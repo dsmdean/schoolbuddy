@@ -1,13 +1,15 @@
 (function() {
-
-    angular.module('app')
-        .controller('ClassroomController', ['dataService', 'notifier', '$routeParams', ClassroomController]);
+    'use strict';
 
     function ClassroomController(dataService, notifier, $routeParams) {
 
         var vm = this;
 
         vm.month = $routeParams.month;
+
+        function showError(message) {
+            notifier.error(message);
+        }
 
         dataService.getClassroom($routeParams.id)
             .then(function(classroom) {
@@ -25,10 +27,9 @@
             })
             .catch(showError);
 
-        function showError(message) {
-            notifier.error(message);
-        }
-
     }
+
+    angular.module('app')
+        .controller('ClassroomController', ['dataService', 'notifier', '$routeParams', ClassroomController]);
 
 }());

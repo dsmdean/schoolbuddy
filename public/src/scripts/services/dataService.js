@@ -1,19 +1,9 @@
 (function() {
-
-    angular.module('app')
-        .factory('dataService', ['$http', '$q', '$log', '$timeout', dataService]);
+    'use strict';
 
     function dataService($http, $q, $log, $timeout) {
 
         var baseURL = "http://localhost:3000/";
-
-        return {
-            getAllSchools: getAllSchools,
-            getAllClassrooms: getAllClassrooms,
-            getAllActivities: getAllActivities,
-            getClassroom: getClassroom,
-            getMonthName: getMonthName
-        };
 
         function getAllSchools() {
             return $http.get(baseURL + 'api/schools')
@@ -23,7 +13,7 @@
                 .catch(function(response) {
                     $log.error('Error retrieving schools: ' + response.statusText);
                     return $q.reject('Error retrieving schools.');
-                })
+                });
         }
 
         function getAllClassrooms() {
@@ -34,7 +24,7 @@
                 .catch(function(response) {
                     $log.error('Error retrieving classrooms: ' + response.statusText);
                     return $q.reject('Error retrieving classrooms.');
-                })
+                });
         }
 
         function getClassroom(id) {
@@ -45,7 +35,7 @@
                 .catch(function(response) {
                     $log.error('Error retrieving classroom (' + id + '): ' + response.statusText);
                     return $q.reject('Error retrieving classroom.');
-                })
+                });
         }
 
         function getAllActivities() {
@@ -78,6 +68,17 @@
             return monthNames[month - 1];
         }
 
+        return {
+            getAllSchools: getAllSchools,
+            getAllClassrooms: getAllClassrooms,
+            getAllActivities: getAllActivities,
+            getClassroom: getClassroom,
+            getMonthName: getMonthName
+        };
+
     }
+
+    angular.module('app')
+        .factory('dataService', ['$http', '$q', '$log', '$timeout', dataService]);
 
 }());

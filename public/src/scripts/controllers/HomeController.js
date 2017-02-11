@@ -1,7 +1,5 @@
 (function() {
-
-    angular.module('app')
-        .controller('HomeController', ['dataService', 'notifier', '$route', '$log', HomeController]);
+    'use strict';
 
     function HomeController(dataService, notifier, $route, $log) {
 
@@ -13,6 +11,10 @@
             $log.debug($route.current);
             $log.debug($route.routes);
             $route.reload();
+        };
+
+        function showError(message) {
+            notifier.error(message);
         }
 
         dataService.getAllSchools()
@@ -36,10 +38,9 @@
             })
             .catch(showError);
 
-        function showError(message) {
-            notifier.error(message);
-        }
-
     }
+
+    angular.module('app')
+        .controller('HomeController', ['dataService', 'notifier', '$route', '$log', HomeController]);
 
 }());

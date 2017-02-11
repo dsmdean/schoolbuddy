@@ -1,7 +1,5 @@
 (function() {
-
-    angular.module('app')
-        .controller('AllActivitiesController', ['dataService', 'notifier', '$location', 'activities', AllActivitiesController]);
+    'use strict';
 
     function AllActivitiesController(dataService, notifier, $location, activities) {
 
@@ -16,6 +14,10 @@
             $location.url(classroom_detail_url);
         };
 
+        function showError(message) {
+            notifier.error(message);
+        }
+
         dataService.getAllClassrooms()
             .then(function(classrooms) {
                 vm.allClassrooms = classrooms;
@@ -29,10 +31,9 @@
         //     })
         //     .catch(showError);
 
-        function showError(message) {
-            notifier.error(message);
-        }
-
     }
+
+    angular.module('app')
+        .controller('AllActivitiesController', ['dataService', 'notifier', '$location', 'activities', AllActivitiesController]);
 
 }());

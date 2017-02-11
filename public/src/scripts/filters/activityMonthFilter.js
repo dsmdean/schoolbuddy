@@ -1,11 +1,12 @@
-(function () {
+(function() {
+    'use strict';
 
     angular.module('app')
         .filter('activityMonthFilter', function() {
             return function(activities, filterMonth) {
 
                 // if no filterMonth was provided, return all activities
-                if(!filterMonth) {
+                if (!filterMonth) {
                     return activities;
                 }
 
@@ -16,14 +17,14 @@
                     var activityMonth = new Date(activity.date).getMonth();
 
                     // JavaScript month will be zero-based, so add 1 to it
-                    if((activityMonth + 1) == filterMonth) {
+                    if ((activityMonth + 1) === filterMonth) {
                         filteredActivities.push(activity);
                     }
 
                 });
 
                 return filteredActivities;
-            }
+            };
         });
 
 }());

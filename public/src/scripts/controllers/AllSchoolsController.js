@@ -1,11 +1,13 @@
-(function () {
-
-    angular.module('app')
-        .controller('AllSchoolsController', ['dataService', 'notifier', AllSchoolsController]);
+(function() {
+    'use strict';
 
     function AllSchoolsController(dataService, notifier) {
 
         var vm = this;
+
+        function showError(message) {
+            notifier.error(message);
+        }
 
         dataService.getAllSchools()
             .then(function(schools) {
@@ -13,10 +15,9 @@
             })
             .catch(showError);
 
-        function showError(message) {
-            notifier.error(message);
-        }
-
     }
+
+    angular.module('app')
+        .controller('AllSchoolsController', ['dataService', 'notifier', AllSchoolsController]);
 
 }());
