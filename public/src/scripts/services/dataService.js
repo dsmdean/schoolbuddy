@@ -1,9 +1,11 @@
-(function () {
+(function() {
 
     angular.module('app')
         .factory('dataService', ['$http', '$q', '$log', '$timeout', dataService]);
 
     function dataService($http, $q, $log, $timeout) {
+
+        var baseURL = "http://localhost:3000/";
 
         return {
             getAllSchools: getAllSchools,
@@ -14,7 +16,7 @@
         };
 
         function getAllSchools() {
-            return $http.get('api/schools')
+            return $http.get(baseURL + 'api/schools')
                 .then(function(response) {
                     return response.data;
                 })
@@ -25,7 +27,7 @@
         }
 
         function getAllClassrooms() {
-            return $http.get('api/classrooms')
+            return $http.get(baseURL + 'api/classrooms')
                 .then(function(response) {
                     return response.data;
                 })
@@ -36,7 +38,7 @@
         }
 
         function getClassroom(id) {
-            return $http.get('api/classrooms/' + id)
+            return $http.get(baseURL + 'api/classrooms/' + id)
                 .then(function(response) {
                     return response.data;
                 })
@@ -52,7 +54,7 @@
 
             $timeout(function() {
 
-                $http.get('api/activities')
+                $http.get(baseURL + 'api/activities')
                     .then(function(response) {
                         deferred.resolve(response.data);
                     })

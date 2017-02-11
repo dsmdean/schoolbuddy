@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var Classrooms = require('../models/classrooms');
+var Activities = require('../models/activities');
 var classroomsRouter = express.Router();
 classroomsRouter.use(bodyParser.json());
 
@@ -38,7 +39,15 @@ classroomsRouter.route('/:id')
             .populate('school')
             .exec(function(err, classroom) {
                 if (err) next(err);
-                res.json(classroom);
+
+                Activities.find({ "classroom": classroom._id }, function(err, activities) {
+                    if (err) next(err);
+                    var classroomDetails = classroom.toObject();
+                    // classroomDetails.activities = [];
+                    classroomDetails.activities = activities;
+
+                    res.json(classroomDetails);
+                });
             });
     })
     // PUT individual classroom

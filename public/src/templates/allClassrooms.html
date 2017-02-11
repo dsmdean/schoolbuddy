@@ -7,16 +7,16 @@
         <!-- Table -->
         <table class="table">
             <thead>
-            <tr>
-                <th>Classroom Name</th>
-                <th>School</th>
-                <th>Teacher</th>
-            </tr>
+                <tr>
+                    <th>Classroom Name</th>
+                    <th>School</th>
+                    <th>Teacher</th>
+                </tr>
             </thead>
             <tr ng-repeat="classroom in classrooms.allClassrooms">
-                <td><a href="#/classrooms/{{ classroom.id }}/detail">{{ classroom.name }}</a></td>
+                <td><a href="#/classrooms/{{ classroom._id }}/detail">{{ classroom.name }}</a></td>
                 <td>{{ classroom.school.name }}</td>
-                <td><a href="#/classrooms/{{ classroom.id }}">{{ classroom.teacher }}</a></td>
+                <td><a href="#/classrooms/{{ classroom._id }}">{{ classroom.teacher }}</a></td>
             </tr>
         </table>
     </div>
