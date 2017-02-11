@@ -1,0 +1,19 @@
+{
+    "name": "schoolbuddy",
+    "version": "1.0.0",
+    "description": "Project for a course on Pluralsight",
+    "main": "index.html",
+    "moduleType": [],
+    "homepage": "",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "angular": "~1.4.0",
+        "angular-route": "~1.4.0",
+        "jquery": ">=1.6.3",
+        "toastr": "~2.1.1"
+    }
+}

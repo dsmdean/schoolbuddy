@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>School Buddy</title>
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/bootstrap.cerulean.min.css">
+    <link rel="stylesheet" href="bower_components/toastr/toastr.min.css">
+    <!-- endbuild -->
+</head>
+
+<body ng-app="app">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="#/">School Buddy</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/schools">Schools<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#/classrooms">Classrooms</a></li>
+                    <li><a href="#/activities">Activities</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- build:js scripts/main.js -->
+    <!-- Libraries -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/toastr/toastr.min.js"></script>
+
+    <!-- Angular -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+
+    <!-- Application code -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/dataService.js"></script>
+    <script src="scripts/services/notifier.js"></script>
+    <script src="scripts/filters/activityMonthFilter.js"></script>
+    <script src="scripts/controllers/HomeController.js"></script>
+    <script src="scripts/controllers/AllSchoolsController.js"></script>
+    <script src="scripts/controllers/AllClassroomsController.js"></script>
+    <script src="scripts/controllers/AllActivitiesController.js"></script>
+    <script src="scripts/controllers/ClassroomController.js"></script>
+    <!-- endbuild -->
+
+</body>
+
+</html>
