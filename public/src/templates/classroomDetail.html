@@ -2,6 +2,7 @@
     <h3>School: {{ classroom.currentClassroom.school.name }}</h3>
     <h3>Classroom: {{ classroom.currentClassroom.name }}</h3>
     <h3>Teacher: {{ classroom.currentClassroom.teacher }}</h3>
+    <h3>{{ classroom.message }}</h3>
 
     <div>
         <div class="panel panel-default">
@@ -11,10 +12,10 @@
             <!-- Table -->
             <table class="table">
                 <thead>
-                <tr>
-                    <th>Activity Name</th>
-                    <th>Date</th>
-                </tr>
+                    <tr>
+                        <th>Activity Name</th>
+                        <th>Date</th>
+                    </tr>
                 </thead>
                 <tr ng-repeat="activity in filteredActivities = (classroom.currentClassroom.activities | activityMonthFilter:classroom.month)">
                     <td>{{ activity.name }}</td>
@@ -26,5 +27,3 @@
     </div>
 
 </div>
-
-

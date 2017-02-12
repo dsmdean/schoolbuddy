@@ -17,7 +17,7 @@
                     var activityMonth = new Date(activity.date).getMonth();
 
                     // JavaScript month will be zero-based, so add 1 to it
-                    if ((activityMonth + 1) === filterMonth) {
+                    if ((activityMonth + 1) == filterMonth) {
                         filteredActivities.push(activity);
                     }
 

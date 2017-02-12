@@ -1,17 +1,18 @@
 (function() {
     'use strict';
 
-    function AllActivitiesController(dataService, notifier, $location, activities) {
+    function AllActivitiesController(dataService, notifier, $state, activities, $log) {
 
         var vm = this;
 
         vm.selectedMonth = 1; // default to January
-
         vm.allActivities = activities;
 
+        $log.debug($state.current.data);
+        $log.debug($state.current.foo);
+
         vm.search = function() {
-            var classroom_detail_url = '/classrooms/' + vm.selectedClassroom._id + '/detail/' + vm.selectedMonth;
-            $location.url(classroom_detail_url);
+            $state.go('classrooms_detail', { id: vm.selectedClassroom._id, month: vm.selectedMonth });
         };
 
         function showError(message) {
@@ -34,6 +35,6 @@
     }
 
     angular.module('app')
-        .controller('AllActivitiesController', ['dataService', 'notifier', '$location', 'activities', AllActivitiesController]);
+        .controller('AllActivitiesController', ['dataService', 'notifier', '$state', 'activities', '$log', AllActivitiesController]);
 
 }());

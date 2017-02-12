@@ -1,23 +1,24 @@
 (function() {
     'use strict';
 
-    function ClassroomController(dataService, notifier, $routeParams) {
+    function ClassroomController(dataService, notifier, $stateParams) {
 
         var vm = this;
 
-        vm.month = $routeParams.month;
+        vm.month = $stateParams.month;
+        vm.message = $stateParams.classroomMessage;
 
         function showError(message) {
             notifier.error(message);
         }
 
-        dataService.getClassroom($routeParams.id)
+        dataService.getClassroom($stateParams.id)
             .then(function(classroom) {
                 vm.currentClassroom = classroom;
 
-                if ($routeParams.month) {
+                if ($stateParams.month) {
                     if (classroom.activities.length > 0) {
-                        vm.timePeriod = dataService.getMonthName($routeParams.month);
+                        vm.timePeriod = dataService.getMonthName($stateParams.month);
                     } else {
                         vm.timePeriod = 'No activities this month';
                     }
@@ -30,6 +31,6 @@
     }
 
     angular.module('app')
-        .controller('ClassroomController', ['dataService', 'notifier', '$routeParams', ClassroomController]);
+        .controller('ClassroomController', ['dataService', 'notifier', '$stateParams', ClassroomController]);
 
 }());
