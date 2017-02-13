@@ -8,11 +8,11 @@
         vm.selectedMonth = 1; // default to January
         vm.allActivities = activities;
 
-        $log.debug($state.current.data);
-        $log.debug($state.current.foo);
+        // $log.debug($state.current.data);
+        // $log.debug($state.current.foo);
 
         vm.search = function() {
-            $state.go('classrooms_detail', { id: vm.selectedClassroom._id, month: vm.selectedMonth });
+            $state.go('classroom_parent.classroom_detail', { id: vm.selectedClassroom._id, month: vm.selectedMonth });
         };
 
         function showError(message) {

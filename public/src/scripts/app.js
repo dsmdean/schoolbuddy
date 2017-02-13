@@ -56,19 +56,42 @@
                     myFoo: 'bar'
                 }
             })
-            .state('classrooms_summary', {
+            .state('classroom_parent', {
+                abstract: true,
                 url: '/classrooms/:id',
                 controller: 'ClassroomController',
                 controllerAs: 'classroom',
-                templateUrl: 'templates/classroom.html'
-            })
-            .state('classrooms_detail', {
-                url: '/classrooms/{id}/detail/{month}',
-                controller: 'ClassroomController',
-                controllerAs: 'classroom',
-                templateUrl: 'templates/classroomDetail.html',
+                templateUrl: 'templates/classroom_parent.html',
                 params: {
                     classroomMessage: { value: 'Learning is fun!' }
+                },
+                resolve: {
+                    classroom: function($stateParams, dataService) {
+                        return dataService.getClassroom($stateParams.id);
+                    }
+                }
+            })
+            .state('classroom_parent.classroom_summary', {
+                url: '/summary',
+                views: {
+                    'classInfo': {
+                        controller: 'ClassroomSummaryController',
+                        controllerAs: 'classroomSummary',
+                        templateUrl: 'templates/classroom.html'
+                    },
+                    'classMessage': {
+                        controller: 'ClassroomMessageController',
+                        controllerAs: 'classroomMessage',
+                        templateUrl: 'templates/classroom_message.html'
+                    }
+                },
+            })
+            .state('classroom_parent.classroom_detail', {
+                url: '/detail/{month}',
+                views: {
+                    'classInfo': {
+                        templateUrl: 'templates/classroomDetail.html'
+                    }
                 }
             });
 
