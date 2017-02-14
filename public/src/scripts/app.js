@@ -14,6 +14,12 @@
         $urlRouterProvider.otherwise('/');
 
         $stateProvider
+            .state('login', {
+                url: '/login',
+                controller: 'LoginController',
+                controllerAs: 'login',
+                templateUrl: 'templates/login.html'
+            })
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
@@ -25,6 +31,12 @@
                 controller: 'AllSchoolsController',
                 controllerAs: 'schools',
                 templateUrl: 'templates/allSchools.html'
+            })
+            .state('profile', {
+                url: '/profile',
+                controller: 'ProfileController',
+                controllerAs: 'profile',
+                templateUrl: 'templates/profile.html'
             })
             .state('classrooms', {
                 url: '/classrooms',
@@ -97,7 +109,7 @@
 
     }]);
 
-    app.run(['$rootScope', '$log', function($rootScope, $log) {
+    app.run(['$rootScope', '$log', '$state', 'authentication', function($rootScope, $log, $state, authentication) {
 
         // $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
@@ -110,6 +122,16 @@
         //     $log.debug('fromParams', fromParams);
 
         // });
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            // $log.debug('State changed - Auth: ' + authentication.isAuthenticated());
+
+            if (!authentication.isAuthenticated() && toState.name != 'login') {
+                event.preventDefault();
+                $state.go('login');
+            }
+
+        });
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
 

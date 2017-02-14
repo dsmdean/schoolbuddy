@@ -8,13 +8,14 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.cerulean.min.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="bower_components/toastr/toastr.min.css">
     <!-- endbuild -->
 </head>
 
-<body ng-app="app">
+<body ng-app="app" ng-cloak>
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" ng-controller="HeaderController as header">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -30,9 +31,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a ui-sref="schools">Schools<span class="sr-only">(current)</span></a></li>
-                    <li><a ui-sref="classrooms">Classrooms</a></li>
-                    <li><a ui-sref="activities">Activities</a></li>
+                    <li ng-show="header.isAdmin"><a ui-sref="schools">Schools<span class="sr-only">(current)</span></a></li>
+                    <li ng-hide="true"><a ui-sref="classrooms">Classrooms</a></li>
+                    <li ng-hide="true"><a ui-sref="activities">Activities</a></li>
+                    <li ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
+                    <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -54,9 +57,15 @@
 
     <!-- Application code -->
     <script src="scripts/app.js"></script>
+
     <script src="scripts/services/dataService.js"></script>
     <script src="scripts/services/notifier.js"></script>
+    <script src="scripts/services/localStorage.js"></script>
+    <script src="scripts/services/authenticationService.js"></script>
+    <script src="scripts/services/userService.js"></script>
+
     <script src="scripts/filters/activityMonthFilter.js"></script>
+
     <script src="scripts/controllers/HomeController.js"></script>
     <script src="scripts/controllers/AllSchoolsController.js"></script>
     <script src="scripts/controllers/AllClassroomsController.js"></script>
@@ -64,6 +73,10 @@
     <script src="scripts/controllers/ClassroomController.js"></script>
     <script src="scripts/controllers/ClassroomSummaryController.js"></script>
     <script src="scripts/controllers/ClassroomMessageController.js"></script>
+
+    <script src="scripts/controllers/LoginController.js"></script>
+    <script src="scripts/controllers/HeaderController.js"></script>
+    <script src="scripts/controllers/ProfileController.js"></script>
     <!-- endbuild -->
 
 </body>

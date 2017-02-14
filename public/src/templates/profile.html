@@ -1,0 +1,69 @@
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-md-4 login-box" style="margin-right: 5%;">
+            <div class="text-center">
+                <img height="150px" class="img-thumbnail" style="height:150px" ng-src="{{profile.currentUser.image || profile.defaultImg}}" />
+                <h3 style="color: #fff;">{{profile.currentUser.firstname}} {{profile.currentUser.lastname}}</h3><span class="badge" style="background-color: #3289c8;">{{profile.getBadge(profile.currentUser.total_minutes_read)}}</span><br/><br/>
+            </div>
+            <div class="text-center">
+                <h5 style="color: #fff;">
+                    <strong>Username:</strong> {{profile.currentUser.username}}
+                </h5>
+            </div>
+        </div>
+        <div class="col-md-7 login-box">
+            <div class="text-center">
+                <h3 style="color: #fff;">Update Profile</h3>
+            </div>
+            <div class="">&nbsp;</div>
+            <div class="">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="bookTitle" class="col-md-3 col-md-offset-1 control-label">Firstname</label>
+                        <div class="col-md-6">
+                            <input type="text" ng-model="profile.currentUser.firstname" class="form-control" id="bookTitle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Lastname</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="profile.currentUser.lastname" class="form-control" id="bookAuthor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Username</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="profile.currentUser.username" class="form-control" id="bookAuthor">
+                        </div>
+                    </div>
+                    <div ng-show="profile.updatePassword">
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Current Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.password" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">New Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.newPassword" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Confirm New Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.confirmNewPassword" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-6">
+                            <a style="color: #fff;" href="" ng-click="profile.toggleUpdatePassword()"><span ng-show="profile.updatePassword">&#9650;</span><span ng-hide="profile.updatePassword">&#9660;</span> Update Password</a> &nbsp;
+                            <button class="btn btn-default" ng-click="profile.updateUser()">Update User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

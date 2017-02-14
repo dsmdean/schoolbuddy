@@ -1,0 +1,15 @@
+body {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #555;
+    /*background-color: #f5f5f5;*/
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.login-box {
+    margin-top: 8%;
+    color: #fff !important;
+    background: #1995dc !important;
+    border-radius: 3px;
+    padding: 40px;
+}
