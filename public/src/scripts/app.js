@@ -20,6 +20,12 @@
                 controllerAs: 'login',
                 templateUrl: 'templates/login.html'
             })
+            .state('profile', {
+                url: '/profile',
+                controller: 'ProfileController',
+                controllerAs: 'profile',
+                templateUrl: 'templates/profile.html'
+            })
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
@@ -32,80 +38,81 @@
                 controllerAs: 'schools',
                 templateUrl: 'templates/allSchools.html'
             })
-            .state('profile', {
-                url: '/profile',
-                controller: 'ProfileController',
-                controllerAs: 'profile',
-                templateUrl: 'templates/profile.html'
+            .state('schools_register', {
+                url: '/schools/register',
+                controller: 'SchoolRegisterController',
+                controllerAs: 'school',
+                templateUrl: 'templates/newSchool.html'
             })
-            .state('classrooms', {
-                url: '/classrooms',
-                controller: 'AllClassroomsController',
-                controllerAs: 'classrooms',
-                templateUrl: 'templates/allClassrooms.html',
-                onEnter: function($log) {
-                    $log.debug('Entering the classrooms state.');
-                },
-                onExit: function($log) {
-                    $log.debug('Exiting the classrooms state.');
-                }
-            })
-            .state('activities', {
-                url: '/activities',
-                controller: 'AllActivitiesController',
-                controllerAs: 'activities',
-                templateUrl: 'templates/allActivities.html',
-                resolve: {
-                    activities: function(dataService) {
-                        return dataService.getAllActivities();
-                    }
-                },
-                data: {
-                    name: 'My Activity',
-                    desc: 'Fun!'
-                },
-                foo: {
-                    myFoo: 'bar'
-                }
-            })
-            .state('classroom_parent', {
-                abstract: true,
-                url: '/classrooms/:id',
-                controller: 'ClassroomController',
-                controllerAs: 'classroom',
-                templateUrl: 'templates/classroom_parent.html',
-                params: {
-                    classroomMessage: { value: 'Learning is fun!' }
-                },
-                resolve: {
-                    classroom: function($stateParams, dataService) {
-                        return dataService.getClassroom($stateParams.id);
-                    }
-                }
-            })
-            .state('classroom_parent.classroom_summary', {
-                url: '/summary',
-                views: {
-                    'classInfo': {
-                        controller: 'ClassroomSummaryController',
-                        controllerAs: 'classroomSummary',
-                        templateUrl: 'templates/classroom.html'
-                    },
-                    'classMessage': {
-                        controller: 'ClassroomMessageController',
-                        controllerAs: 'classroomMessage',
-                        templateUrl: 'templates/classroom_message.html'
-                    }
-                },
-            })
-            .state('classroom_parent.classroom_detail', {
-                url: '/detail/{month}',
-                views: {
-                    'classInfo': {
-                        templateUrl: 'templates/classroomDetail.html'
-                    }
-                }
-            });
+            // .state('classrooms', {
+            //     url: '/classrooms',
+            //     controller: 'AllClassroomsController',
+            //     controllerAs: 'classrooms',
+            //     templateUrl: 'templates/allClassrooms.html',
+            //     onEnter: function($log) {
+            //         $log.debug('Entering the classrooms state.');
+            //     },
+            //     onExit: function($log) {
+            //         $log.debug('Exiting the classrooms state.');
+            //     }
+            // })
+            // .state('activities', {
+            //     url: '/activities',
+            //     controller: 'AllActivitiesController',
+            //     controllerAs: 'activities',
+            //     templateUrl: 'templates/allActivities.html',
+            //     resolve: {
+            //         activities: function(dataService) {
+            //             return dataService.getAllActivities();
+            //         }
+            //     },
+            //     data: {
+            //         name: 'My Activity',
+            //         desc: 'Fun!'
+            //     },
+            //     foo: {
+            //         myFoo: 'bar'
+            //     }
+            // })
+            // .state('classroom_parent', {
+            //     abstract: true,
+            //     url: '/classrooms/:id',
+            //     controller: 'ClassroomController',
+            //     controllerAs: 'classroom',
+            //     templateUrl: 'templates/classroom_parent.html',
+            //     params: {
+            //         classroomMessage: { value: 'Learning is fun!' }
+            //     },
+            //     resolve: {
+            //         classroom: function($stateParams, dataService) {
+            //             return dataService.getClassroom($stateParams.id);
+            //         }
+            //     }
+            // })
+            // .state('classroom_parent.classroom_summary', {
+            //     url: '/summary',
+            //     views: {
+            //         'classInfo': {
+            //             controller: 'ClassroomSummaryController',
+            //             controllerAs: 'classroomSummary',
+            //             templateUrl: 'templates/classroom.html'
+            //         },
+            //         'classMessage': {
+            //             controller: 'ClassroomMessageController',
+            //             controllerAs: 'classroomMessage',
+            //             templateUrl: 'templates/classroom_message.html'
+            //         }
+            //     },
+            // })
+            // .state('classroom_parent.classroom_detail', {
+            //     url: '/detail/{month}',
+            //     views: {
+            //         'classInfo': {
+            //             templateUrl: 'templates/classroomDetail.html'
+            //         }
+            //     }
+            // })
+        ;
 
     }]);
 
@@ -129,6 +136,11 @@
             if (!authentication.isAuthenticated() && toState.name != 'login') {
                 event.preventDefault();
                 $state.go('login');
+            }
+
+            if (authentication.isAuthenticated() && !authentication.isAdmin() && (toState.name != 'schools' || toState.name != 'schools_register')) {
+                event.preventDefault();
+                $state.go('profile');
             }
 
         });

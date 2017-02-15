@@ -9,7 +9,11 @@ body {
 .login-box {
     margin-top: 8%;
     color: #fff !important;
-    background: #1995dc !important;
+    background: #3ba9e8 !important;
     border-radius: 3px;
     padding: 40px;
+}
+
+li a .active {
+    background: #1995dc !important;
 }

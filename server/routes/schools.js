@@ -1,7 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
+var User = require('../models/users');
 var Schools = require('../models/schools');
 var schoolsRouter = express.Router();
 schoolsRouter.use(bodyParser.json());
@@ -18,15 +20,31 @@ schoolsRouter.route('/')
     })
     // POST a school
     .post(function(req, res, next) {
-        Schools.create(req.body, function(err, school) {
-            if (err) next(err);
+        // create school admin
+        User.register(new User({ username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, school_admin: true }),
+            req.body.password,
+            function(err, user) {
+                if (err) {
+                    return res.status(500).json({ err: err });
+                }
 
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
+                user.save(function(err, user) {
+                    passport.authenticate('local')(req, res, function() {
+
+                        req.body.school_admin = user._id;
+
+                        Schools.create(req.body, function(err, school) {
+                            if (err) next(err);
+
+                            res.writeHead(200, {
+                                'Content-Type': 'text/plain'
+                            });
+
+                            res.end('Registration Successful! School with name ' + req.body.name + ' saved.');
+                        });
+                    });
+                });
             });
-
-            res.end('Saved the school with name ' + req.body.name);
-        });
     });
 
 schoolsRouter.route('/:id')
@@ -54,6 +72,25 @@ schoolsRouter.route('/:id')
             if (err) next(err);
 
             school.remove({});
+
+            User.findById(school.school_admin, function(err, user) {
+                if (err) next(err);
+
+                user.remove({});
+                res.json(school);
+            })
+        });
+    });
+
+schoolsRouter.route('/:id/suspend')
+    // suspend individual school
+    .put(function(req, res, next) {
+        Schools.findById(req.params.id, function(err, school) {
+            if (err) next(err);
+
+            school.suspended = !school.suspended;
+
+            school.save();
             res.json(school);
         });
     });

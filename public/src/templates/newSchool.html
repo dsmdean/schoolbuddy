@@ -1,0 +1,60 @@
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 login-box" style="margin-top: 4%;">
+            <div class="text-center">
+                <h3 style="color: #fff;">Register School</h3>
+            </div>
+            <div class="">&nbsp;</div>
+            <div class="">
+                <form class="form-horizontal" role="form">
+                    <h4 class="col-md-offset-4" style="color: #fff;">School Admin</h4>
+                    <div class="form-group">
+                        <label for="bookTitle" class="col-md-3 col-md-offset-1 control-label">Username</label>
+                        <div class="col-md-6">
+                            <input type="text" ng-model="school.newSchool.username" class="form-control" id="bookTitle" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Password</label>
+                        <div class="col-sm-6">
+                            <input type="password" ng-model="school.newSchool.password" class="form-control" id="bookAuthor" placeholder="Password">
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <h4 class="col-md-offset-4" style="color: #fff;">School Info</h4>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="school.newSchool.name" class="form-control" id="bookAuthor" placeholder="School Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Location</label>
+                        <div class="col-md-6">
+                            <input type="text" ng-model="school.newSchool.location.address" class="form-control" id="bookAuthor" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-md-offset-4">
+                            <input type="text" ng-model="school.newSchool.location.city" class="form-control" id="bookAuthor" placeholder="City">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" ng-model="school.newSchool.location.province" class="form-control" id="bookAuthor" placeholder="Province">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Phone</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="school.newSchool.phone" class="form-control" id="bookAuthor" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
+                            <button class="btn btn-default" ng-click="school.registerSchool()">Register School</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

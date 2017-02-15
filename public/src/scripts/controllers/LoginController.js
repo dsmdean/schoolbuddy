@@ -15,7 +15,7 @@
             authentication.login(vm.userData)
                 .then(function(response) {
                     notifier.success('Logged in successful!');
-                    $state.go('home');
+                    $state.go('profile');
                 })
                 .catch(showError);
         };

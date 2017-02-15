@@ -20,8 +20,6 @@ db.once('open', function() {
 
 var index = require('./server/routes/index');
 var users = require('./server/routes/users');
-var activities = require('./server/routes/activities');
-var classrooms = require('./server/routes/classrooms');
 var schools = require('./server/routes/schools');
 
 var app = express();
@@ -44,8 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/users', users);
-app.use('/api/activities', activities);
-app.use('/api/classrooms', classrooms);
 app.use('/api/schools', schools);
 
 // app.get('/*', function(req, res) {

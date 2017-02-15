@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function HeaderController(authentication, notifier, $state, $rootScope, localStorage, $window, $interval, $log) {
+    function HeaderController(authentication, notifier, $state, $rootScope, localStorage, $window, $interval, $log, $location) {
 
         var vm = this;
         var tokenExpiration;
@@ -9,6 +9,10 @@
         vm.loggedIn = false;
         vm.isAdmin = false;
         vm.currentUser = {};
+
+        vm.getClass = function(path) {
+            return $location.path().substr(0, path.length) === path ? 'active' : '';
+        }
 
         function stopInterval() {
             $interval.cancel(interval);
@@ -80,6 +84,6 @@
     }
 
     angular.module('app')
-        .controller('HeaderController', ['authentication', 'notifier', '$state', '$rootScope', 'localStorage', '$window', '$interval', '$log', HeaderController]);
+        .controller('HeaderController', ['authentication', 'notifier', '$state', '$rootScope', 'localStorage', '$window', '$interval', '$log', '$location', HeaderController]);
 
 }());

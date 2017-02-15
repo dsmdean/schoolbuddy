@@ -1,4 +1,12 @@
-<h1 class="col-md-offset-1 col-lg-offset-1">All Schools</h1>
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    All Schools
+    <button class="btn btn-primary btn-sm" title="Register School" ui-sref="schools_register">&#10010;</button>
+</h1>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <!--<i class="fa fa-search" aria-hidden="true"></i>-->
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="schools.search">
+</div>
+
 <div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
     <div class="panel panel-default">
         <!-- Default panel contents -->
@@ -9,13 +17,42 @@
             <thead>
                 <tr>
                     <th>School Name</th>
-                    <th>Principal</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Current Principal</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tr ng-repeat="school in schools.allSchools">
+            <tr ng-repeat="school in schools.allSchools | filter:schools.search" ng-class="{danger: school.suspended}">
                 <td>{{ school.name }}</td>
-                <td>{{ school.principal }}</td>
+                <td>{{ school.location.address }}, {{school.location.city}} {{school.location.province}}</td>
+                <td>{{ school.phone }}</td>
+                <td ng-if="school.principal">{{ school.principal }}</td>
+                <td ng-if="!school.principal">None</td>
+                <td>
+                    <button ng-show="school.suspended" class="btn btn-primary btn-xs" title="Restore" ng-click="schools.schoolToDeleteSuspend(school._id, school.name, 'restore')" data-toggle="modal" data-target="#deleteModal">&#10004;</button>
+                    <button ng-hide="school.suspended" class="btn btn-warning btn-xs" title="Suspend" ng-click="schools.schoolToDeleteSuspend(school._id, school.name, 'suspend')" data-toggle="modal" data-target="#deleteModal">&#9888;</button>
+                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="schools.schoolToDeleteSuspend(school._id, school.name, 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
+                </td>
             </tr>
         </table>
+    </div>
+</div>
+
+<!-- Book Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <br/>
+                <h4 class="modal-title">Do you want to {{schools.schoolDeleteSuspendData.action}} the school named "<strong>{{schools.schoolDeleteSuspendData.name}}</strong>"?</h4>
+                <br/>
+                <button ng-show="schools.schoolDeleteSuspendData.action === 'delete'" type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="schools.deleteSchool()">Yes, Delete School</button>
+                <button ng-show="schools.schoolDeleteSuspendData.action === 'restore'" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="schools.suspendSchool()">Yes, Restore School</button>
+                <button ng-show="schools.schoolDeleteSuspendData.action === 'suspend'" type="button" class="btn btn-warning btn-sm" data-dismiss="modal" ng-click="schools.suspendSchool()">Yes, Suspend school</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave School</button>
+            </div>
+        </div>
     </div>
 </div>

@@ -7,6 +7,8 @@
     <title>School Buddy</title>
 
     <!-- build:css styles/main.css -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="styles/bootstrap.cerulean.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="bower_components/toastr/toastr.min.css">
@@ -31,10 +33,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li ng-show="header.isAdmin"><a ui-sref="schools">Schools<span class="sr-only">(current)</span></a></li>
-                    <li ng-hide="true"><a ui-sref="classrooms">Classrooms</a></li>
-                    <li ng-hide="true"><a ui-sref="activities">Activities</a></li>
-                    <li ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
+                    <li ng-class="header.getClass('/schools')" ng-show="header.isAdmin"><a ui-sref="schools">Schools</a></li>
+                    <!--<li ng-hide="true"><a ui-sref="classrooms">Classrooms</a></li>
+                    <li ng-hide="true"><a ui-sref="activities">Activities</a></li>-->
+                    <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
                 </ul>
             </div>
@@ -48,6 +50,7 @@
     <!-- build:js scripts/main.js -->
     <!-- Libraries -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/toastr/toastr.min.js"></script>
 
     <!-- Angular -->
@@ -63,20 +66,22 @@
     <script src="scripts/services/localStorage.js"></script>
     <script src="scripts/services/authenticationService.js"></script>
     <script src="scripts/services/userService.js"></script>
+    <script src="scripts/services/schoolService.js"></script>
 
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
     <script src="scripts/controllers/HomeController.js"></script>
-    <script src="scripts/controllers/AllSchoolsController.js"></script>
-    <script src="scripts/controllers/AllClassroomsController.js"></script>
+    <!--<script src="scripts/controllers/AllClassroomsController.js"></script>
     <script src="scripts/controllers/AllActivitiesController.js"></script>
     <script src="scripts/controllers/ClassroomController.js"></script>
     <script src="scripts/controllers/ClassroomSummaryController.js"></script>
-    <script src="scripts/controllers/ClassroomMessageController.js"></script>
+    <script src="scripts/controllers/ClassroomMessageController.js"></script>-->
 
     <script src="scripts/controllers/LoginController.js"></script>
     <script src="scripts/controllers/HeaderController.js"></script>
     <script src="scripts/controllers/ProfileController.js"></script>
+    <script src="scripts/controllers/AllSchoolsController.js"></script>
+    <script src="scripts/controllers/SchoolRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>
