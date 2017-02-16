@@ -36,8 +36,17 @@
                     <li ng-class="header.getClass('/schools')" ng-show="header.isAdmin"><a ui-sref="schools">Schools</a></li>
                     <!--<li ng-hide="true"><a ui-sref="classrooms">Classrooms</a></li>
                     <li ng-hide="true"><a ui-sref="activities">Activities</a></li>-->
+
+                    <li ng-class="header.getClass('/teachers')" ng-show="header.isSchoolAdmin"><a ui-sref="teachers">Teachers</a></li>
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
+                    <!--<li class="dropdown" ng-if="header.loggedIn">
+                        <a href="" class="dropdown-toggle" ng-class="header.getClass('/profile')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{header.currentUser.firstname}} {{header.currentUser.lastname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-class="header.getClass('/profile')"><a href="#" ui-sref="profile">Profile</a></li>
+                            <li><a ng-click="header.logout()" href="#">Logout</a></li>
+                        </ul>
+                    </li>-->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -67,6 +76,7 @@
     <script src="scripts/services/authenticationService.js"></script>
     <script src="scripts/services/userService.js"></script>
     <script src="scripts/services/schoolService.js"></script>
+    <script src="scripts/services/teacherService.js"></script>
 
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
@@ -82,6 +92,8 @@
     <script src="scripts/controllers/ProfileController.js"></script>
     <script src="scripts/controllers/AllSchoolsController.js"></script>
     <script src="scripts/controllers/SchoolRegisterController.js"></script>
+    <script src="scripts/controllers/TeachersController.js"></script>
+    <script src="scripts/controllers/TeacherRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>

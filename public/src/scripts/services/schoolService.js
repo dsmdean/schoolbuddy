@@ -16,6 +16,17 @@
                 });
         }
 
+        function getSchoolByUserId(userID) {
+            return $http.get(baseURL + '/api/schools/admin/' + userID)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving schools: ' + response.statusText);
+                    return $q.reject('Error retrieving schools.');
+                });
+        }
+
         function registerSchool(newSchool) {
             return $http.post(baseURL + '/api/schools', newSchool)
                 .then(function(response) {
@@ -24,6 +35,17 @@
                 .catch(function(response) {
                     $log.error('Error registering school: ' + response.statusText);
                     return $q.reject('Error registering school.');
+                });
+        }
+
+        function updateSchool(school) {
+            return $http.put(baseURL + '/api/schools/' + school._id, school)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error updating school: ' + response.statusText);
+                    return $q.reject('Error updating school.');
                 });
         }
 
@@ -51,7 +73,9 @@
 
         return {
             getAllSchools: getAllSchools,
+            getSchoolByUserId: getSchoolByUserId,
             registerSchool: registerSchool,
+            updateSchool: updateSchool,
             deleteSchool: deleteSchool,
             suspendSchool: suspendSchool
         };

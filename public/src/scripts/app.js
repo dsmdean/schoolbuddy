@@ -44,6 +44,18 @@
                 controllerAs: 'school',
                 templateUrl: 'templates/newSchool.html'
             })
+            .state('teachers', {
+                url: '/teachers',
+                controller: 'TeachersController',
+                controllerAs: 'teachers',
+                templateUrl: 'templates/teachers.html'
+            })
+            .state('teachers_register', {
+                url: '/teachers/register',
+                controller: 'TeacherRegisterController',
+                controllerAs: 'teacher',
+                templateUrl: 'templates/newTeacher.html'
+            })
             // .state('classrooms', {
             //     url: '/classrooms',
             //     controller: 'AllClassroomsController',
@@ -136,9 +148,11 @@
             if (!authentication.isAuthenticated() && toState.name != 'login') {
                 event.preventDefault();
                 $state.go('login');
+            } else if (authentication.isAuthenticated() && toState.name == 'login') {
+                $state.go('profile');
             }
 
-            if (authentication.isAuthenticated() && !authentication.isAdmin() && (toState.name != 'schools' || toState.name != 'schools_register')) {
+            if (!authentication.isAdmin() && (toState.name == 'schools' || toState.name == 'schools_register')) {
                 event.preventDefault();
                 $state.go('profile');
             }

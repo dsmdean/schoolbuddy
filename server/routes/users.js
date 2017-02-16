@@ -47,6 +47,13 @@ userRouter.post('/login', function(req, res, next) {
                 err: info
             });
         }
+
+        if (user.suspended) {
+            return res.status(500).json({
+                err: 'User suspended! Could not log in user'
+            });
+        }
+
         req.logIn(user, function(err) {
             if (err) {
                 return res.status(500).json({

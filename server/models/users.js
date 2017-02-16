@@ -37,6 +37,10 @@ var Users = new Schema({
     student: {
         type: Boolean,
         default: false
+    },
+    suspended: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

@@ -21,6 +21,7 @@ db.once('open', function() {
 var index = require('./server/routes/index');
 var users = require('./server/routes/users');
 var schools = require('./server/routes/schools');
+var teachers = require('./server/routes/teachers');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api/users', users);
 app.use('/api/schools', schools);
+app.use('/api/teachers', teachers);
 
 // app.get('/*', function(req, res) {
 //     res.sendFile(__dirname + '/public/src/index.html')

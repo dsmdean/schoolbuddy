@@ -12,6 +12,10 @@ var principalsSchema = new Schema({
         type: String,
         default: ''
     },
+    phone: {
+        type: String,
+        default: ''
+    },
     startDate: Date,
     endDate: Date,
     current: {

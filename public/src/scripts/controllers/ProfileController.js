@@ -1,11 +1,12 @@
 (function() {
     'use strict';
 
-    function ProfileController(authentication, userService, notifier, $state) {
+    function ProfileController(authentication, userService, schoolService, notifier, $state) {
 
         var vm = this;
         vm.defaultImg = "http://1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png";
         vm.currentUser = authentication.getCurrentUser();
+        vm.currentSchool = authentication.getCurrentSchool();
         vm.updatePassword = false;
 
         function showError(message) {
@@ -20,8 +21,8 @@
             userService.updateUser(vm.currentUser)
                 .then(function(response) {
                     if (response !== undefined) {
-                        notifier.success(response.data.status);
-                        vm.updatePassword = !vm.updatePassword;
+                        notifier.success(response);
+                        vm.updatePassword = false;
                     }
                 })
                 .catch(showError);
@@ -41,9 +42,17 @@
             }
         }
 
+        vm.updateSchool = function() {
+            schoolService.updateSchool(vm.currentSchool)
+                .then(function(response) {
+                    notifier.success('School named ' + response.name + ' updated');
+                })
+                .catch(showError);
+        }
+
     }
 
     angular.module('app')
-        .controller('ProfileController', ['authentication', 'userService', 'notifier', '$state', ProfileController]);
+        .controller('ProfileController', ['authentication', 'userService', 'schoolService', 'notifier', '$state', ProfileController]);
 
 }());

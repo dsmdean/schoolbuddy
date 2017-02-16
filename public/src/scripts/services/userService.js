@@ -29,7 +29,7 @@
                     })
                     .then(function(response) {
                         authentication.updateCurrentUser(user);
-                        return response;
+                        return 'User updated: ' + response.config.data.username;
                     })
                     .catch(showError);
             }

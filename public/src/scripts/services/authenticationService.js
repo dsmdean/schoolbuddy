@@ -1,13 +1,16 @@
 (function() {
     'use strict';
 
-    function authentication($q, $http, localStorage, $rootScope) {
+    function authentication($q, $http, localStorage, $rootScope, schoolService) {
 
         var TOKEN_KEY = 'Token';
+        var SCHOOL_DATA = 'school_data';
         var baseURL = 'http://localhost:3000';
         var loggedIn = false;
         var currentUser = {};
+        var currentSchool = {};
         var admin = false;
+        var school_admin = false;
         var authToken;
 
         function useCredentials(credentials) {
@@ -17,6 +20,9 @@
 
             if (credentials.admin) {
                 admin = true;
+            } else if (credentials.school_admin) {
+                school_admin = true;
+                currentSchool = localStorage.getObject(SCHOOL_DATA, '{}');
             }
 
             // Set the token as header for your requests!
@@ -40,8 +46,10 @@
             currentUser = {};
             loggedIn = false;
             admin = false;
+            school_admin = false;
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
+            localStorage.remove(SCHOOL_DATA);
         }
 
         function loginSuccess(response) {
@@ -51,6 +59,18 @@
             if (response.data.user.admin) {
                 storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, admin: response.data.user.admin });
                 admin = true;
+            } else if (response.data.user.school_admin) {
+                storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, school_admin: response.data.user.school_admin });
+                school_admin = true;
+
+                schoolService.getSchoolByUserId(currentUser.id)
+                    .then(function(response) {
+                        currentSchool = response;
+                        localStorage.storeObject(SCHOOL_DATA, currentSchool);
+                    })
+                    .catch(function(message) {
+                        notifier.error(message);
+                    });
             }
 
             $rootScope.$broadcast('login:Successful');
@@ -59,7 +79,7 @@
         }
 
         function loginError(response) {
-            return $q.reject('Error logging in. (HTTP status: ' + response.status + ').');
+            return $q.reject(response.data.err);
         }
 
         function login(loginData) {
@@ -109,6 +129,10 @@
             return currentUser;
         }
 
+        function getCurrentSchool() {
+            return currentSchool;
+        }
+
         function updateCurrentUser(user) {
             currentUser.firstname = user.firstname;
             currentUser.lastname = user.lastname;
@@ -122,6 +146,10 @@
 
         function isAdmin() {
             return admin;
+        }
+
+        function isSchoolAdmin() {
+            return school_admin;
         }
 
         function getDate() {
@@ -140,13 +168,15 @@
             logout: logout,
             isAuthenticated: isAuthenticated,
             getCurrentUser: getCurrentUser,
+            getCurrentSchool: getCurrentSchool,
             updateCurrentUser: updateCurrentUser,
             isAdmin: isAdmin,
+            isSchoolAdmin: isSchoolAdmin,
             getDate: getDate
         };
     }
 
     angular.module('app')
-        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', authentication]);
+        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', authentication]);
 
 }());

@@ -47,13 +47,24 @@ schoolsRouter.route('/')
             });
     });
 
-schoolsRouter.route('/:id')
-    // GET individual school
+schoolsRouter.route('/admin/:id')
+    // GET individual school by userID
     .get(function(req, res, next) {
-        Schools.findById(req.params.id, function(err, school) {
+        Schools.findOne({ school_admin: req.params.id }, function(err, school) {
             if (err) next(err);
             res.json(school);
         });
+    });
+
+schoolsRouter.route('/:id')
+    // GET individual school
+    .get(function(req, res, next) {
+        Schools.findById(req.params.id)
+            .populate('school_admin')
+            .exec(function(err, school) {
+                if (err) next(err);
+                res.json(school);
+            });
     })
     // PUT individual school
     .put(function(req, res, next) {
@@ -89,9 +100,15 @@ schoolsRouter.route('/:id/suspend')
             if (err) next(err);
 
             school.suspended = !school.suspended;
-
             school.save();
-            res.json(school);
+
+            User.findById(school.school_admin, function(err, user) {
+                if (err) next(err);
+
+                user.suspended = !user.suspended;
+                user.save();
+                res.json(school);
+            })
         });
     });
 

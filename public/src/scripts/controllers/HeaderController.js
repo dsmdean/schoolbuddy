@@ -8,6 +8,7 @@
         var interval;
         vm.loggedIn = false;
         vm.isAdmin = false;
+        vm.isSchoolAdmin = false;
         vm.currentUser = {};
 
         vm.getClass = function(path) {
@@ -24,6 +25,8 @@
 
             if (authentication.isAdmin()) {
                 vm.isAdmin = true;
+            } else if (authentication.isSchoolAdmin()) {
+                vm.isSchoolAdmin = true;
             }
 
             Date.prototype.addHours = function(h) {
@@ -74,6 +77,7 @@
                     localStorage.remove('tokenExpiration');
                     vm.loggedIn = false;
                     vm.isAdmin = false;
+                    vm.isSchoolAdmin = false;
 
                     notifier.success('Logout successful!');
                     $state.go('login');
