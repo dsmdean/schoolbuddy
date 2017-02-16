@@ -6,8 +6,10 @@
         var vm = this;
         vm.schoolDeleteSuspendData = {};
         vm.search = '';
+        vm.loading = false;
 
         function showError(message) {
+            vm.loading = false;
             notifier.error(message);
         }
 

@@ -8,8 +8,10 @@
         vm.currentUser = authentication.getCurrentUser();
         vm.currentSchool = authentication.getCurrentSchool();
         vm.updatePassword = false;
+        vm.loading = false;
 
         function showError(message) {
+            vm.loading = false;
             notifier.error(message);
         }
 
@@ -18,11 +20,13 @@
         }
 
         function updateUser() {
+            vm.loading = true;
             userService.updateUser(vm.currentUser)
                 .then(function(response) {
                     if (response !== undefined) {
                         notifier.success(response);
                         vm.updatePassword = false;
+                        vm.loading = false;
                     }
                 })
                 .catch(showError);
@@ -43,9 +47,11 @@
         }
 
         vm.updateSchool = function() {
+            vm.loading = true;
             schoolService.updateSchool(vm.currentSchool)
                 .then(function(response) {
                     notifier.success('School named ' + response.name + ' updated');
+                    vm.loading = false;
                 })
                 .catch(showError);
         }

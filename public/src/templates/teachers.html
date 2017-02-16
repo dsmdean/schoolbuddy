@@ -1,3 +1,5 @@
+<div ng-show="teachers.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
 <h1 class="col-md-offset-1 col-lg-offset-1">
     {{teachers.currentSchool.name}}
     <button class="btn btn-primary btn-sm" title="Register Teacher" ui-sref="teachers_register">&#10010;</button>

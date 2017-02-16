@@ -7,8 +7,10 @@
         vm.currentSchool = authentication.getCurrentSchool();
         vm.teacherDeleteSuspendData = {};
         vm.search = '';
+        vm.loading = false;
 
         function showError(message) {
+            vm.loading = false;
             notifier.error(message);
         }
 

@@ -5,18 +5,26 @@
 
         var vm = this;
         vm.newSchool = {};
+        vm.loading = false;
 
         function showError(message) {
+            vm.loading = false;
             notifier.error(message);
         }
 
         vm.registerSchool = function() {
-            schoolService.registerSchool(vm.newSchool)
-                .then(function(response) {
-                    notifier.success(response);
-                    $state.go('schools');
-                })
-                .catch(showError);
+            if (vm.newSchool.password !== vm.newSchool.confirmPassword) {
+                notifier.error('Your password does not match the confirmed password!');
+            } else {
+                vm.loading = true;
+                schoolService.registerSchool(vm.newSchool)
+                    .then(function(response) {
+                        $state.go('schools');
+                        vm.loading = false;
+                        notifier.success(response);
+                    })
+                    .catch(showError);
+            }
         };
     }
 

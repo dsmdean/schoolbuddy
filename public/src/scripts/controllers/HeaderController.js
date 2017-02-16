@@ -45,7 +45,7 @@
             interval = $interval(function() {
                 if (new Date() >= Date.parse(tokenExpiration.date)) {
                     $log.debug('Time is up');
-                    vm.logOut();
+                    vm.logout();
 
                     notifier.error("Your token has ended. You have been logged out!");
                 } else {

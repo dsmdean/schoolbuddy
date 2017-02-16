@@ -157,6 +157,11 @@
                 $state.go('profile');
             }
 
+            if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register')) {
+                event.preventDefault();
+                $state.go('profile');
+            }
+
         });
 
         $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
