@@ -51,7 +51,7 @@ teachersRouter.route('/school/:id')
     });
 
 teachersRouter.route('/admin/:id')
-    // GET individual school by userID
+    // GET individual teacher by userID
     .get(function(req, res, next) {
         Teachers.findOne({ teacher: req.params.id }, function(err, teacher) {
             if (err) next(err);
@@ -97,7 +97,7 @@ teachersRouter.route('/:id')
     });
 
 teachersRouter.route('/:id/suspend')
-    // suspend individual school
+    // suspend individual teacher
     .put(function(req, res, next) {
         Teachers.findById(req.params.id, function(err, teacher) {
             if (err) next(err);

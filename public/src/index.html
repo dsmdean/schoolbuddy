@@ -38,6 +38,7 @@
                     <li ng-hide="true"><a ui-sref="activities">Activities</a></li>-->
 
                     <li ng-class="header.getClass('/teachers')" ng-show="header.isSchoolAdmin"><a ui-sref="teachers">Teachers</a></li>
+                    <li ng-class="header.getClass('/students')" ng-show="header.isSchoolAdmin"><a ui-sref="students">Students</a></li>
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
                     <!--<li class="dropdown" ng-if="header.loggedIn">
@@ -77,6 +78,7 @@
     <script src="scripts/services/userService.js"></script>
     <script src="scripts/services/schoolService.js"></script>
     <script src="scripts/services/teacherService.js"></script>
+    <script src="scripts/services/studentService.js"></script>
 
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
@@ -94,6 +96,8 @@
     <script src="scripts/controllers/SchoolRegisterController.js"></script>
     <script src="scripts/controllers/TeachersController.js"></script>
     <script src="scripts/controllers/TeacherRegisterController.js"></script>
+    <script src="scripts/controllers/StudentsController.js"></script>
+    <script src="scripts/controllers/StudentRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>
