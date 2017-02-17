@@ -4,8 +4,14 @@
     {{teachers.currentSchool.name}}
     <button class="btn btn-primary btn-sm" title="Register Teacher" ui-sref="teachers_register">&#10010;</button>
 </h1>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="teachers.currentPastSearch">
+        <option value="">All Teachers</option>
+        <option value="current">Current Teachers</option>
+        <option value="past">Past Teachers</option>
+    </select>
+</div>
 <div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
-    <!--<i class="fa fa-search" aria-hidden="true"></i>-->
     <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="teachers.search">
 </div>
 
@@ -21,38 +27,41 @@
                     <th>Teacher Name</th>
                     <th>Username</th>
                     <th>Phone</th>
-                    <th>Starting Date</th>
+                    <th>Date Started</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tr ng-repeat="teacher in teachers.allTeachers | filter:teachers.search" ng-class="{danger: teacher.suspended}">
+            <tr ng-repeat="teacher in teachers.allTeachers | filter:teachers.myFilter | filter:teachers.search" ng-class="{warning: teacher.endDate != undefined, danger: teacher.suspended && teacher.endDate == undefined}">
                 <td>{{ teacher.teacher.firstname }} {{teacher.teacher.lastname}}</td>
                 <td>{{ teacher.teacher.username }}</td>
                 <td>{{ teacher.phone }}</td>
                 <td>{{ teacher.startDate | date:'MMM. dd, yyyy' }}</td>
                 <td>
-                    <button ng-show="teacher.suspended" class="btn btn-primary btn-xs" title="Restore" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.firstname + ' ' + teacher.lastname), 'restore')" data-toggle="modal" data-target="#deleteModal">&#10004;</button>
-                    <button ng-hide="teacher.suspended" class="btn btn-warning btn-xs" title="Suspend" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.firstname + ' ' + teacher.lastname), 'suspend')" data-toggle="modal" data-target="#deleteModal">&#9888;</button>
-                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.firstname + ' ' + teacher.lastname), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
+                    <button ng-hide="teacher.endDate != undefined" class="btn btn-info btn-xs" title="Stopped working here" ng-click="teachers.teacherToStop(teacher)" data-toggle="modal" data-target="#deleteModal">&#8855;</button>
+                    <button ng-show="teacher.suspended && teacher.endDate == undefined" class="btn btn-primary btn-xs" title="Restore" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.teacher.firstname + ' ' + teacher.teacher.lastname), 'restore')" data-toggle="modal"
+                        data-target="#deleteModal">&#10004;</button>
+                    <button ng-hide="teacher.suspended || teacher.endDate != undefined" class="btn btn-warning btn-xs" title="Suspend" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.teacher.firstname + ' ' + teacher.teacher.lastname), 'suspend')" data-toggle="modal"
+                        data-target="#deleteModal">&#9888;</button>
+                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="teachers.teacherToDeleteSuspend(teacher._id, (teacher.teacher.firstname + ' ' + teacher.teacher.lastname), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 
-<!-- Book Delete Modal -->
+<!-- Teacher Confirm Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header" style="padding: 30px;">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 ng-hide="teachers.teacherStopped.teacher !== undefined" class="modal-title">Do you want to {{teachers.teacherDeleteSuspendData.action}} the teacher named "<strong>{{teachers.teacherDeleteSuspendData.name}}</strong>"?</h4>
+                <h4 ng-show="teachers.teacherStopped.teacher !== undefined" class="modal-title">Did the teacher "<strong>{{teachers.teacherStopped.teacher.firstname}} {{teachers.teacherStopped.teacher.lastname}}</strong>" stop working here?</h4>
                 <br/>
-                <h4 class="modal-title">Do you want to {{teachers.teacherDeleteSuspendData.action}} the teacher named "<strong>{{teachers.teacherDeleteSuspendData.name}}</strong>"?</h4>
-                <br/>
+                <button ng-show="teachers.teacherStopped.teacher !== undefined" type="button" class="btn btn-info btn-sm" data-dismiss="modal" ng-click="teachers.stopWorking()">Yes, The Teacher Stopped</button>
                 <button ng-show="teachers.teacherDeleteSuspendData.action === 'delete'" type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="teachers.deleteTeacher()">Yes, Delete Teacher</button>
                 <button ng-show="teachers.teacherDeleteSuspendData.action === 'restore'" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="teachers.suspendTeacher()">Yes, Restore Teacher</button>
                 <button ng-show="teachers.teacherDeleteSuspendData.action === 'suspend'" type="button" class="btn btn-warning btn-sm" data-dismiss="modal" ng-click="teachers.suspendTeacher()">Yes, Suspend Teacher</button>
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Teacher</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="teachers.resetModalData()">No, Leave Teacher</button>
             </div>
         </div>
     </div>

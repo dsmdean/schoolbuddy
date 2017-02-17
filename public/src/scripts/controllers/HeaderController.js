@@ -74,7 +74,7 @@
                 .then(function(response) {
 
                     stopInterval();
-                    localStorage.remove('tokenExpiration');
+                    // localStorage.remove('tokenExpiration');
                     vm.loggedIn = false;
                     vm.isAdmin = false;
                     vm.isSchoolAdmin = false;

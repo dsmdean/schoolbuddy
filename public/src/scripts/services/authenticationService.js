@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authentication($q, $http, localStorage, $rootScope, schoolService) {
+    function authentication($q, $http, localStorage, $rootScope, schoolService, notifier) {
 
         var TOKEN_KEY = 'Token';
         var SCHOOL_DATA = 'school_data';
@@ -37,33 +37,13 @@
         }
 
         function storeUserCredentials(credentials) {
-            localStorage.storeObject(TOKEN_KEY, credentials);
-            useCredentials(credentials);
-        }
+            if (admin) {
+                localStorage.storeObject(TOKEN_KEY, credentials);
+                useCredentials(credentials);
+            } else if (school_admin) {
+                localStorage.storeObject(TOKEN_KEY, credentials);
 
-        function destroyUserCredentials() {
-            authToken = undefined;
-            currentUser = {};
-            loggedIn = false;
-            admin = false;
-            school_admin = false;
-            $http.defaults.headers.common['x-access-token'] = authToken;
-            localStorage.remove(TOKEN_KEY);
-            localStorage.remove(SCHOOL_DATA);
-        }
-
-        function loginSuccess(response) {
-            loggedIn = true;
-            currentUser = response.data.user;
-
-            if (response.data.user.admin) {
-                storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, admin: response.data.user.admin });
-                admin = true;
-            } else if (response.data.user.school_admin) {
-                storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, school_admin: response.data.user.school_admin });
-                school_admin = true;
-
-                schoolService.getSchoolByUserId(currentUser.id)
+                schoolService.getSchoolByUserId(currentUser._id)
                     .then(function(response) {
                         currentSchool = response;
                         localStorage.storeObject(SCHOOL_DATA, currentSchool);
@@ -71,6 +51,36 @@
                     .catch(function(message) {
                         notifier.error(message);
                     });
+
+                useCredentials(credentials);
+            }
+        }
+
+        function destroyUserCredentials() {
+            authToken = undefined;
+            currentUser = {};
+            loggedIn = false;
+            admin = false;
+            $http.defaults.headers.common['x-access-token'] = authToken;
+            localStorage.remove(TOKEN_KEY);
+            localStorage.remove('tokenExpiration');
+
+            if (school_admin) {
+                school_admin = false;
+                localStorage.remove(SCHOOL_DATA);
+            }
+        }
+
+        function loginSuccess(response) {
+            loggedIn = true;
+            currentUser = response.data.user;
+
+            if (response.data.user.admin) {
+                admin = true;
+                storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, admin: response.data.user.admin });
+            } else if (response.data.user.school_admin) {
+                school_admin = true;
+                storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, school_admin: response.data.user.school_admin });
             }
 
             $rootScope.$broadcast('login:Successful');
@@ -177,6 +187,6 @@
     }
 
     angular.module('app')
-        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', authentication]);
+        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', 'notifier', authentication]);
 
 }());
