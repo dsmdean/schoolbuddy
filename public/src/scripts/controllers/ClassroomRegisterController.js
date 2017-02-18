@@ -21,11 +21,6 @@
             })
             .catch(showError);
 
-        vm.setTeacherName = function(name) {
-            vm.newClassroom.teacherName = name;
-            console.log(vm.newClassroom.teacherName);
-        };
-
         vm.registerClassroom = function() {
             vm.loading = true;
 

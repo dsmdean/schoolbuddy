@@ -5,7 +5,18 @@
 
         var baseURL = 'http://localhost:3000';
 
-        function getAllStudents(schoolID) {
+        function getAllStudents() {
+            return $http.get(baseURL + '/api/students')
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving students: ' + response.statusText);
+                    return $q.reject('Error retrieving students.');
+                });
+        }
+
+        function getStudentsBySchool(schoolID) {
             return $http.get(baseURL + '/api/students/school/' + schoolID)
                 .then(function(response) {
                     return response.data;
@@ -73,6 +84,7 @@
 
         return {
             getAllStudents: getAllStudents,
+            getStudentsBySchool: getStudentsBySchool,
             getStudentByUserId: getStudentByUserId,
             registerStudent: registerStudent,
             updateStudent: updateStudent,

@@ -15,7 +15,7 @@
             notifier.error(message);
         }
 
-        studentService.getAllStudents(vm.currentSchool._id)
+        studentService.getStudentsBySchool(vm.currentSchool._id)
             .then(function(students) {
                 vm.allStudents = students;
             })

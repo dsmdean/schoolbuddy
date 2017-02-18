@@ -16,7 +16,7 @@
             notifier.error(message);
         }
 
-        teacherService.getAllTeachers(vm.currentSchool._id)
+        teacherService.getTeachersBySchool(vm.currentSchool._id)
             .then(function(teachers) {
                 vm.allTeachers = teachers;
             })

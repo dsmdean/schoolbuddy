@@ -10,6 +10,13 @@ teachersRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/teachers
 teachersRouter.route('/')
+    // GET all teachers
+    .get(function(req, res, next) {
+        Teachers.find({}, function(err, teachers) {
+            if (err) next(err);
+            res.json(teachers);
+        });
+    })
     // POST a teacher
     .post(function(req, res, next) {
         // create teacher
@@ -40,7 +47,7 @@ teachersRouter.route('/')
     });
 
 teachersRouter.route('/school/:id')
-    // GET all teachers
+    // GET all teachers from individual school
     .get(function(req, res, next) {
         Teachers.find({ school: req.params.id })
             .populate('teacher')

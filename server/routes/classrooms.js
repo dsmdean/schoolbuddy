@@ -9,6 +9,14 @@ classroomsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/classrooms
 classroomsRouter.route('/')
+    // GET all classrooms
+    .get(function(req, res, next) {
+        Classrooms.find({}, function(err, classrooms) {
+            if (err) next(err);
+
+            res.json(classrooms);
+        });
+    })
     // POST a classroom
     .post(function(req, res, next) {
         Classrooms.create(req.body, function(err, classroom) {

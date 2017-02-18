@@ -15,7 +15,7 @@
             notifier.error(message);
         }
 
-        classroomService.getAllClassrooms(vm.currentSchool._id)
+        classroomService.getClassroomsBySchool(vm.currentSchool._id)
             .then(function(classrooms) {
                 vm.allClassrooms = classrooms;
             })

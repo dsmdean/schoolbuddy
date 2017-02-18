@@ -10,6 +10,13 @@ studentsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/students
 studentsRouter.route('/')
+    // GET all students
+    .get(function(req, res, next) {
+        Students.find({}, function(err, students) {
+            if (err) next(err);
+            res.json(students);
+        });
+    })
     // POST a student
     .post(function(req, res, next) {
         // create student
@@ -40,7 +47,7 @@ studentsRouter.route('/')
     });
 
 studentsRouter.route('/school/:id')
-    // GET all students
+    // GET all students from individual school
     .get(function(req, res, next) {
         Students.find({ school: req.params.id })
             .populate('student')
