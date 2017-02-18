@@ -14,6 +14,10 @@ var studentsSchema = new Schema({
         ref: 'Schools',
         required: true
     },
+    level: {
+        type: String,
+        default: 'Kindergarten'
+    },
     address: {
         type: String,
         default: ''

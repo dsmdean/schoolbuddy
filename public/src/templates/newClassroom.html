@@ -1,0 +1,61 @@
+<div ng-show="classroom.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 login-box" style="margin-top: 4%;">
+            <div class="text-center">
+                <h3 style="color: #fff;">Register Classroom</h3>
+            </div>
+            <div class="">&nbsp;</div>
+            <div class="">
+                <form class="form-horizontal" role="form">
+                    <h4 class="col-md-offset-4" style="color: #fff;">Classroom Info</h4>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Teacher</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="classroom.newClassroom.teacher">
+                                <option value=""></option>
+                                <option ng-repeat="teacher in classroom.allTeachers | filter:classroom.myFilter" value="{{teacher._id}}: {{teacher.teacher.firstname}} {{teacher.teacher.lastname}}">{{teacher.teacher.firstname}} {{teacher.teacher.lastname}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Grade</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="classroom.newClassroom.grade">
+                                <option value="Kindergarten">Kindergarten</option>
+                                <option value="1st Grade">1st Grade</option>
+                                <option value="2nd Grade">2nd Grade</option>
+                                <option value="3rd Grade">3rd Grade</option>
+                                <option value="4th Grade">4th Grade</option>
+                                <option value="5th Grade">5th Grade</option>
+                                <option value="6th Grade">6th Grade</option>
+                                <option value="7th Grade">7th Grade</option>
+                                <option value="8th Grade">8th Grade</option>
+                                <option value="9th Grade">9th Grade</option>
+                                <option value="10th Grade">10th Grade</option>
+                                <option value="11th Grade">11th Grade</option>
+                                <option value="12th Grade">12th Grade</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">School Year</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="classroom.newClassroom.schoolYear">
+                                <option value="2016/2017">2016 / 2017</option>
+                                <option value="2015/2016">2015 / 2016</option>
+                                <option value="2014/2015">2014 / 2015</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
+                            <button class="btn btn-default" ng-click="classroom.registerClassroom()">Register Classroom</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div ng-show="classrooms.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    {{classrooms.currentSchool.name}}
+    <button class="btn btn-primary btn-sm" title="Register Classroom" ui-sref="classrooms_register">&#10010;</button>
+</h1>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="classrooms.currentPastSearch">
+        <option value="">All Classrooms</option>
+        <option value="current">Current Classrooms</option>
+        <option value="graduated">Graduated Classrooms</option>
+    </select>
+</div>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="classrooms.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Registered Classrooms</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Classroom Grade</th>
+                    <th>Teacher</th>
+                    <th>School Year</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="classroom in classrooms.allClassrooms | filter:classrooms.myFilter | filter:classrooms.search" ng-class="{danger: classroom.suspended}">
+                <td>{{ classroom.grade }}</td>
+                <td>{{ classroom.teacherName }}</td>
+                <td>{{ classroom.schoolYear }}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="classrooms.classroomToDelete(classroom._id, (classroom.grade + ' - ' + classroom.teacherName ), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Student Confirm Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <h4 class="modal-title">Do you want to {{classrooms.classroomDeleteData.action}} the classroom: "<strong>{{classrooms.classroomDeleteData.name}}</strong>"?</h4>
+                <br/>
+                <button ng-show="classrooms.classroomDeleteData.action === 'delete'" type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="classrooms.deleteClassroom()">Yes, Delete Classroom</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Student</button>
+            </div>
+        </div>
+    </div>
+</div>

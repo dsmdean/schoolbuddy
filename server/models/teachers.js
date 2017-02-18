@@ -14,6 +14,9 @@ var teachersSchema = new Schema({
         ref: 'Schools',
         required: true
     },
+    gender: {
+        type: String
+    },
     phone: {
         type: String,
         default: ''
