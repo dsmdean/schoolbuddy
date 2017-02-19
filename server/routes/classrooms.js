@@ -35,6 +35,7 @@ classroomsRouter.route('/school/:id')
     .get(function(req, res, next) {
         Classrooms.find({ school: req.params.id })
             .populate('teacher')
+            .populate('schoolYear')
             .exec(function(err, classrooms) {
                 if (err) next(err);
 
@@ -57,6 +58,7 @@ classroomsRouter.route('/:id')
         Classrooms.findById(req.params.id)
             .populate('teacher')
             .populate('students')
+            .populate('schoolYear')
             .exec(function(err, classroom) {
                 if (err) next(err);
                 res.json(classroom);

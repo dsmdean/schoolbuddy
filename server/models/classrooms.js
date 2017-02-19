@@ -27,7 +27,8 @@ var classroomsSchema = new Schema({
         ref: 'Students'
     }],
     schoolYear: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SchoolYear',
         required: true
     }
 }, {

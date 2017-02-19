@@ -14,7 +14,6 @@
                         <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Teacher</label>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="classroom.newClassroom.teacher">
-                                <option value=""></option>
                                 <option ng-repeat="teacher in classroom.allTeachers | filter:classroom.myFilter" value="{{teacher._id}}: {{teacher.teacher.firstname}} {{teacher.teacher.lastname}}">{{teacher.teacher.firstname}} {{teacher.teacher.lastname}}</option>
                             </select>
                         </div>
@@ -43,9 +42,7 @@
                         <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">School Year</label>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="classroom.newClassroom.schoolYear">
-                                <option value="2016/2017">2016 / 2017</option>
-                                <option value="2015/2016">2015 / 2016</option>
-                                <option value="2014/2015">2014 / 2015</option>
+                                <option ng-repeat="schoolyear in classroom.schoolyears" value="{{schoolyear._id}}">{{schoolyear.year}}</option>
                             </select>
                         </div>
                     </div>

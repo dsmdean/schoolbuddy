@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function ClassroomsController(classroomService, authentication, notifier, $state) {
+    function ClassroomsController(classroomService, authentication, schoolyearService, notifier, $state) {
 
         var vm = this;
         vm.currentSchool = authentication.getCurrentSchool();
@@ -14,6 +14,12 @@
             vm.loading = false;
             notifier.error(message);
         }
+
+        schoolyearService.getCurrentYear()
+            .then(function(response) {
+                vm.currentYear = response._id;
+            })
+            .catch(showError);
 
         classroomService.getClassroomsBySchool(vm.currentSchool._id)
             .then(function(classrooms) {
@@ -41,15 +47,15 @@
             if (vm.currentPastSearch === '') {
                 return item;
             } else if (vm.currentPastSearch === 'current') {
-                return item;
+                return item.schoolYear._id == vm.currentYear;
             } else if (vm.currentPastSearch === 'past') {
-                return item;
+                return item.schoolYear._id != vm.currentYear;
             }
         };
 
     }
 
     angular.module('app')
-        .controller('ClassroomsController', ['classroomService', 'authentication', 'notifier', '$state', ClassroomsController]);
+        .controller('ClassroomsController', ['classroomService', 'authentication', 'schoolyearService', 'notifier', '$state', ClassroomsController]);
 
 }());

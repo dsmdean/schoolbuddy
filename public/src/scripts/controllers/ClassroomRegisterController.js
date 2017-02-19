@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function ClassroomRegisterController(classroomService, teacherService, notifier, $state, authentication) {
+    function ClassroomRegisterController(classroomService, teacherService, schoolyearService, notifier, $state, authentication) {
 
         var vm = this;
         vm.loading = false;
@@ -15,9 +15,15 @@
             notifier.error(message);
         }
 
-        teacherService.getAllTeachers(currentSchool._id)
+        teacherService.getTeachersBySchool(currentSchool._id)
             .then(function(teachers) {
                 vm.allTeachers = teachers;
+            })
+            .catch(showError);
+
+        schoolyearService.getAllYears()
+            .then(function(schoolyears) {
+                vm.schoolyears = schoolyears;
             })
             .catch(showError);
 
@@ -44,6 +50,6 @@
     }
 
     angular.module('app')
-        .controller('ClassroomRegisterController', ['classroomService', 'teacherService', 'notifier', '$state', 'authentication', ClassroomRegisterController]);
+        .controller('ClassroomRegisterController', ['classroomService', 'teacherService', 'schoolyearService', 'notifier', '$state', 'authentication', ClassroomRegisterController]);
 
 }());
