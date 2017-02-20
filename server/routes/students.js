@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
+var Classrooms = require('../models/classrooms');
 var User = require('../models/users');
 var Students = require('../models/students');
 var studentsRouter = express.Router();
@@ -120,6 +121,37 @@ studentsRouter.route('/:id/suspend')
                 res.json(student);
             })
         });
+    });
+
+studentsRouter.route('/school/:id/grade/:grade')
+    // GET all students from individual school
+    .get(function(req, res, next) {
+        Students.find({ school: req.params.id, level: req.params.grade, graduated: false, endDate: undefined })
+            .populate('student')
+            .exec(function(err, students) {
+                if (err) next(err);
+
+                Classrooms.find({ school: req.params.id })
+                    .populate('schoolYear')
+                    .exec(function(err, classrooms) {
+                        if (err) next(err);
+
+                        var availableStudents = [];
+                        var takenStudents = [];
+
+                        for (var i = 0; i < classrooms.length; i++) {
+                            takenStudents = takenStudents.concat(classrooms[i].students);
+                        }
+
+                        for (var j = 0; j < students.length; j++) {
+                            if (takenStudents.map(function(e) { return e.toString(); }).indexOf(students[j]._id.toString()) === -1) {
+                                availableStudents.push(students[j]);
+                            }
+                        }
+
+                        res.json(availableStudents);
+                    });
+            });
     });
 
 module.exports = studentsRouter;
