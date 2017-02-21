@@ -21,7 +21,7 @@
         <div class="panel-heading">Registered Classrooms</div>
 
         <!-- Table -->
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Classroom Grade</th>
@@ -32,10 +32,11 @@
             </thead>
             <tr ng-repeat="classroom in classrooms.allClassrooms | filter:classrooms.myFilter | filter:classrooms.search" ng-class="{danger: classroom.suspended}">
                 <td>{{ classroom.grade }}</td>
-                <td>{{ classroom.teacherName }}</td>
+                <td>{{ classroom.teacher.firstname }} {{ classroom.teacher.lastname }}</td>
                 <td>{{ classroom.schoolYear.year }}</td>
                 <td>
-                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="classrooms.classroomToDelete(classroom._id, (classroom.grade + ' - ' + classroom.teacherName ), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
+                    <button class="btn btn-primary btn-xs" title="View Classroom" ui-sref="classrooms_set_students({classroom: classroom._id})">&#10000;</button>
+                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="classrooms.classroomToDelete(classroom._id, (classroom.grade + ' - ' + classroom.teacher.firstname + ' ' + classroom.teacher.lastname ), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>
             </tr>
         </table>

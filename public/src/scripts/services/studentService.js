@@ -38,6 +38,17 @@
                 });
         }
 
+        function getStudentsBySchoolGradeNotInClass(schoolID, grade) {
+            return $http.get(baseURL + '/api/students/school/' + schoolID + '/grade/' + grade)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving students: ' + response.statusText);
+                    return $q.reject('Error retrieving students.');
+                });
+        }
+
         function registerStudent(newStudent) {
             return $http.post(baseURL + '/api/students', newStudent)
                 .then(function(response) {
@@ -87,6 +98,7 @@
             getStudentsBySchool: getStudentsBySchool,
             getStudentByUserId: getStudentByUserId,
             registerStudent: registerStudent,
+            getStudentsBySchoolGradeNotInClass: getStudentsBySchoolGradeNotInClass,
             updateStudent: updateStudent,
             deleteStudent: deleteStudent,
             suspendStudent: suspendStudent

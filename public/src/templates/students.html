@@ -21,7 +21,7 @@
         <div class="panel-heading">Registered Students</div>
 
         <!-- Table -->
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Student Name</th>
@@ -33,17 +33,15 @@
                 </tr>
             </thead>
             <tr ng-repeat="student in students.allStudents | filter:students.myFilter | filter:students.search" ng-class="{warning: student.endDate != undefined, danger: student.suspended && student.endDate == undefined}">
-                <td>{{ student.student.firstname }} {{student.student.lastname}}</td>
+                <td>{{ student.firstname }} {{student.lastname}}</td>
                 <td>{{ student.level }}</td>
                 <td>{{ student.address }}</td>
                 <td>{{ student.phone }}</td>
                 <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
                 <td>
-                    <button ng-show="student.suspended && student.endDate == undefined" class="btn btn-primary btn-xs" title="Restore" ng-click="students.studentToDeleteSuspend(student._id, (student.student.firstname + ' ' + student.student.lastname), 'restore')" data-toggle="modal"
-                        data-target="#deleteModal">&#10004;</button>
-                    <button ng-hide="student.suspended || student.endDate != undefined" class="btn btn-warning btn-xs" title="Suspend" ng-click="students.studentToDeleteSuspend(student._id, (student.student.firstname + ' ' + student.student.lastname), 'suspend')" data-toggle="modal"
-                        data-target="#deleteModal">&#9888;</button>
-                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="students.studentToDeleteSuspend(student._id, (student.student.firstname + ' ' + student.student.lastname), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
+                    <button ng-show="student.suspended && student.endDate == undefined" class="btn btn-primary btn-xs" title="Restore" ng-click="students.studentToDeleteSuspend(student._id, (student.firstname + ' ' + student.lastname), 'restore')" data-toggle="modal" data-target="#deleteModal">&#10004;</button>
+                    <button ng-hide="student.suspended || student.endDate != undefined" class="btn btn-warning btn-xs" title="Suspend" ng-click="students.studentToDeleteSuspend(student._id, (student.firstname + ' ' + student.lastname), 'suspend')" data-toggle="modal" data-target="#deleteModal">&#9888;</button>
+                    <button class="btn btn-danger btn-xs" title="Delete" ng-click="students.studentToDeleteSuspend(student._id, (student.firstname + ' ' + student.lastname), 'delete')" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>
             </tr>
         </table>

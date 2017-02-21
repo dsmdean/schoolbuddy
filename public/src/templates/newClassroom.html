@@ -14,7 +14,7 @@
                         <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Teacher</label>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="classroom.newClassroom.teacher">
-                                <option ng-repeat="teacher in classroom.allTeachers | filter:classroom.myFilter" value="{{teacher._id}}: {{teacher.teacher.firstname}} {{teacher.teacher.lastname}}">{{teacher.teacher.firstname}} {{teacher.teacher.lastname}}</option>
+                                <option ng-repeat="teacher in classroom.allTeachers | filter:classroom.myFilter" value="{{teacher._id}}: {{teacher.firstname}} {{teacher.lastname}}">{{teacher.firstname}} {{teacher.lastname}}</option>
                             </select>
                         </div>
                     </div>

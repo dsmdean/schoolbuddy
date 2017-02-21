@@ -80,6 +80,12 @@
                 controllerAs: 'classroom',
                 templateUrl: 'templates/newClassroom.html'
             })
+            .state('classrooms_set_students', {
+                url: '/classrooms/:classroom/students',
+                controller: 'ClassroomStudentsController',
+                controllerAs: 'classroom',
+                templateUrl: 'templates/classroomStudents.html'
+            })
             // .state('classrooms', {
             //     url: '/classrooms',
             //     controller: 'AllClassroomsController',

@@ -18,10 +18,6 @@ var classroomsSchema = new Schema({
         ref: 'Teachers',
         required: true
     },
-    teacherName: {
-        type: String,
-        required: true
-    },
     students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Students'

@@ -31,9 +31,9 @@
             vm.loading = true;
 
             var teacherID = vm.newClassroom.teacher.split(": ")[0];
-            var teacherName = vm.newClassroom.teacher.split(": ")[1];
+            // var teacherName = vm.newClassroom.teacher.split(": ")[1];
             vm.newClassroom.teacher = teacherID;
-            vm.newClassroom.teacherName = teacherName;
+            // vm.newClassroom.teacherName = teacherName;
 
             classroomService.registerClassroom(vm.newClassroom)
                 .then(function(response) {

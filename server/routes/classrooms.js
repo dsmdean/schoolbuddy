@@ -85,4 +85,47 @@ classroomsRouter.route('/:id')
         });
     });
 
+classroomsRouter.route('/:id/students')
+    // GET individual classroom's students
+    .get(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+            res.json(classroom.students);
+        });
+    })
+    // update individual classroom's students
+    .put(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            // classroom.students.map(function(e) { return e.toString(); }).concat(req.body.toString());
+
+            for (var i = 0; i < req.body.students.length; i++) {
+                classroom.students.push(req.body.students[i]);
+            }
+
+            classroom.save();
+
+            res.json(classroom);
+        });
+    });
+
+classroomsRouter.route('/:id/students/delete')
+    // delete individual classroom's students
+    .put(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            for (var i = 0; i < req.body.students.length; i++) {
+                if (classroom.students.indexOf(req.body.students[i]._id) != -1) {
+                    classroom.students.splice(classroom.students.indexOf(req.body.students[i]._id), 1);
+                }
+            }
+
+            classroom.save();
+
+            res.json(classroom);
+        });
+    });
+
 module.exports = classroomsRouter;

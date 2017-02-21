@@ -1,0 +1,83 @@
+<div ng-show="classrooms.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="col-md-offset-1 col-lg-offset-1">
+    <h1>
+        {{classroom.currentSchool.name}}
+    </h1>
+</div>
+
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="classroom.searchCurrent">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Students in class: {{classroom.currentClass.grade}} - {{classroom.currentClass.teacher.firstname}} {{classroom.currentClass.teacher.lastname}}</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Date Registered</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="student in classroom.classStudents | filter:classroom.searchCurrent" ng-class="{info: student.new}">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" title="Remove student from this class" ng-click="classroom.removeStudentFromClass(student)">&#10008;</button>
+                </td>
+            </tr>
+        </table>
+        <button style="margin-top: 1%;" class="btn btn-primary btn-sm pull-right" title="Save students to this class" ng-click="classroom.saveStudentsToClass()">Save students to this class</button>
+    </div>
+</div>
+
+<div class="col-md-2 col-md-offset-7" style="margin-top: 20px;padding-bottom: 10px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="classroom.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{classroom.currentClass.grade}} students not yet in a class</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Date Registered</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="student in classroom.studentsToDelete" ng-class="{warning: student.new}">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" title="Remove student from this class" ng-click="classroom.removeStudentFromClass(student)">&#10008;</button>
+                </td>
+            </tr>
+            <tr ng-repeat="student in classroom.students | filter:classroom.search" ng-class="{danger: student.new}">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
+                <td>
+                    <button class="btn btn-primary btn-xs" title="Place student in this class" ng-click="classroom.addStudentToClass(student)">&#10010;</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

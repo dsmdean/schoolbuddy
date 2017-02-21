@@ -9,6 +9,14 @@ var studentsSchema = new Schema({
         ref: 'Users',
         required: true
     },
+    firstname: {
+        type: String,
+        default: ''
+    },
+    lastname: {
+        type: String,
+        default: ''
+    },
     school: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Schools',

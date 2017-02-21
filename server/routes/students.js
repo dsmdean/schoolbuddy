@@ -50,12 +50,10 @@ studentsRouter.route('/')
 studentsRouter.route('/school/:id')
     // GET all students from individual school
     .get(function(req, res, next) {
-        Students.find({ school: req.params.id })
-            .populate('student')
-            .exec(function(err, students) {
-                if (err) next(err);
-                res.json(students);
-            });
+        Students.find({ school: req.params.id }, function(err, students) {
+            if (err) next(err);
+            res.json(students);
+        });
     });
 
 studentsRouter.route('/admin/:id')
@@ -70,12 +68,10 @@ studentsRouter.route('/admin/:id')
 studentsRouter.route('/:id')
     // GET individual student
     .get(function(req, res, next) {
-        Students.findById(req.params.id)
-            .populate('student')
-            .exec(function(err, student) {
-                if (err) next(err);
-                res.json(student);
-            });
+        Students.findById(req.params.id, function(err, student) {
+            if (err) next(err);
+            res.json(student);
+        });
     })
     // PUT individual student
     .put(function(req, res, next) {
@@ -126,32 +122,30 @@ studentsRouter.route('/:id/suspend')
 studentsRouter.route('/school/:id/grade/:grade')
     // GET all students from individual school
     .get(function(req, res, next) {
-        Students.find({ school: req.params.id, level: req.params.grade, graduated: false, endDate: undefined })
-            .populate('student')
-            .exec(function(err, students) {
-                if (err) next(err);
+        Students.find({ school: req.params.id, level: req.params.grade, graduated: false, endDate: undefined }, function(err, students) {
+            if (err) next(err);
 
-                Classrooms.find({ school: req.params.id })
-                    .populate('schoolYear')
-                    .exec(function(err, classrooms) {
-                        if (err) next(err);
+            Classrooms.find({ school: req.params.id })
+                .populate('schoolYear')
+                .exec(function(err, classrooms) {
+                    if (err) next(err);
 
-                        var availableStudents = [];
-                        var takenStudents = [];
+                    var availableStudents = [];
+                    var takenStudents = [];
 
-                        for (var i = 0; i < classrooms.length; i++) {
-                            takenStudents = takenStudents.concat(classrooms[i].students);
+                    for (var i = 0; i < classrooms.length; i++) {
+                        takenStudents = takenStudents.concat(classrooms[i].students);
+                    }
+
+                    for (var j = 0; j < students.length; j++) {
+                        if (takenStudents.map(function(e) { return e.toString(); }).indexOf(students[j]._id.toString()) === -1) {
+                            availableStudents.push(students[j]);
                         }
+                    }
 
-                        for (var j = 0; j < students.length; j++) {
-                            if (takenStudents.map(function(e) { return e.toString(); }).indexOf(students[j]._id.toString()) === -1) {
-                                availableStudents.push(students[j]);
-                            }
-                        }
-
-                        res.json(availableStudents);
-                    });
-            });
+                    res.json(availableStudents);
+                });
+        });
     });
 
 module.exports = studentsRouter;
