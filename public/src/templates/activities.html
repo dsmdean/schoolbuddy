@@ -1,0 +1,62 @@
+<div ng-show="activities.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    {{activities.currentSchool.name}}
+</h1>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="activities.currentPastSearch">
+        <option value="">All Activities</option>
+        <option value="current">Current Activities</option>
+        <option value="past">Past Activities</option>
+        <option value="hold">Activities on Hold</option>
+    </select>
+</div>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="activities.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Registered Activities</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="activity in activities.activitiesBySchool | filter:activities.myFilter | filter:activities.search" ng-class="{danger: activity.hold}">
+                <td>{{ activity.name }}</td>
+                <td>{{ activity.description }}</td>
+                <td>{{ activity.classroom.grade }}</td>
+                <td>{{ activity.date | date:'MMM. dd, yyyy' }}</td>
+                <td>
+                    <button ng-hide="activity.hold" class="btn btn-danger btn-xs" title="Put on Hold" ng-click="activities.activityToPutOnHold(activity._id, activity.name, activity.hold)" data-toggle="modal" data-target="#holdModal">&#10008;</button>
+                    <button ng-show="activity.hold" class="btn btn-primary btn-xs" title="Restore" ng-click="activities.activityToPutOnHold(activity._id, activity.name, activity.hold)" data-toggle="modal" data-target="#holdModal">&#10004;</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Student Confirm Modal -->
+<div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <h4 ng-hide="activities.activityOnHoldData.hold" class="modal-title">Do you want to put the activity "<strong>{{activities.activityOnHoldData.name}}</strong>" on hold?</h4>
+                <h4 ng-show="activities.activityOnHoldData.hold" class="modal-title">Do you want to restore the activity "<strong>{{activities.activityOnHoldData.name}}</strong>"?</h4>
+                <br/>
+                <button ng-hide="activities.activityOnHoldData.hold" type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="activities.setActivityOnHold()">Yes, Put Activity on Hold</button>
+                <button ng-show="activities.activityOnHoldData.hold" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="activities.setActivityOnHold()">Yes, Restore Activity</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
