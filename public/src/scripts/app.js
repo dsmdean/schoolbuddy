@@ -34,7 +34,7 @@
             })
             .state('schools', {
                 url: '/schools',
-                controller: 'AllSchoolsController',
+                controller: 'SchoolsController',
                 controllerAs: 'schools',
                 templateUrl: 'templates/allSchools.html'
             })
@@ -91,6 +91,12 @@
                 controller: 'ActivitiesController',
                 controllerAs: 'activities',
                 templateUrl: 'templates/activities.html'
+            })
+            .state('teacher_classroom', {
+                url: '/teacher-classroom',
+                controller: 'TeacherClassroomController',
+                controllerAs: 'classroom',
+                templateUrl: 'templates/teacherClassroom.html'
             });
 
     }]);

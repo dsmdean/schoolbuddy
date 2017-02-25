@@ -28,7 +28,7 @@
         }
 
         function getClassroomByTeacher(teacherID, year) {
-            return $http.get(baseURL + '/api/classrooms/admin/' + teacherID + '/' + year)
+            return $http.get(baseURL + '/api/classrooms/teacher/' + teacherID + '/' + year)
                 .then(function(response) {
                     return response.data;
                 })

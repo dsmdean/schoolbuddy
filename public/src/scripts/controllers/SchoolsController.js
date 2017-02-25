@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function AllSchoolsController(schoolService, notifier, $state) {
+    function SchoolsController(schoolService, notifier, $state) {
 
         var vm = this;
         vm.schoolDeleteSuspendData = {};
@@ -48,6 +48,6 @@
     }
 
     angular.module('app')
-        .controller('AllSchoolsController', ['schoolService', 'notifier', '$state', AllSchoolsController]);
+        .controller('SchoolsController', ['schoolService', 'notifier', '$state', SchoolsController]);
 
 }());

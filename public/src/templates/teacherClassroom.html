@@ -1,0 +1,33 @@
+<div ng-show="classroom.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    {{classroom.classroom.grade}} - {{classroom.currentTeacher.firstname}} {{classroom.currentTeacher.lastname}}
+</h1>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="classroom.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Students in your {{classroom.classroom.schoolYear.year}} class</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Date Registered</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="student in classroom.students | filter:classroom.search" ng-class="{danger: student.suspended}">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

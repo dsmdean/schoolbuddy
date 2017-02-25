@@ -197,6 +197,10 @@
             return school_admin;
         }
 
+        function isTeacher() {
+            return teacher;
+        }
+
         function getDate() {
             if (tokenExpiration.date !== undefined) {
                 return tokenExpiration.date;
@@ -219,6 +223,7 @@
             setCurrentTeacher: setCurrentTeacher,
             isAdmin: isAdmin,
             isSchoolAdmin: isSchoolAdmin,
+            isTeacher: isTeacher,
             getDate: getDate
         };
     }

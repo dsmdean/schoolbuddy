@@ -9,6 +9,7 @@
         vm.loggedIn = false;
         vm.isAdmin = false;
         vm.isSchoolAdmin = false;
+        vm.isTeacher = false;
         vm.currentUser = {};
 
         vm.getClass = function(path) {
@@ -27,6 +28,8 @@
                 vm.isAdmin = true;
             } else if (authentication.isSchoolAdmin()) {
                 vm.isSchoolAdmin = true;
+            } else if (authentication.isTeacher()) {
+                vm.isTeacher = true;
             }
 
             Date.prototype.addHours = function(h) {
@@ -78,6 +81,7 @@
                     vm.loggedIn = false;
                     vm.isAdmin = false;
                     vm.isSchoolAdmin = false;
+                    vm.isTeacher = false;
 
                     notifier.success('Logout successful!');
                     $state.go('login');

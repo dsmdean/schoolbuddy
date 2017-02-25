@@ -44,13 +44,16 @@ classroomsRouter.route('/school/:id')
             });
     });
 
-classroomsRouter.route('/teacher/:id')
+classroomsRouter.route('/teacher/:id/:year')
     // GET individual classroom by teacher
     .get(function(req, res, next) {
-        Classrooms.findOne({ teacher: req.params.id }, function(err, classroom) {
-            if (err) next(err);
-            res.json(classroom);
-        });
+        Classrooms.findOne({ teacher: req.params.id, schoolYear: req.params.year })
+            .populate('schoolYear')
+            .populate('students')
+            .exec(function(err, classroom) {
+                if (err) next(err);
+                res.json(classroom);
+            });
     });
 
 classroomsRouter.route('/:id')

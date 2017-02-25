@@ -40,6 +40,8 @@
                     <li ng-class="header.getClass('/students')" ng-show="header.isSchoolAdmin"><a ui-sref="students">Students</a></li>
                     <li ng-class="header.getClass('/activities')" ng-show="header.isSchoolAdmin"><a ui-sref="activities">Activities</a></li>
 
+                    <li ng-class="header.getClass('/teacher-classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
+
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
                 </ul>
@@ -65,7 +67,6 @@
     <!-- Application code -->
     <script src="scripts/app.js"></script>
 
-    <script src="scripts/services/dataService.js"></script>
     <script src="scripts/services/notifier.js"></script>
     <script src="scripts/services/localStorage.js"></script>
     <script src="scripts/services/authenticationService.js"></script>
@@ -83,7 +84,7 @@
     <script src="scripts/controllers/LoginController.js"></script>
     <script src="scripts/controllers/HeaderController.js"></script>
     <script src="scripts/controllers/ProfileController.js"></script>
-    <script src="scripts/controllers/AllSchoolsController.js"></script>
+    <script src="scripts/controllers/SchoolsController.js"></script>
     <script src="scripts/controllers/SchoolRegisterController.js"></script>
     <script src="scripts/controllers/TeachersController.js"></script>
     <script src="scripts/controllers/TeacherRegisterController.js"></script>
@@ -93,6 +94,7 @@
     <script src="scripts/controllers/ClassroomRegisterController.js"></script>
     <script src="scripts/controllers/ClassroomStudentsController.js"></script>
     <script src="scripts/controllers/ActivitiesController.js"></script>
+    <script src="scripts/controllers/TeacherClassroomController.js"></script>
     <!-- endbuild -->
 
 </body>
