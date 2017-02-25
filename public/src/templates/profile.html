@@ -150,3 +150,76 @@
         </div>
     </div>
 </div>
+
+<div ng-show="profile.currentUser.teacher" class="container margin_60">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 login-box" style="margin-top: 4%;">
+            <div class="text-center">
+                <h3 style="color: #fff;">Teacher Profile</h3>
+            </div>
+            <div class="">&nbsp;</div>
+            <div class="">
+                <form class="form-horizontal" role="form">
+                    <h4 class="col-md-offset-4" style="color: #fff;">Teacher Login</h4>
+                    <div class="form-group">
+                        <label for="bookTitle" class="col-md-3 col-md-offset-1 control-label">Username</label>
+                        <div class="col-md-6">
+                            <input type="text" ng-model="profile.currentUser.username" class="form-control" id="bookTitle" placeholder="Username">
+                        </div>
+                    </div>
+                    <div ng-show="profile.updatePassword">
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Current Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.password" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">New Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.newPassword" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Confirm New Password</label>
+                            <div class="col-sm-6">
+                                <input type="password" ng-model="profile.currentUser.confirmNewPassword" class="form-control" id="bookAuthor">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
+                            <a style="color: #fff;" href="" ng-click="profile.toggleUpdatePassword()"><span ng-show="profile.updatePassword">&#9650;</span><span ng-hide="profile.updatePassword">&#9660;</span> Update Password</a> &nbsp;
+                            <button class="btn btn-default" ng-click="profile.updateUser()">Update User</button>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <h4 class="col-md-offset-4" style="color: #fff;">Teacher Info</h4>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Firstname</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="profile.currentTeacher.firstname" class="form-control" id="bookAuthor" placeholder="School Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Lastname</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="profile.currentTeacher.lastname" class="form-control" id="bookAuthor" placeholder="School Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Phone</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="profile.currentTeacher.phone" class="form-control" id="bookAuthor" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
+                            <button class="btn btn-default" ng-click="profile.updateTeacher()">Update Teacher</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

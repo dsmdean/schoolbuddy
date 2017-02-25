@@ -1,12 +1,13 @@
 (function() {
     'use strict';
 
-    function ProfileController(authentication, userService, schoolService, notifier, $state) {
+    function ProfileController(authentication, userService, schoolService, teacherService, notifier, $state) {
 
         var vm = this;
         vm.defaultImg = "http://1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png";
         vm.currentUser = authentication.getCurrentUser();
         vm.currentSchool = authentication.getCurrentSchool();
+        vm.currentTeacher = authentication.getCurrentTeacher();
         vm.updatePassword = false;
         vm.loading = false;
 
@@ -56,9 +57,20 @@
                 .catch(showError);
         }
 
+        vm.updateTeacher = function() {
+            vm.loading = true;
+            teacherService.updateTeacher(vm.currentTeacher)
+                .then(function(response) {
+                    notifier.success('Teacher named ' + response.firstname + ' ' + response.lastname + ' updated');
+                    authentication.setCurrentTeacher(response);
+                    vm.loading = false;
+                })
+                .catch(showError);
+        }
+
     }
 
     angular.module('app')
-        .controller('ProfileController', ['authentication', 'userService', 'schoolService', 'notifier', '$state', ProfileController]);
+        .controller('ProfileController', ['authentication', 'userService', 'schoolService', 'teacherService', 'notifier', '$state', ProfileController]);
 
 }());

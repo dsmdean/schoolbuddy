@@ -124,7 +124,7 @@
                 $state.go('profile');
             }
 
-            if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register' || toState.name == 'students' || toState.name == 'students_register' || toState.name == 'classrooms' || toState.name == 'classrooms_register')) {
+            if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register' || toState.name == 'students' || toState.name == 'students_register' || toState.name == 'classrooms' || toState.name == 'classrooms_register' || toState.name == 'classrooms_set_students' || toState.name == 'activities')) {
                 event.preventDefault();
                 $state.go('profile');
             }

@@ -34,22 +34,14 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li ng-class="header.getClass('/schools')" ng-show="header.isAdmin"><a ui-sref="schools">Schools</a></li>
-                    <!--<li ng-hide="true"><a ui-sref="classrooms">Classrooms</a></li>
-                    <li ng-hide="true"><a ui-sref="activities">Activities</a></li>-->
 
                     <li ng-class="header.getClass('/classrooms')" ng-show="header.isSchoolAdmin"><a ui-sref="classrooms">Classrooms</a></li>
                     <li ng-class="header.getClass('/teachers')" ng-show="header.isSchoolAdmin"><a ui-sref="teachers">Teachers</a></li>
                     <li ng-class="header.getClass('/students')" ng-show="header.isSchoolAdmin"><a ui-sref="students">Students</a></li>
                     <li ng-class="header.getClass('/activities')" ng-show="header.isSchoolAdmin"><a ui-sref="activities">Activities</a></li>
+
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
-                    <!--<li class="dropdown" ng-if="header.loggedIn">
-                        <a href="" class="dropdown-toggle" ng-class="header.getClass('/profile')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{header.currentUser.firstname}} {{header.currentUser.lastname}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-class="header.getClass('/profile')"><a href="#" ui-sref="profile">Profile</a></li>
-                            <li><a ng-click="header.logout()" href="#">Logout</a></li>
-                        </ul>
-                    </li>-->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -88,12 +80,6 @@
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
     <script src="scripts/controllers/HomeController.js"></script>
-    <!--<script src="scripts/controllers/AllClassroomsController.js"></script>
-    <script src="scripts/controllers/AllActivitiesController.js"></script>
-    <script src="scripts/controllers/ClassroomController.js"></script>
-    <script src="scripts/controllers/ClassroomSummaryController.js"></script>
-    <script src="scripts/controllers/ClassroomMessageController.js"></script>-->
-
     <script src="scripts/controllers/LoginController.js"></script>
     <script src="scripts/controllers/HeaderController.js"></script>
     <script src="scripts/controllers/ProfileController.js"></script>
