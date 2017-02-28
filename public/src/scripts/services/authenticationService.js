@@ -1,16 +1,20 @@
 (function() {
     'use strict';
 
-    function authentication($q, $http, localStorage, $rootScope, schoolService, teacherService, notifier) {
+    function authentication($q, $http, localStorage, $rootScope, schoolService, teacherService, classroomService, schoolyearService, notifier) {
 
         var TOKEN_KEY = 'Token';
         var SCHOOL_DATA = 'school_data';
         var TEACHER_DATA = 'teacher_data';
+        var CLASSROOM_DATA = 'classroom_data';
+        var SCHOOLYEAR_DATA = 'schoolyear_data';
         var baseURL = 'http://localhost:3000';
         var loggedIn = false;
         var currentUser = {};
         var currentSchool = {};
         var currentTeacher = {};
+        var currentClassroom = {};
+        var currentYear = {};
         var admin = false;
         var school_admin = false;
         var teacher = false;
@@ -29,7 +33,11 @@
             } else if (credentials.teacher) {
                 teacher = true;
                 currentTeacher = localStorage.getObject(TEACHER_DATA, '{}');
+                currentClassroom = localStorage.getObject(CLASSROOM_DATA, '{}');
+                currentYear = localStorage.getObject(SCHOOLYEAR_DATA, '{}');
             }
+
+            $rootScope.$broadcast('login:Successful');
 
             // Set the token as header for your requests!
             $http.defaults.headers.common['x-access-token'] = authToken;
@@ -66,6 +74,24 @@
                     .then(function(response) {
                         currentTeacher = response;
                         localStorage.storeObject(TEACHER_DATA, currentTeacher);
+
+                        schoolyearService.getCurrentYear()
+                            .then(function(response) {
+                                currentYear = response;
+                                localStorage.storeObject(SCHOOLYEAR_DATA, response);
+
+                                classroomService.getClassroomByTeacher(currentTeacher._id, currentYear._id)
+                                    .then(function(classroom) {
+                                        currentClassroom = classroom;
+                                        localStorage.storeObject(CLASSROOM_DATA, classroom);
+                                    })
+                                    .catch(function(message) {
+                                        notifier.error(message);
+                                    });
+                            })
+                            .catch(function(message) {
+                                notifier.error(message);
+                            });
                     })
                     .catch(function(message) {
                         notifier.error(message);
@@ -90,6 +116,8 @@
             } else if (teacher) {
                 teacher = false;
                 localStorage.remove(TEACHER_DATA);
+                localStorage.remove(CLASSROOM_DATA);
+                localStorage.remove(SCHOOLYEAR_DATA);
             }
         }
 
@@ -108,7 +136,7 @@
                 storeUserCredentials({ id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, teacher: response.data.user.teachers });
             }
 
-            $rootScope.$broadcast('login:Successful');
+            // $rootScope.$broadcast('login:Successful');
 
             return 'User logged in: ' + response.data.user.username;
         }
@@ -172,6 +200,14 @@
             return currentTeacher;
         }
 
+        function getCurrentClassroom() {
+            return currentClassroom;
+        }
+
+        function getCurrentYear() {
+            return currentYear;
+        }
+
         function updateCurrentUser(user) {
             currentUser.firstname = user.firstname;
             currentUser.lastname = user.lastname;
@@ -221,6 +257,8 @@
             getCurrentTeacher: getCurrentTeacher,
             updateCurrentUser: updateCurrentUser,
             setCurrentTeacher: setCurrentTeacher,
+            getCurrentClassroom: getCurrentClassroom,
+            getCurrentYear: getCurrentYear,
             isAdmin: isAdmin,
             isSchoolAdmin: isSchoolAdmin,
             isTeacher: isTeacher,
@@ -229,6 +267,6 @@
     }
 
     angular.module('app')
-        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'notifier', authentication]);
+        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'classroomService', 'schoolyearService', 'notifier', authentication]);
 
 }());

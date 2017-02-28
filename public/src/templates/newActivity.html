@@ -1,0 +1,40 @@
+<div ng-show="activity.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="container margin_60">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 login-box" style="margin-top: 4%;">
+            <div class="text-center">
+                <h3 style="color: #fff;">Register Activity</h3>
+            </div>
+            <div class="">&nbsp;</div>
+            <div class="">
+                <form class="form-horizontal" role="form">
+                    <h4 class="col-md-offset-4" style="color: #fff;">Activity Info</h4>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" ng-model="activity.newActivity.name" class="form-control" id="bookAuthor" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Description</label>
+                        <div class="col-sm-6">
+                            <textarea ng-model="activity.newActivity.description" class="form-control" placeholder="Description" rows="4" cols="50"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Date</label>
+                        <div class="col-md-6">
+                            <input type="date" ng-model="activity.newActivity.date" class="form-control" id="bookAuthor" placeholder="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
+                            <button class="btn btn-default" ng-click="activity.registerActivity()">Register Activity</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

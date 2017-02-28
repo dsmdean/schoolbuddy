@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+var Classrooms = require('../models/classrooms');
 var Activities = require('../models/activities');
 var activitiesRouter = express.Router();
 activitiesRouter.use(bodyParser.json());
@@ -49,6 +50,23 @@ activitiesRouter.route('/school/:id')
                 if (err) next(err);
                 res.json(activities);
             });
+    });
+
+activitiesRouter.route('/teacher/:id/:year')
+    // GET activities from individual classroom connected to individual teacher
+    .get(function(req, res, next) {
+        Classrooms.findOne({ teacher: req.params.id, schoolYear: req.params.year }, function(err, classroom) {
+            if (err) next(err);
+
+            res.json(classroom);
+
+            // Activities.find({ classroom: classroom._id })
+            //     .populate('classroom')
+            //     .exec(function(err, activities) {
+            //         if (err) next(err);
+            //         res.json({ classroom: classroom, activities: activities });
+            //     });
+        });
     });
 
 activitiesRouter.route('/:id')

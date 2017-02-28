@@ -38,6 +38,17 @@
                 });
         }
 
+        function getActivitiesByTeacher(teacherID, year) {
+            return $http.get(baseURL + '/api/activities/teacher/' + teacherID + '/' + year)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving activities: ' + response.statusText);
+                    return $q.reject('Error retrieving activities.');
+                });
+        }
+
         function setActivityOnHold(activityID, hold) {
             return $http.put(baseURL + '/api/activities/' + activityID, { "hold": !hold })
                 .then(function(response) {
@@ -86,6 +97,7 @@
             getAllActivities: getAllActivities,
             getActivitiesBySchool: getActivitiesBySchool,
             getActivitiesByClassroom: getActivitiesByClassroom,
+            getActivitiesByTeacher: getActivitiesByTeacher,
             setActivityOnHold: setActivityOnHold,
             registerActivity: registerActivity,
             updateActivity: updateActivity,

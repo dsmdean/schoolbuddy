@@ -36,7 +36,7 @@
                 url: '/schools',
                 controller: 'SchoolsController',
                 controllerAs: 'schools',
-                templateUrl: 'templates/allSchools.html'
+                templateUrl: 'templates/schools.html'
             })
             .state('schools_register', {
                 url: '/schools/register',
@@ -82,7 +82,7 @@
             })
             .state('classrooms_set_students', {
                 url: '/classrooms/:classroom/students',
-                controller: 'ClassroomStudentsController',
+                controller: 'ClassroomSetStudentsController',
                 controllerAs: 'classroom',
                 templateUrl: 'templates/classroomStudents.html'
             })
@@ -97,6 +97,18 @@
                 controller: 'TeacherClassroomController',
                 controllerAs: 'classroom',
                 templateUrl: 'templates/teacherClassroom.html'
+            })
+            .state('classroom_activities', {
+                url: '/classroom-activities',
+                controller: 'ClassroomActivitiesController',
+                controllerAs: 'activities',
+                templateUrl: 'templates/classroomActivities.html'
+            })
+            .state('activity_register', {
+                url: '/activity/register',
+                controller: 'ActivityRegisterController',
+                controllerAs: 'activity',
+                templateUrl: 'templates/newActivity.html'
             });
 
     }]);
