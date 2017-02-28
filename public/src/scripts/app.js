@@ -109,6 +109,18 @@
                 controller: 'ActivityRegisterController',
                 controllerAs: 'activity',
                 templateUrl: 'templates/newActivity.html'
+            })
+            .state('subjects', {
+                url: '/subjects',
+                controller: 'SubjectsController',
+                controllerAs: 'subjects',
+                templateUrl: 'templates/subjects.html'
+            })
+            .state('subject_register', {
+                url: '/subjects/register',
+                controller: 'SubjectRegisterController',
+                controllerAs: 'subject',
+                templateUrl: 'templates/newSubject.html'
             });
 
     }]);

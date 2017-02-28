@@ -34,6 +34,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li ng-class="header.getClass('/schools')" ng-show="header.isAdmin"><a ui-sref="schools">Schools</a></li>
+                    <li ng-class="header.getClass('/subjects')" ng-show="header.isAdmin"><a ui-sref="subjects">Subjects</a></li>
 
                     <li ng-class="header.getClass('/classrooms')" ng-show="header.isSchoolAdmin"><a ui-sref="classrooms">Classrooms</a></li>
                     <li ng-class="header.getClass('/teachers')" ng-show="header.isSchoolAdmin"><a ui-sref="teachers">Teachers</a></li>
@@ -78,6 +79,7 @@
     <script src="scripts/services/classroomService.js"></script>
     <script src="scripts/services/schoolyearService.js"></script>
     <script src="scripts/services/activitiesService.js"></script>
+    <script src="scripts/services/subjectService.js"></script>
 
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
@@ -98,6 +100,8 @@
     <script src="scripts/controllers/TeacherClassroomController.js"></script>
     <script src="scripts/controllers/ClassroomActivitiesController.js"></script>
     <script src="scripts/controllers/ActivityRegisterController.js"></script>
+    <script src="scripts/controllers/SubjectsController.js"></script>
+    <script src="scripts/controllers/SubjectRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>

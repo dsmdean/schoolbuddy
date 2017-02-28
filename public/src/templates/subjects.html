@@ -1,0 +1,23 @@
+<div ng-show="subjects.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    All Subjects
+    <button class="btn btn-primary btn-sm" title="Register Subject" ui-sref="subject_register">&#10010;</button>
+</h1>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="subjects.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Registered Subjects</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <tr ng-repeat="subject in subjects.allSubjects | filter:subjects.search">
+                <td>{{ subject.subject }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
