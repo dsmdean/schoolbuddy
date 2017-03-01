@@ -85,6 +85,7 @@ classroomsRouter.route('/:id')
             if (err) next(err);
 
             classroom.remove({});
+            res.json(classroom);
         });
     });
 

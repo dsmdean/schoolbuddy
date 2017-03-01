@@ -27,9 +27,21 @@
                 });
         }
 
+        function deleteSubject(subjectID) {
+            return $http.delete(baseURL + '/api/subjects/' + subjectID)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error deleting subjects: ' + response.statusText);
+                    return $q.reject('Error deleting subjects.');
+                });
+        }
+
         return {
             getAllSubjects: getAllSubjects,
-            registerSubject: registerSubject
+            registerSubject: registerSubject,
+            deleteSubject: deleteSubject
         };
     }
 

@@ -17,7 +17,22 @@
         <table class="table table-hover">
             <tr ng-repeat="subject in subjects.allSubjects | filter:subjects.search">
                 <td>{{ subject.subject }}</td>
+                <td><button class="btn btn-danger btn-xs" title="Delete" ng-click="subjects.subjectToDelete(subject._id, subject.subject)" data-toggle="modal" data-target="#deleteModal">&#10008;</button></td>
             </tr>
         </table>
+    </div>
+</div>
+
+<!-- Subject Confirm Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <h4 class="modal-title">Do you want to delete the subject named "<strong>{{subjects.subjectDelete.subject}}</strong>"?</h4>
+                <br/>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="subjects.deleteSubject()">Yes, Delete Student</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Student</button>
+            </div>
+        </div>
     </div>
 </div>

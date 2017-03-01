@@ -94,6 +94,7 @@ activitiesRouter.route('/:id')
             if (err) next(err);
 
             activity.remove({});
+            res.json(activity);
         });
     });
 

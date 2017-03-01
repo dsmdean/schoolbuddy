@@ -54,6 +54,7 @@ subjectsRouter.route('/:id')
             if (err) next(err);
 
             subject.remove({});
+            res.json(subject);
         });
     });
 

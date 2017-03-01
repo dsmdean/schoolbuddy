@@ -64,6 +64,7 @@ schoolYearRouter.route('/:id')
             if (err) next(err);
 
             schoolYear.remove({});
+            res.json(schoolYear);
         });
     });
 
