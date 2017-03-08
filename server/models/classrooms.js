@@ -26,7 +26,11 @@ var classroomsSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SchoolYear',
         required: true
-    }
+    },
+    subjects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subjects'
+    }]
 }, {
     timestamps: true
 });

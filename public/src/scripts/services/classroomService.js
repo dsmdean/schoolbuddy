@@ -104,6 +104,17 @@
                 });
         }
 
+        function getClassroomSubjects(classroomID) {
+            return $http.get(baseURL + '/api/classrooms/' + classroomID + '/subjects')
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting classroom subjects: ' + response.statusText);
+                    return $q.reject('Error getting classroom subjects.');
+                });
+        }
+
         return {
             getAllClassrooms: getAllClassrooms,
             getClassroomsBySchool: getClassroomsBySchool,
@@ -113,7 +124,8 @@
             deleteStudentsFromClassroom: deleteStudentsFromClassroom,
             registerClassroom: registerClassroom,
             updateClassroom: updateClassroom,
-            deleteClassroom: deleteClassroom
+            deleteClassroom: deleteClassroom,
+            getClassroomSubjects: getClassroomSubjects
         };
     }
 

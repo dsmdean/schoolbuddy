@@ -1,0 +1,52 @@
+<div ng-show="subjects.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    {{subjects.currentClassroom.grade}} - {{subjects.currentTeacher.firstname}} {{subjects.currentTeacher.lastname}}
+</h1>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="subjects.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Subjects in your {{subjects.currentClassroom.schoolYear.year}} class</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <tr ng-repeat="subject in subjects.classSubjects | filter:subjects.search" ng-class="{info: subject.new}">
+                <td>{{ subject.subject }}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" title="Remove Subject" ng-click="subjects.removeSubjectFromClass(subject)">&#10008;</button>
+                </td>
+            </tr>
+        </table>
+        <button style="margin-top: 1%;" class="btn btn-primary btn-sm pull-right" title="Toggle" ng-click="subjects.toggleAddSubject()">&#10010;</button>
+        <span style="margin-top: 1%;" class="pull-right">&nbsp;&nbsp;</span>
+        <button style="margin-top: 1%;" class="btn btn-primary btn-sm pull-right" title="Save subjects to this class" ng-click="subjects.saveSubjectsToClass()">Save subjects to this class</button>
+
+    </div>
+
+    <div class="panel panel-default" ng-show="subjects.addSubject" style="margin-top: 8%;">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Subjects not in your {{subjects.currentClassroom.schoolYear.year}} class</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <tr ng-repeat="subject in subjects.subjectsToDelete" ng-class="{warning: subject.new}">
+                <td>{{ subject.subject }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" title="Add Subject" ng-click="subjects.addSubjectToClass(subject)">&#10010;</button>
+                    <!--<button class="btn btn-danger btn-sm" title="Add Subject" ng-click="subjects.addSubjectToClass(subject)">&#10008;</button>-->
+                </td>
+            </tr>
+            <tr ng-repeat="subject in subjects.filteredSubjects | filter:subjects.search" ng-class="{danger: subject.new}">
+                <td>{{ subject.subject }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" title="Add Subject" ng-click="subjects.addSubjectToClass(subject)">&#10010;</button>
+                    <!--<button class="btn btn-danger btn-sm" title="Add Subject" ng-click="subjects.addSubjectToClass(subject)">&#10008;</button>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

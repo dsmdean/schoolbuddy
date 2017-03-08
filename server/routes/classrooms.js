@@ -132,4 +132,85 @@ classroomsRouter.route('/:id/students/delete')
         });
     });
 
+classroomsRouter.route('/:id/subjects')
+    // get subjects from a specific classroom
+    .get(function(req, res, next) {
+        Classrooms.findById(req.params.id)
+            .populate('subjects')
+            .exec(function(err, classroom) {
+                if (err) next(err);
+
+                res.json(classroom.subjects);
+            });
+    })
+    // save subject for a specific classroom
+    .post(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            if (classroom.subjects.indexOf(req.body.subjectID) === -1) {
+                classroom.subjects.push(req.body.subjectID);
+                classroom.save(function(err, classroom) {
+                    if (err) next(err);
+
+                    res.json('Added the subject.');
+                });
+            } else {
+                res.json('You have already added this subject.');
+            }
+        });
+    })
+    // update individual classroom's subjects
+    .put(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            for (var i = 0; i < req.body.subjects.length; i++) {
+                classroom.subjects.push(req.body.subjects[i]);
+            }
+
+            classroom.save();
+
+            res.json(classroom);
+        });
+    });
+
+classroomsRouter.route('/:id/subjects/delete')
+    // delete individual classroom's subjects
+    .put(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            for (var i = 0; i < req.body.subjects.length; i++) {
+                if (classroom.subjects.indexOf(req.body.subjects[i]._id) != -1) {
+                    classroom.subjects.splice(classroom.subjects.indexOf(req.body.subjects[i]._id), 1);
+                }
+            }
+
+            classroom.save();
+
+            res.json(classroom);
+        });
+    });
+
+classroomsRouter.route('/:id/subjects/:subject')
+    // delete a specific subject from a specific classroom
+    .delete(function(req, res, next) {
+        Classrooms.findById(req.params.id, function(err, classroom) {
+            if (err) next(err);
+
+            if (classroom.subjects.indexOf(req.params.subject) !== -1) {
+                classroom.subjects.splice(classroom.subjects.indexOf(req.params.subject), 1);
+
+                classroom.save(function(err, classroom) {
+                    if (err) next(err);
+
+                    res.json('Deleted the subject.');
+                });
+            } else {
+                res.json('Subject not deleted.');
+            }
+        });
+    });
+
 module.exports = classroomsRouter;

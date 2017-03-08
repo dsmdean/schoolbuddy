@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function ClassroomStudentsController(classroomService, studentService, authentication, schoolyearService, notifier, $state, $stateParams) {
+    function ClassroomSetStudentsController(classroomService, studentService, authentication, schoolyearService, notifier, $state, $stateParams) {
 
         var vm = this;
         vm.currentSchool = authentication.getCurrentSchool();
@@ -80,6 +80,6 @@
     }
 
     angular.module('app')
-        .controller('ClassroomStudentsController', ['classroomService', 'studentService', 'authentication', 'schoolyearService', 'notifier', '$state', '$stateParams', ClassroomStudentsController]);
+        .controller('ClassroomSetStudentsController', ['classroomService', 'studentService', 'authentication', 'schoolyearService', 'notifier', '$state', '$stateParams', ClassroomSetStudentsController]);
 
 }());

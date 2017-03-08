@@ -121,6 +121,12 @@
                 controller: 'SubjectRegisterController',
                 controllerAs: 'subject',
                 templateUrl: 'templates/newSubject.html'
+            })
+            .state('classroom_subjects', {
+                url: '/classroom-subjects',
+                controller: 'ClassroomSubjectsController',
+                controllerAs: 'subjects',
+                templateUrl: 'templates/classroomSubjects.html'
             });
 
     }]);

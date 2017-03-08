@@ -42,6 +42,7 @@
                     <li ng-class="header.getClass('/activities')" ng-show="header.isSchoolAdmin"><a ui-sref="activities">Activities</a></li>
 
                     <li ng-class="header.getClass('/teacher-classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
+                    <li ng-class="header.getClass('/classroom-subjects')" ng-show="header.isTeacher"><a ui-sref="classroom_subjects">Subjects</a></li>
                     <li ng-class="header.getClass('/classroom-activities')" ng-show="header.isTeacher"><a ui-sref="classroom_activities">Activities</a></li>
 
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
@@ -102,6 +103,7 @@
     <script src="scripts/controllers/ActivityRegisterController.js"></script>
     <script src="scripts/controllers/SubjectsController.js"></script>
     <script src="scripts/controllers/SubjectRegisterController.js"></script>
+    <script src="scripts/controllers/ClassroomSubjectsController.js"></script>
     <!-- endbuild -->
 
 </body>
