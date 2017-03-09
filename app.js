@@ -27,6 +27,7 @@ var classrooms = require('./server/routes/classrooms');
 var schoolYear = require('./server/routes/schoolYear');
 var activities = require('./server/routes/activities');
 var subjects = require('./server/routes/subjects');
+var tests = require('./server/routes/tests');
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/classrooms', classrooms);
 app.use('/api/schoolyear', schoolYear);
 app.use('/api/activities', activities);
 app.use('/api/subjects', subjects);
+app.use('/api/tests', tests);
 
 // app.get('/*', function(req, res) {
 //     res.sendFile(__dirname + '/public/src/index.html')

@@ -1,0 +1,45 @@
+<div ng-show="tests.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h2 class="col-md-offset-1 col-lg-offset-1">
+    All Tests - {{tests.currentTeacher.firstname}} {{tests.currentTeacher.lastname}}
+    <button class="btn btn-primary btn-sm" title="Register Test" ui-sref="test_register">&#10010;</button>
+</h2>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="tests.currentPastSearch">
+        <option value="">All Tests</option>
+        <option value="upcoming">Upcoming Tests</option>
+        <option value="past">Past Tests</option>
+    </select>
+</div>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="tests.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Registered Tests from {{tests.currentClassroom.grade}}</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="test in tests.classroomTests | filter:tests.myFilter | filter:tests.search" ng-class="">
+                <td>{{ test.subject.subject }}</td>
+                <td>{{ test.title }}</td>
+                <td>{{ test.date | date:'MMM. dd, yyyy' }}</td>
+                <td>{{ test.time | date:'HH.mm a' }}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" title="Rescheduele">&#10008;</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

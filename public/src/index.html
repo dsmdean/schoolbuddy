@@ -44,6 +44,7 @@
                     <li ng-class="header.getClass('/teacher-classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
                     <li ng-class="header.getClass('/classroom-subjects')" ng-show="header.isTeacher"><a ui-sref="classroom_subjects">Subjects</a></li>
                     <li ng-class="header.getClass('/classroom-activities')" ng-show="header.isTeacher"><a ui-sref="classroom_activities">Activities</a></li>
+                    <li ng-class="header.getClass('/classroom-tests')" ng-show="header.isTeacher"><a ui-sref="classroom_tests">Tests</a></li>
 
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
@@ -81,6 +82,7 @@
     <script src="scripts/services/schoolyearService.js"></script>
     <script src="scripts/services/activitiesService.js"></script>
     <script src="scripts/services/subjectService.js"></script>
+    <script src="scripts/services/testService.js"></script>
 
     <script src="scripts/filters/activityMonthFilter.js"></script>
 
@@ -104,6 +106,8 @@
     <script src="scripts/controllers/SubjectsController.js"></script>
     <script src="scripts/controllers/SubjectRegisterController.js"></script>
     <script src="scripts/controllers/ClassroomSubjectsController.js"></script>
+    <script src="scripts/controllers/ClassroomTestsController.js"></script>
+    <script src="scripts/controllers/TestRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>

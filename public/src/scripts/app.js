@@ -99,7 +99,7 @@
                 templateUrl: 'templates/teacherClassroom.html'
             })
             .state('classroom_activities', {
-                url: '/classroom-activities',
+                url: '/classroom/activities',
                 controller: 'ClassroomActivitiesController',
                 controllerAs: 'activities',
                 templateUrl: 'templates/classroomActivities.html'
@@ -123,10 +123,22 @@
                 templateUrl: 'templates/newSubject.html'
             })
             .state('classroom_subjects', {
-                url: '/classroom-subjects',
+                url: '/classroom/subjects',
                 controller: 'ClassroomSubjectsController',
                 controllerAs: 'subjects',
                 templateUrl: 'templates/classroomSubjects.html'
+            })
+            .state('classroom_tests', {
+                url: '/tests',
+                controller: 'ClassroomTestsController',
+                controllerAs: 'tests',
+                templateUrl: 'templates/classroomTests.html'
+            })
+            .state('test_register', {
+                url: '/tests/register',
+                controller: 'TestRegisterController',
+                controllerAs: 'test',
+                templateUrl: 'templates/newTest.html'
             });
 
     }]);
