@@ -1,0 +1,36 @@
+<h2 class="col-md-offset-1 col-lg-offset-1">
+    {{test.test.title}} ({{test.test.subject.subject}})
+</h2>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <br/>
+    <div class="panel panel-default">
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Grade</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="student in test.currentClassroom.students" ng-class="">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Grade">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" placeholder="Feedback"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary btn-md">Save</button>
+        <button type="button" class="btn btn-success btn-md">Completed</button>
+    </div>
+</div>

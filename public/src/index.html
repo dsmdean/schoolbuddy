@@ -44,7 +44,7 @@
                     <li ng-class="header.getClass('/teacher-classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
                     <li ng-class="header.getClass('/classroom-subjects')" ng-show="header.isTeacher"><a ui-sref="classroom_subjects">Subjects</a></li>
                     <li ng-class="header.getClass('/classroom-activities')" ng-show="header.isTeacher"><a ui-sref="classroom_activities">Activities</a></li>
-                    <li ng-class="header.getClass('/classroom-tests')" ng-show="header.isTeacher"><a ui-sref="classroom_tests">Tests</a></li>
+                    <li ng-class="header.getClass('/tests')" ng-show="header.isTeacher"><a ui-sref="classroom_tests">Tests</a></li>
 
                     <li ng-class="header.getClass('/profile')" ng-show="header.loggedIn"><a href="#" ui-sref="profile">Profile</a></li>
                     <li ng-show="header.loggedIn"><a ng-click="header.logout()" href="#">Logout</a></li>
@@ -108,6 +108,7 @@
     <script src="scripts/controllers/ClassroomSubjectsController.js"></script>
     <script src="scripts/controllers/ClassroomTestsController.js"></script>
     <script src="scripts/controllers/TestRegisterController.js"></script>
+    <script src="scripts/controllers/TestGradesController.js"></script>
     <!-- endbuild -->
 
 </body>

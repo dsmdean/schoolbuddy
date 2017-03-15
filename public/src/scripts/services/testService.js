@@ -27,9 +27,45 @@
                 });
         }
 
+        function getTestById(testId) {
+            return $http.get(baseURL + '/api/tests/' + testId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving test: ' + response.statusText);
+                    return $q.reject('Error retrieving test.');
+                });
+        }
+
+        function updateTest(newTest) {
+            return $http.put(baseURL + '/api/tests/' + newTest._id, newTest)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error updating test: ' + response.statusText);
+                    return $q.reject('Error updating test.');
+                });
+        }
+
+        function deleteTest(testID) {
+            return $http.delete(baseURL + '/api/tests/' + testID)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error deleting test: ' + response.statusText);
+                    return $q.reject('Error deleting test.');
+                });
+        }
+
         return {
             getAllTests: getAllTests,
-            registerTest: registerTest
+            registerTest: registerTest,
+            getTestById: getTestById,
+            updateTest: updateTest,
+            deleteTest: deleteTest
         };
     }
 

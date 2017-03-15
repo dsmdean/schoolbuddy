@@ -139,6 +139,12 @@
                 controller: 'TestRegisterController',
                 controllerAs: 'test',
                 templateUrl: 'templates/newTest.html'
+            })
+            .state('test_grade', {
+                url: '/tests/:id/grade',
+                controller: 'TestGradesController',
+                controllerAs: 'test',
+                templateUrl: 'templates/testGrade.html'
             });
 
     }]);

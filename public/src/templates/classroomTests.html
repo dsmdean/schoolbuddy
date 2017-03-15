@@ -9,6 +9,7 @@
         <option value="">All Tests</option>
         <option value="upcoming">Upcoming Tests</option>
         <option value="past">Past Tests</option>
+        <option value="canceled">Canceled</option>
     </select>
 </div>
 <div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
@@ -31,15 +32,62 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tr ng-repeat="test in tests.classroomTests | filter:tests.myFilter | filter:tests.search" ng-class="">
+            <tr ng-repeat="test in tests.classroomTests | filter:tests.myFilter | filter:tests.search | orderBy : '-date'" ng-class="{danger: test.canceled}">
                 <td>{{ test.subject.subject }}</td>
                 <td>{{ test.title }}</td>
                 <td>{{ test.date | date:'MMM. dd, yyyy' }}</td>
-                <td>{{ test.time | date:'HH.mm a' }}</td>
+                <td>{{ test.time | date:'hh.mm a' }}</td>
                 <td>
-                    <button class="btn btn-danger btn-xs" title="Rescheduele">&#10008;</button>
+                    <button ng-show="test.past" class="btn btn-info btn-xs test-font" title="Add Scores" ui-sref="test_grade({id: test._id})">&#9745;</button>
+                    <button ng-show="test.upcoming && !test.canceled" class="btn btn-warning btn-xs test-font" title="Rescheduele" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#reschedueleModal">&#9719;</button>
+                    <button ng-show="test.upcoming && !test.canceled" class="btn btn-danger btn-xs test-font" title="Cancel" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>
             </tr>
         </table>
+    </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <h4 class="modal-title">Do you want to delete or cancel "{{tests.testToReschedueleDelete.title}}"?</h4>
+                <br/>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="tests.deleteTest()">Delete Test</button>
+                <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal" ng-click="tests.cancelTest()">Cancel Test</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Rescheduele Confirm Modal -->
+<div class="modal fade" id="reschedueleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <h4 class="modal-title">Rescheduele "{{tests.testToReschedueleDelete.title}}"</h4>
+                <p>{{tests.testToReschedueleDelete.date | date:'MMM. dd, yyyy'}} - {{tests.testToReschedueleDelete.time | date:'hh.mm a'}}</p>
+                <br/>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Date</label>
+                        <div class="col-md-6">
+                            <input type="date" ng-model="tests.testToReschedueleDelete.date" class="form-control" placeholder="Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor" class="col-md-3 col-md-offset-1 control-label">Time</label>
+                        <div class="col-sm-6">
+                            <input type="time" class="form-control" ng-model="tests.testToReschedueleDelete.time" placeholder="Time">
+                        </div>
+                    </div>
+                </form>
+                <br/>
+                <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal" ng-click="tests.reschedueleTest()">Yes, Rescheduele Test</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave</button>
+            </div>
+        </div>
     </div>
 </div>

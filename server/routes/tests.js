@@ -34,10 +34,12 @@ testsRouter.route('/')
 testsRouter.route('/:id')
     // GET individual test
     .get(function(req, res, next) {
-        Tests.findById(req.params.id, function(err, test) {
-            if (err) next(err);
-            res.json(test);
-        });
+        Tests.findById(req.params.id)
+            .populate('subject')
+            .exec(function(err, test) {
+                if (err) next(err);
+                res.json(test);
+            });
     })
     // PUT individual test
     .put(function(req, res, next) {
