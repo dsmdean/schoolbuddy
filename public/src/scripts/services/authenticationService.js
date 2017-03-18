@@ -225,6 +225,12 @@
             localStorage.storeObject(TEACHER_DATA, teacher);
         }
 
+        function setCurrentClassroom(classroom) {
+            currentClassroom = classroom;
+            localStorage.remove(CLASSROOM_DATA);
+            localStorage.storeObject(CLASSROOM_DATA, classroom);
+        }
+
         function isAdmin() {
             return admin;
         }
@@ -257,6 +263,7 @@
             getCurrentTeacher: getCurrentTeacher,
             updateCurrentUser: updateCurrentUser,
             setCurrentTeacher: setCurrentTeacher,
+            setCurrentClassroom: setCurrentClassroom,
             getCurrentClassroom: getCurrentClassroom,
             getCurrentYear: getCurrentYear,
             isAdmin: isAdmin,

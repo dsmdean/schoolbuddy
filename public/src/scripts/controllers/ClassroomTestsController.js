@@ -33,11 +33,15 @@
 
                 return item;
             } else if (vm.currentPastSearch === 'upcoming') {
-                return Date.parse(item.date) > new Date();
+                return Date.parse(item.date) > new Date() && item.canceled == false;
             } else if (vm.currentPastSearch === 'past') {
-                return Date.parse(item.date) < new Date();
+                return Date.parse(item.date) < new Date() && item.canceled == false;
             } else if (vm.currentPastSearch === 'canceled') {
                 return item.canceled == true;
+            } else if (vm.currentPastSearch === 'graded') {
+                return item.graded == true;
+            } else if (vm.currentPastSearch === 'ungraded') {
+                return Date.parse(item.date) < new Date() && item.graded == false;
             }
         };
 

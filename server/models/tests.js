@@ -29,6 +29,10 @@ var testsSchema = new Schema({
     canceled: {
         type: Boolean,
         default: false
+    },
+    graded: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

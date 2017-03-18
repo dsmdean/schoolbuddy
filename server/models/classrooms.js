@@ -2,23 +2,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-//create a Grades Schema
-var gradesSchema = new Schema({
-    test: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tests'
-    },
-    grade: {
-        type: String
-    },
-    feedback: {
-        type: String,
-        default: ''
-    }
-}, {
-    timestamps: true
-});
-
 //create a Classrooms Schema
 var classroomsSchema = new Schema({
     grade: {

@@ -60,12 +60,24 @@
                 });
         }
 
+        function gradeTest(grades) {
+            return $http.post(baseURL + '/api/students/grade', grades)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error grading test: ' + response.statusText);
+                    return $q.reject('Error grading test.');
+                });
+        }
+
         return {
             getAllTests: getAllTests,
             registerTest: registerTest,
             getTestById: getTestById,
             updateTest: updateTest,
-            deleteTest: deleteTest
+            deleteTest: deleteTest,
+            gradeTest: gradeTest
         };
     }
 

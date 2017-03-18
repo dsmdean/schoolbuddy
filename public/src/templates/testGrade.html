@@ -1,3 +1,5 @@
+<div ng-show="test.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
 <h2 class="col-md-offset-1 col-lg-offset-1">
     {{test.test.title}} ({{test.test.subject.subject}})
 </h2>
@@ -14,23 +16,31 @@
                     <th>Feedback</th>
                 </tr>
             </thead>
-            <tr ng-repeat="student in test.currentClassroom.students" ng-class="">
+            <tr ng-repeat="student in test.currentClassroom.students" ng-hide="test.test.graded">
                 <td>{{ student.firstname }} {{student.lastname}}</td>
                 <td>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Grade">
+                        <input type="text" class="form-control" ng-model="test.grades[student._id].grade" placeholder="Grade">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" placeholder="Feedback"></textarea>
+                        <textarea class="form-control" rows="5" ng-model="test.grades[student._id].feedback" placeholder="Feedback"></textarea>
                     </div>
+                </td>
+            </tr>
+            <tr ng-repeat="student in test.currentClassroom.students" ng-show="test.test.graded">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>
+                    <p>{{ test.grades[student._id].grade }}</p>
+                </td>
+                <td>
+                    <p>{{ test.grades[student._id].feedback }}</p>
                 </td>
             </tr>
         </table>
     </div>
-    <div class="pull-right">
-        <button type="button" class="btn btn-primary btn-md">Save</button>
-        <button type="button" class="btn btn-success btn-md">Completed</button>
+    <div class="pull-right" ng-hide="test.test.graded">
+        <button type="button" class="btn btn-primary btn-md" ng-click="test.saveGrades()">Save</button>
     </div>
 </div>

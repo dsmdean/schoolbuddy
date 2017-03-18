@@ -47,21 +47,36 @@ studentsRouter.route('/')
             });
     });
 
-studentsRouter.route('/school/:id')
-    // GET all students from individual school
-    .get(function(req, res, next) {
-        Students.find({ school: req.params.id }, function(err, students) {
-            if (err) next(err);
-            res.json(students);
-        });
-    });
+studentsRouter.route('/grade')
+    // POST students grades
+    .post(function(req, res, next) {
+        var IDs = [];
+        for (var studentID in req.body) {
+            IDs.push(studentID);
+        }
 
-studentsRouter.route('/admin/:id')
-    // GET individual student by userID
-    .get(function(req, res, next) {
-        Students.findOne({ student: req.params.id }, function(err, student) {
+        Students.find({
+            '_id': { $in: IDs }
+        }, function(err, students) {
             if (err) next(err);
-            res.json(student);
+
+            for (var i = 0; i < students.length; i++) {
+                var exists = false;
+                for (var j = 0; j < students[i].grades.length; j++) {
+                    if (students[i].grades[j].test == req.body[students[i]._id.toString()].test) {
+                        exists = true;
+                    }
+                }
+
+                if (!exists) {
+                    students[i].grades.push(req.body[students[i]._id.toString()]);
+                    students[i].save();
+                }
+            }
+
+            // students.save();
+
+            res.json(students);
         });
     });
 
@@ -116,6 +131,24 @@ studentsRouter.route('/:id/suspend')
                 user.save();
                 res.json(student);
             })
+        });
+    });
+
+studentsRouter.route('/school/:id')
+    // GET all students from individual school
+    .get(function(req, res, next) {
+        Students.find({ school: req.params.id }, function(err, students) {
+            if (err) next(err);
+            res.json(students);
+        });
+    });
+
+studentsRouter.route('/admin/:id')
+    // GET individual student by userID
+    .get(function(req, res, next) {
+        Students.findOne({ student: req.params.id }, function(err, student) {
+            if (err) next(err);
+            res.json(student);
         });
     });
 

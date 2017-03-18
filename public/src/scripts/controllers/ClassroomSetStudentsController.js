@@ -19,6 +19,7 @@
             notifier.error(message);
         }
 
+        vm.loading = true;
         classroomService.getClassroomByID($stateParams.classroom)
             .then(function(classroom) {
                 vm.currentClass = classroom;
@@ -27,6 +28,7 @@
                 studentService.getStudentsBySchoolGradeNotInClass(vm.currentSchool._id, vm.currentClass.grade)
                     .then(function(students) {
                         vm.students = students;
+                        vm.loading = false;
                     })
                     .catch(showError);
             })

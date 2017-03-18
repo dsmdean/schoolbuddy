@@ -1,15 +1,17 @@
 <div ng-show="tests.loading" class="loading" ng-include="'templates/spinner.html'"></div>
 
 <h2 class="col-md-offset-1 col-lg-offset-1">
-    All Tests - {{tests.currentTeacher.firstname}} {{tests.currentTeacher.lastname}}
+    Tests - {{tests.currentTeacher.firstname}} {{tests.currentTeacher.lastname}}
     <button class="btn btn-primary btn-sm" title="Register Test" ui-sref="test_register">&#10010;</button>
 </h2>
 <div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
     <select class="form-control" ng-model="tests.currentPastSearch">
-        <option value="">All Tests</option>
-        <option value="upcoming">Upcoming Tests</option>
-        <option value="past">Past Tests</option>
+        <option value="">All</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="past">Past</option>
         <option value="canceled">Canceled</option>
+        <option value="graded">Graded</option>
+        <option value="ungraded">Ungraded</option>
     </select>
 </div>
 <div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
@@ -38,7 +40,7 @@
                 <td>{{ test.date | date:'MMM. dd, yyyy' }}</td>
                 <td>{{ test.time | date:'hh.mm a' }}</td>
                 <td>
-                    <button ng-show="test.past" class="btn btn-info btn-xs test-font" title="Add Scores" ui-sref="test_grade({id: test._id})">&#9745;</button>
+                    <button ng-show="test.past" class="btn btn-xs test-font" title="Test Scores" ui-sref="test_grade({id: test._id})" ng-class="{'btn-info': !test.graded, 'btn-success': test.graded}">&#9745;</button>
                     <button ng-show="test.upcoming && !test.canceled" class="btn btn-warning btn-xs test-font" title="Rescheduele" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#reschedueleModal">&#9719;</button>
                     <button ng-show="test.upcoming && !test.canceled" class="btn btn-danger btn-xs test-font" title="Cancel" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>
