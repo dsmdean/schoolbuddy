@@ -8,6 +8,7 @@
         vm.currentUser = authentication.getCurrentUser();
         vm.currentSchool = authentication.getCurrentSchool();
         vm.currentTeacher = authentication.getCurrentTeacher();
+        vm.currentStudent = authentication.getCurrentStudent();
         vm.updatePassword = false;
         vm.loading = false;
 

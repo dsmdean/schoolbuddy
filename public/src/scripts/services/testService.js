@@ -38,6 +38,17 @@
                 });
         }
 
+        function getTestByClassroom(classroomId) {
+            return $http.get(baseURL + '/api/tests/classroom/' + classroomId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error retrieving test: ' + response.statusText);
+                    return $q.reject('Error retrieving test.');
+                });
+        }
+
         function updateTest(newTest) {
             return $http.put(baseURL + '/api/tests/' + newTest._id, newTest)
                 .then(function(response) {
@@ -75,6 +86,7 @@
             getAllTests: getAllTests,
             registerTest: registerTest,
             getTestById: getTestById,
+            getTestByClassroom: getTestByClassroom,
             updateTest: updateTest,
             deleteTest: deleteTest,
             gradeTest: gradeTest

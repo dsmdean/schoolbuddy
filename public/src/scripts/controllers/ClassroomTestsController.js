@@ -16,7 +16,7 @@
             notifier.error(message);
         }
 
-        testService.getAllTests()
+        testService.getTestByClassroom(vm.currentClassroom._id)
             .then(function(tests) {
                 vm.classroomTests = tests;
             })
