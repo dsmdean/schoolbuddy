@@ -24,7 +24,6 @@
         var authToken;
 
         function useCredentials(credentials) {
-            loggedIn = true;
             currentUser = credentials;
             authToken = credentials.token;
 
@@ -43,6 +42,7 @@
                 currentStudent = localStorage.getObject(STUDENT_DATA, '{}');
             }
 
+            loggedIn = true;
             $rootScope.$broadcast('login:Successful');
 
             // Set the token as header for your requests!
@@ -57,12 +57,9 @@
         }
 
         function storeUserCredentials(credentials) {
-            if (admin) {
-                localStorage.storeObject(TOKEN_KEY, credentials);
-                useCredentials(credentials);
-            } else if (school_admin) {
-                localStorage.storeObject(TOKEN_KEY, credentials);
+            localStorage.storeObject(TOKEN_KEY, credentials);
 
+            if (school_admin) {
                 schoolService.getSchoolByUserId(currentUser._id)
                     .then(function(response) {
                         currentSchool = response;
@@ -71,11 +68,7 @@
                     .catch(function(message) {
                         notifier.error(message);
                     });
-
-                useCredentials(credentials);
             } else if (teacher) {
-                localStorage.storeObject(TOKEN_KEY, credentials);
-
                 teacherService.getTeacherByUserId(currentUser._id)
                     .then(function(response) {
                         currentTeacher = response;
@@ -102,11 +95,7 @@
                     .catch(function(message) {
                         notifier.error(message);
                     });
-
-                useCredentials(credentials);
             } else if (student) {
-                localStorage.storeObject(TOKEN_KEY, credentials);
-
                 studentService.getStudentByUserId(currentUser._id)
                     .then(function(response) {
                         currentStudent = response;
@@ -115,9 +104,9 @@
                     .catch(function(message) {
                         notifier.error(message);
                     });
-
-                useCredentials(credentials);
             }
+
+            useCredentials(credentials);
         }
 
         function destroyUserCredentials() {
@@ -144,7 +133,6 @@
         }
 
         function loginSuccess(response) {
-            loggedIn = true;
             currentUser = response.data.user;
 
             if (response.data.user.admin) {
@@ -297,6 +285,7 @@
             updateCurrentUser: updateCurrentUser,
             setCurrentTeacher: setCurrentTeacher,
             setCurrentClassroom: setCurrentClassroom,
+            getCurrentClassroom: getCurrentClassroom,
             getCurrentStudent: getCurrentStudent,
             getCurrentYear: getCurrentYear,
             isAdmin: isAdmin,

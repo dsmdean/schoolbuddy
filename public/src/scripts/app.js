@@ -93,7 +93,7 @@
                 templateUrl: 'templates/activities.html'
             })
             .state('teacher_classroom', {
-                url: '/teacher-classroom',
+                url: '/teacher/classroom',
                 controller: 'TeacherClassroomController',
                 controllerAs: 'classroom',
                 templateUrl: 'templates/teacherClassroom.html'
@@ -105,7 +105,7 @@
                 templateUrl: 'templates/classroomActivities.html'
             })
             .state('activity_register', {
-                url: '/activity/register',
+                url: '/classroom/activities/register',
                 controller: 'ActivityRegisterController',
                 controllerAs: 'activity',
                 templateUrl: 'templates/newActivity.html'
@@ -129,19 +129,19 @@
                 templateUrl: 'templates/classroomSubjects.html'
             })
             .state('classroom_tests', {
-                url: '/tests',
+                url: '/classroom/tests',
                 controller: 'ClassroomTestsController',
                 controllerAs: 'tests',
                 templateUrl: 'templates/classroomTests.html'
             })
             .state('test_register', {
-                url: '/tests/register',
+                url: '/classroom/tests/register',
                 controller: 'TestRegisterController',
                 controllerAs: 'test',
                 templateUrl: 'templates/newTest.html'
             })
             .state('test_grade', {
-                url: '/tests/:id/grade',
+                url: '/classroom/tests/:id/grade',
                 controller: 'TestGradesController',
                 controllerAs: 'test',
                 templateUrl: 'templates/testGrade.html'

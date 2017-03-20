@@ -41,7 +41,7 @@
                     <li ng-class="header.getClass('/students')" ng-show="header.isSchoolAdmin"><a ui-sref="students">Students</a></li>
                     <li ng-class="header.getClass('/activities')" ng-show="header.isSchoolAdmin"><a ui-sref="activities">Activities</a></li>
 
-                    <li ng-class="header.getClass('/teacher-classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
+                    <li ng-class="header.getClass('/teacher/classroom')" ng-show="header.isTeacher"><a ui-sref="teacher_classroom">Classroom</a></li>
                     <li ng-class="header.getClass('/classroom-subjects')" ng-show="header.isTeacher"><a ui-sref="classroom_subjects">Subjects</a></li>
                     <li ng-class="header.getClass('/classroom-activities')" ng-show="header.isTeacher || header.isStudent"><a ui-sref="classroom_activities">Activities</a></li>
                     <li ng-class="header.getClass('/tests')" ng-show="header.isTeacher || header.isStudent"><a ui-sref="classroom_tests">Tests</a></li>
