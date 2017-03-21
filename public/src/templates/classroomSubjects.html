@@ -17,7 +17,7 @@
             <tr ng-repeat="subject in subjects.classSubjects | filter:subjects.search" ng-class="{info: subject.new}">
                 <td>{{ subject.subject }}</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" title="Remove Subject" ng-click="subjects.removeSubjectFromClass(subject)">&#10008;</button>
+                    <button ng-show="subject.new" class="btn btn-danger btn-sm" title="Remove Subject" ng-click="subjects.removeSubjectFromClass(subject)">&#10008;</button>
                 </td>
             </tr>
         </table>

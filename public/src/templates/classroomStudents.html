@@ -32,7 +32,7 @@
                 <td>{{ student.phone }}</td>
                 <td>{{ student.startDate | date:'MMM. dd, yyyy' }}</td>
                 <td>
-                    <button class="btn btn-danger btn-xs" title="Remove student from this class" ng-click="classroom.removeStudentFromClass(student)">&#10008;</button>
+                    <button ng-show="student.new" class="btn btn-danger btn-xs" title="Remove student from this class" ng-click="classroom.removeStudentFromClass(student)">&#10008;</button>
                 </td>
             </tr>
         </table>

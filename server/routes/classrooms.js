@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+var Students = require('../models/students');
 var User = require('../models/users');
 var Classrooms = require('../models/classrooms');
 var classroomsRouter = express.Router();
@@ -107,8 +108,16 @@ classroomsRouter.route('/:id/students')
             for (var i = 0; i < req.body.students.length; i++) {
                 classroom.students.push(req.body.students[i]);
             }
-
             classroom.save();
+
+            Students.find({
+                '_id': { $in: req.body.students }
+            }, function(err, students) {
+                for (var i = 0; i < students.length; i++) {
+                    students[i].currentClassroom = req.params.id;
+                    students[i].save();
+                }
+            });
 
             res.json(classroom);
         });

@@ -40,6 +40,7 @@
             } else if (credentials.student) {
                 student = true;
                 currentStudent = localStorage.getObject(STUDENT_DATA, '{}');
+                currentClassroom = localStorage.getObject(CLASSROOM_DATA, '{}');
             }
 
             loggedIn = true;
@@ -100,6 +101,15 @@
                     .then(function(response) {
                         currentStudent = response;
                         localStorage.storeObject(STUDENT_DATA, currentStudent);
+
+                        classroomService.getClassroomByID(currentStudent.currentClassroom)
+                            .then(function(classroom) {
+                                currentClassroom = classroom;
+                                localStorage.storeObject(CLASSROOM_DATA, classroom);
+                            })
+                            .catch(function(message) {
+                                notifier.error(message);
+                            });
                     })
                     .catch(function(message) {
                         notifier.error(message);
@@ -129,6 +139,7 @@
             } else if (student) {
                 student = false;
                 localStorage.remove(STUDENT_DATA);
+                localStorage.remove(CLASSROOM_DATA);
             }
         }
 

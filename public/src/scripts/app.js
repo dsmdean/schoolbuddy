@@ -145,6 +145,24 @@
                 controller: 'TestGradesController',
                 controllerAs: 'test',
                 templateUrl: 'templates/testGrade.html'
+            })
+            .state('student_activities', {
+                url: '/student/activities',
+                controller: 'StudentActivitiesController',
+                controllerAs: 'activities',
+                templateUrl: 'templates/studentActivities.html'
+            })
+            .state('student_tests', {
+                url: '/student/tests',
+                controller: 'StudentTestsController',
+                controllerAs: 'tests',
+                templateUrl: 'templates/studentTests.html'
+            })
+            .state('student_grades', {
+                url: '/student/grades',
+                controller: 'StudentGradesController',
+                controllerAs: 'grades',
+                templateUrl: 'templates/studentGrades.html'
             });
 
     }]);

@@ -93,6 +93,17 @@
                 });
         }
 
+        function getStudentGrades(studentID, classroomId) {
+            return $http.get(baseURL + '/api/students/' + studentID + '/grades/classroom/' + classroomId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting student grades: ' + response.statusText);
+                    return $q.reject('Error getting student grades.');
+                });
+        }
+
         return {
             getAllStudents: getAllStudents,
             getStudentsBySchool: getStudentsBySchool,
@@ -101,7 +112,8 @@
             getStudentsBySchoolGradeNotInClass: getStudentsBySchoolGradeNotInClass,
             updateStudent: updateStudent,
             deleteStudent: deleteStudent,
-            suspendStudent: suspendStudent
+            suspendStudent: suspendStudent,
+            getStudentGrades: getStudentGrades
         };
     }
 

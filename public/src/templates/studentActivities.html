@@ -1,0 +1,39 @@
+<div ng-show="activities.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h2 class="col-md-offset-1 col-lg-offset-1">
+    Activities - {{activities.currentClassroom.grade}}
+</h2>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="activities.currentPastSearch">
+        <option value="">All Activities</option>
+        <option value="current">Current Activities</option>
+        <option value="past">Past Activities</option>
+        <option value="hold">Activities on Hold</option>
+    </select>
+</div>
+<div class="col-md-2 col-md-offset-7" style="margin-top: -45px;">
+    <input type="text" class="form-control" name="search" placeholder="Search.." ng-model="activities.search">
+</div>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Registered Activities</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="activity in activities.classActivities | filter:activities.myFilter | filter:activities.search" ng-class="{danger: activity.hold}">
+                <td>{{ activity.name }}</td>
+                <td>{{ activity.description }}</td>
+                <td>{{ activity.date | date:'MMM. dd, yyyy' }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

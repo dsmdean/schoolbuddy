@@ -152,6 +152,25 @@ studentsRouter.route('/admin/:id')
         });
     });
 
+studentsRouter.route('/:id/grades/classroom/:classId')
+    // GET individual student's grades from specific classroom
+    .get(function(req, res, next) {
+        Students.findById(req.params.id)
+            .populate('grades.test')
+            .exec(function(err, student) {
+                if (err) next(err);
+
+                var grades = [];
+                for (var i = 0; i < student.grades.length; i++) {
+                    if (student.grades[i].test.classroom == req.params.classId) {
+                        grades.push(student.grades[i]);
+                    }
+                }
+
+                res.json(grades);
+            });
+    });
+
 studentsRouter.route('/school/:id/grade/:grade')
     // GET all students from individual school
     .get(function(req, res, next) {

@@ -52,6 +52,10 @@ var studentsSchema = new Schema({
         type: String,
         default: ''
     },
+    currentClassroom: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Classrooms',
+    },
     startDate: {
         type: Date,
         required: true
