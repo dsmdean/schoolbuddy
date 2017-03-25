@@ -6,20 +6,22 @@ var passport = require('passport');
 var Classrooms = require('../models/classrooms');
 var User = require('../models/users');
 var Students = require('../models/students');
+var Verify = require('./verify');
 var studentsRouter = express.Router();
 studentsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/students
 studentsRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all students
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Students.find({}, function(err, students) {
             if (err) next(err);
             res.json(students);
         });
     })
     // POST a student
-    .post(function(req, res, next) {
+    .post(Verify.verifySchoolAdmin, function(req, res, next) {
         // create student
         User.register(new User({ username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, student: true }),
             req.body.password,
@@ -48,8 +50,9 @@ studentsRouter.route('/')
     });
 
 studentsRouter.route('/grade')
+    .all(Verify.verifyOrdinaryUser)
     // POST students grades
-    .post(function(req, res, next) {
+    .post(Verify.verifyTeacher, function(req, res, next) {
         var IDs = [];
         for (var studentID in req.body) {
             IDs.push(studentID);
@@ -81,15 +84,16 @@ studentsRouter.route('/grade')
     });
 
 studentsRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual student
-    .get(function(req, res, next) {
-        Students.findById(req.params.id, function(err, student) {
-            if (err) next(err);
-            res.json(student);
-        });
-    })
+    // .get(function(req, res, next) {
+    //     Students.findById(req.params.id, function(err, student) {
+    //         if (err) next(err);
+    //         res.json(student);
+    //     });
+    // })
     // PUT individual student
-    .put(function(req, res, next) {
+    .put(Verify.verifyStudent, function(req, res, next) {
         Students.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, {
@@ -100,7 +104,7 @@ studentsRouter.route('/:id')
         });
     })
     // DELETE individual student
-    .delete(function(req, res, next) {
+    .delete(Verify.verifySchoolAdmin, function(req, res, next) {
         Students.findById(req.params.id, function(err, student) {
             if (err) next(err);
 
@@ -116,8 +120,9 @@ studentsRouter.route('/:id')
     });
 
 studentsRouter.route('/:id/suspend')
+    .all(Verify.verifyOrdinaryUser)
     // suspend individual student
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Students.findById(req.params.id, function(err, student) {
             if (err) next(err);
 
@@ -135,8 +140,9 @@ studentsRouter.route('/:id/suspend')
     });
 
 studentsRouter.route('/school/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET all students from individual school
-    .get(function(req, res, next) {
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Students.find({ school: req.params.id }, function(err, students) {
             if (err) next(err);
             res.json(students);
@@ -145,7 +151,7 @@ studentsRouter.route('/school/:id')
 
 studentsRouter.route('/admin/:id')
     // GET individual student by userID
-    .get(function(req, res, next) {
+    .get(Verify.verifyStudent, function(req, res, next) {
         Students.findOne({ student: req.params.id }, function(err, student) {
             if (err) next(err);
             res.json(student);
@@ -154,7 +160,7 @@ studentsRouter.route('/admin/:id')
 
 studentsRouter.route('/:id/grades/classroom/:classId')
     // GET individual student's grades from specific classroom
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Students.findById(req.params.id)
             .populate('grades.test')
             .exec(function(err, student) {
@@ -172,8 +178,9 @@ studentsRouter.route('/:id/grades/classroom/:classId')
     });
 
 studentsRouter.route('/school/:id/grade/:grade')
-    // GET all students from individual school
-    .get(function(req, res, next) {
+    .all(Verify.verifyOrdinaryUser)
+    // GET all students from individual school in specific grade not in a specific classroom
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Students.find({ school: req.params.id, level: req.params.grade, graduated: false, endDate: undefined }, function(err, students) {
             if (err) next(err);
 

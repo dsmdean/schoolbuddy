@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authentication($q, $http, localStorage, $rootScope, schoolService, teacherService, studentService, classroomService, schoolyearService, notifier) {
+    function authentication($q, $http, $state, localStorage, $rootScope, schoolService, teacherService, studentService, classroomService, schoolyearService, notifier) {
 
         var TOKEN_KEY = 'Token';
         var SCHOOL_DATA = 'school_data';
@@ -46,6 +46,10 @@
             loggedIn = true;
             $rootScope.$broadcast('login:Successful');
 
+            if (admin) {
+                $state.go('home');
+            }
+
             // Set the token as header for your requests!
             $http.defaults.headers.common['x-access-token'] = authToken;
         }
@@ -65,6 +69,7 @@
                     .then(function(response) {
                         currentSchool = response;
                         localStorage.storeObject(SCHOOL_DATA, currentSchool);
+                        $state.go('home');
                     })
                     .catch(function(message) {
                         notifier.error(message);
@@ -84,6 +89,7 @@
                                     .then(function(classroom) {
                                         currentClassroom = classroom;
                                         localStorage.storeObject(CLASSROOM_DATA, classroom);
+                                        $state.go('home');
                                     })
                                     .catch(function(message) {
                                         notifier.error(message);
@@ -106,6 +112,7 @@
                             .then(function(classroom) {
                                 currentClassroom = classroom;
                                 localStorage.storeObject(CLASSROOM_DATA, classroom);
+                                $state.go('home');
                             })
                             .catch(function(message) {
                                 notifier.error(message);
@@ -308,6 +315,6 @@
     }
 
     angular.module('app')
-        .factory('authentication', ['$q', '$http', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'studentService', 'classroomService', 'schoolyearService', 'notifier', authentication]);
+        .factory('authentication', ['$q', '$http', '$state', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'studentService', 'classroomService', 'schoolyearService', 'notifier', authentication]);
 
 }());

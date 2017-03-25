@@ -3,6 +3,12 @@
 <h2 class="col-md-offset-1 col-lg-offset-1">
     Test Scores - {{grades.currentStudent.firstname}} {{grades.currentStudent.lastname}}
 </h2>
+<div class="col-md-2 col-md-offset-5" style="margin-top: -45px;">
+    <select class="form-control" ng-model="grades.filter">
+        <option value="">All Subjects</option>
+        <option ng-repeat="subject in grades.classSubjects" value="{{subject._id}}">{{subject.subject}}</option>
+    </select>
+</div>
 
 <div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
     <br/>
@@ -18,12 +24,19 @@
                     <th>Date</th>
                 </tr>
             </thead>
-            <tr ng-repeat="grade in grades.studentGrades | orderBy : '-test.date'">
+            <tr ng-repeat="grade in grades.studentGrades | orderBy : '-test.date' | filter:grades.myFilter">
                 <td>{{ grade.test.title }}</td>
                 <td>{{ grade.test.subject.subject }}</td>
                 <td>{{ grade.grade }}</td>
                 <td>{{ grade.feedback }}</td>
                 <td>{{ grade.test.date | date:'MMM. dd, yyyy' }}</td>
+            </tr>
+            <tr ng-show="grades.studentGrades.length < 1">
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
             </tr>
         </table>
     </div>

@@ -22,7 +22,7 @@
             vm.loading = true;
             authentication.login(vm.userData)
                 .then(function(response) {
-                    $state.go('profile');
+                    // $state.go('home');
                     vm.loading = false;
                     notifier.success('Logged in successful!');
                 })

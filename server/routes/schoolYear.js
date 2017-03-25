@@ -3,11 +3,13 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var SchoolYear = require('../models/schoolYear');
+var Verify = require('./verify');
 var schoolYearRouter = express.Router();
 schoolYearRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/schoolyear
 schoolYearRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all school years
     .get(function(req, res, next) {
         SchoolYear.find({}, function(err, schoolYears) {
@@ -30,6 +32,7 @@ schoolYearRouter.route('/')
     });
 
 schoolYearRouter.route('/current')
+    .all(Verify.verifyOrdinaryUser)
     // GET current school year
     .get(function(req, res, next) {
         SchoolYear.findOne({ current: true }, function(err, schoolYear) {
@@ -40,6 +43,7 @@ schoolYearRouter.route('/current')
     });
 
 schoolYearRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual school year
     .get(function(req, res, next) {
         SchoolYear.findById(req.params.id, function(err, schoolYear) {

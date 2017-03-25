@@ -16,6 +16,7 @@
             notifier.error(message);
         }
 
+
         // schoolyearService.getCurrentYear()
         //     .then(function(response) {
         //         vm.currentYear = response;

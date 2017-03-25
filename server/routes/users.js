@@ -8,7 +8,7 @@ var User = require('../models/users');
 var Verify = require('./verify');
 
 // get all users
-userRouter.get('/', Verify.verifyOrdinaryUser, function(req, res, next) {
+userRouter.get('/', Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
     User.find({}, function(err, users) {
         if (err) next(err);
         res.json(users);
@@ -16,7 +16,7 @@ userRouter.get('/', Verify.verifyOrdinaryUser, function(req, res, next) {
 });
 
 // register user
-userRouter.post('/register', function(req, res) {
+userRouter.post('/register', Verify.verifyAdminOrSchoolAdmin, function(req, res) {
     User.register(new User({ username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname }),
         req.body.password,
         function(err, user) {

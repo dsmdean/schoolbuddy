@@ -5,6 +5,7 @@
 
         var vm = this;
         vm.loading = false;
+        vm.filter = '';
         vm.currentStudent = authentication.getCurrentStudent();
         vm.currentClassroom = authentication.getCurrentClassroom();
 
@@ -33,6 +34,14 @@
                     .catch(showError);
             })
             .catch(showError);
+
+        vm.myFilter = function(item) {
+            if (vm.filter === '') {
+                return item;
+            } else if (vm.filter != '') {
+                return item.test.subject._id == vm.filter;
+            }
+        };
 
     }
 

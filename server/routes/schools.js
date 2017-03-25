@@ -5,21 +5,23 @@ var passport = require('passport');
 
 var User = require('../models/users');
 var Schools = require('../models/schools');
+var Verify = require('./verify');
 var schoolsRouter = express.Router();
 schoolsRouter.use(bodyParser.json());
 
 
 // http://localhost:3000/api/schools
 schoolsRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all schools
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Schools.find({}, function(err, schools) {
             if (err) next(err);
             res.json(schools);
         });
     })
     // POST a school
-    .post(function(req, res, next) {
+    .post(Verify.verifyAdmin, function(req, res, next) {
         // create school admin
         User.register(new User({ username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, school_admin: true }),
             req.body.password,
@@ -48,8 +50,9 @@ schoolsRouter.route('/')
     });
 
 schoolsRouter.route('/admin/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual school by userID
-    .get(function(req, res, next) {
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Schools.findOne({ school_admin: req.params.id }, function(err, school) {
             if (err) next(err);
             res.json(school);
@@ -57,6 +60,7 @@ schoolsRouter.route('/admin/:id')
     });
 
 schoolsRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual school
     .get(function(req, res, next) {
         Schools.findById(req.params.id)
@@ -67,7 +71,7 @@ schoolsRouter.route('/:id')
             });
     })
     // PUT individual school
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Schools.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, {
@@ -78,7 +82,7 @@ schoolsRouter.route('/:id')
         });
     })
     // DELETE individual school
-    .delete(function(req, res, next) {
+    .delete(Verify.verifyAdmin, function(req, res, next) {
         Schools.findById(req.params.id, function(err, school) {
             if (err) next(err);
 
@@ -94,8 +98,9 @@ schoolsRouter.route('/:id')
     });
 
 schoolsRouter.route('/:id/suspend')
+    .all(Verify.verifyOrdinaryUser)
     // suspend individual school
-    .put(function(req, res, next) {
+    .put(Verify.verifyAdmin, function(req, res, next) {
         Schools.findById(req.params.id, function(err, school) {
             if (err) next(err);
 

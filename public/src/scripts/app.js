@@ -188,17 +188,27 @@
                 event.preventDefault();
                 $state.go('login');
             } else if (authentication.isAuthenticated() && toState.name == 'login') {
-                $state.go('profile');
+                $state.go('home');
             }
 
-            if (!authentication.isAdmin() && (toState.name == 'schools' || toState.name == 'schools_register')) {
+            if (!authentication.isAdmin() && (toState.name == 'schools' || toState.name == 'schools_register' || toState.name == 'subjects' || toState.name == 'subject_register')) {
                 event.preventDefault();
-                $state.go('profile');
+                $state.go('home');
             }
 
             if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register' || toState.name == 'students' || toState.name == 'students_register' || toState.name == 'classrooms' || toState.name == 'classrooms_register' || toState.name == 'classrooms_set_students' || toState.name == 'activities')) {
                 event.preventDefault();
-                $state.go('profile');
+                $state.go('home');
+            }
+
+            if (!authentication.isTeacher() && (toState.name == 'teacher_classroom' || toState.name == 'classroom_subjects' || toState.name == 'classroom_activities' || toState.name == 'activity_register' || toState.name == 'classroom_tests' || toState.name == 'test_register' || toState.name == 'test_grade')) {
+                event.preventDefault();
+                $state.go('home');
+            }
+
+            if (!authentication.isStudent() && (toState.name == 'student_activities' || toState.name == 'student_tests' || toState.name == 'student_grades')) {
+                event.preventDefault();
+                $state.go('home');
             }
 
         });

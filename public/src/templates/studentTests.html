@@ -38,6 +38,13 @@
                 <td>{{ test.date | date:'MMM. dd, yyyy' }}</td>
                 <td>{{ test.time | date:'hh.mm a' }}</td>
             </tr>
+            <tr ng-show="tests.classroomTests.length < 1">
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
+                <td>NONE</td>
+            </tr>
         </table>
     </div>
 </div>

@@ -5,13 +5,15 @@ var mongoose = require('mongoose');
 var Students = require('../models/students');
 var User = require('../models/users');
 var Classrooms = require('../models/classrooms');
+var Verify = require('./verify');
 var classroomsRouter = express.Router();
 classroomsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/classrooms
 classroomsRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all classrooms
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Classrooms.find({}, function(err, classrooms) {
             if (err) next(err);
 
@@ -19,7 +21,7 @@ classroomsRouter.route('/')
         });
     })
     // POST a classroom
-    .post(function(req, res, next) {
+    .post(Verify.verifySchoolAdmin, function(req, res, next) {
         Classrooms.create(req.body, function(err, classroom) {
             if (err) next(err);
 
@@ -32,8 +34,9 @@ classroomsRouter.route('/')
     });
 
 classroomsRouter.route('/school/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET all classrooms from individual school
-    .get(function(req, res, next) {
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Classrooms.find({ school: req.params.id })
             .populate('teacher')
             .populate('students')
@@ -46,8 +49,9 @@ classroomsRouter.route('/school/:id')
     });
 
 classroomsRouter.route('/teacher/:id/:year')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual classroom by teacher
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacher, function(req, res, next) {
         Classrooms.findOne({ teacher: req.params.id, schoolYear: req.params.year })
             .populate('schoolYear')
             .populate('students')
@@ -58,6 +62,7 @@ classroomsRouter.route('/teacher/:id/:year')
     });
 
 classroomsRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual classroom
     .get(function(req, res, next) {
         Classrooms.findById(req.params.id)
@@ -81,7 +86,7 @@ classroomsRouter.route('/:id')
         });
     })
     // DELETE individual classroom
-    .delete(function(req, res, next) {
+    .delete(Verify.verifySchoolAdmin, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -91,15 +96,16 @@ classroomsRouter.route('/:id')
     });
 
 classroomsRouter.route('/:id/students')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual classroom's students
-    .get(function(req, res, next) {
-        Classrooms.findById(req.params.id, function(err, classroom) {
-            if (err) next(err);
-            res.json(classroom.students);
-        });
-    })
+    // .get(function(req, res, next) {
+    //     Classrooms.findById(req.params.id, function(err, classroom) {
+    //         if (err) next(err);
+    //         res.json(classroom.students);
+    //     });
+    // })
     // update individual classroom's students
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -124,8 +130,9 @@ classroomsRouter.route('/:id/students')
     });
 
 classroomsRouter.route('/:id/students/delete')
+    .all(Verify.verifyOrdinaryUser)
     // delete individual classroom's students
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -142,8 +149,9 @@ classroomsRouter.route('/:id/students/delete')
     });
 
 classroomsRouter.route('/:id/subjects')
+    .all(Verify.verifyOrdinaryUser)
     // get subjects from a specific classroom
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Classrooms.findById(req.params.id)
             .populate('subjects')
             .exec(function(err, classroom) {
@@ -153,7 +161,7 @@ classroomsRouter.route('/:id/subjects')
             });
     })
     // save subject for a specific classroom
-    .post(function(req, res, next) {
+    .post(Verify.verifyTeacher, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -170,7 +178,7 @@ classroomsRouter.route('/:id/subjects')
         });
     })
     // update individual classroom's subjects
-    .put(function(req, res, next) {
+    .put(Verify.verifyTeacher, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -185,8 +193,9 @@ classroomsRouter.route('/:id/subjects')
     });
 
 classroomsRouter.route('/:id/subjects/delete')
+    .all(Verify.verifyOrdinaryUser)
     // delete individual classroom's subjects
-    .put(function(req, res, next) {
+    .put(Verify.verifyTeacher, function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {
             if (err) next(err);
 
@@ -203,6 +212,7 @@ classroomsRouter.route('/:id/subjects/delete')
     });
 
 classroomsRouter.route('/:id/subjects/:subject')
+    .all(Verify.verifyOrdinaryUser)
     // delete a specific subject from a specific classroom
     .delete(function(req, res, next) {
         Classrooms.findById(req.params.id, function(err, classroom) {

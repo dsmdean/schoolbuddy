@@ -89,3 +89,26 @@ li a .active {
 .test-font {
     font-size: 20px;
 }
+
+.home-listing {
+    min-height: 100px;
+    height: 100%;
+    min-width: 200px;
+    background: #fff !important;
+    border-radius: 10px;
+    border-color: #e9f2f7;
+    border-style: solid;
+    padding: 20px;
+    text-align: center;
+}
+
+.home-container {
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.home-list {
+    width: auto !important;
+    height: 100% !important;
+}

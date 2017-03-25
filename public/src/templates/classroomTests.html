@@ -40,7 +40,7 @@
                 <td>{{ test.date | date:'MMM. dd, yyyy' }}</td>
                 <td>{{ test.time | date:'hh.mm a' }}</td>
                 <td>
-                    <button ng-show="test.past" class="btn btn-xs test-font" title="Test Scores" ui-sref="test_grade({id: test._id})" ng-class="{'btn-info': !test.graded, 'btn-success': test.graded}">&#9745;</button>
+                    <button ng-show="test.past && !test.canceled" class="btn btn-xs test-font" title="Test Scores" ui-sref="test_grade({id: test._id})" ng-class="{'btn-info': !test.graded, 'btn-success': test.graded}">&#9745;</button>
                     <button ng-show="test.upcoming && !test.canceled" class="btn btn-warning btn-xs test-font" title="Rescheduele" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#reschedueleModal">&#9719;</button>
                     <button ng-show="test.upcoming && !test.canceled" class="btn btn-danger btn-xs test-font" title="Cancel" ng-click="tests.setTestToReschedueleDelete(test)" data-toggle="modal" data-target="#deleteModal">&#10008;</button>
                 </td>

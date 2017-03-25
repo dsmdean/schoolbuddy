@@ -3,13 +3,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var Tests = require('../models/tests');
+var Verify = require('./verify');
 var testsRouter = express.Router();
 testsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/tests
 testsRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all tests
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Tests.find({})
             .populate('subject')
             .exec(function(err, tests) {
@@ -19,7 +21,7 @@ testsRouter.route('/')
             });
     })
     // POST a test
-    .post(function(req, res, next) {
+    .post(Verify.verifyTeacher, function(req, res, next) {
         Tests.create(req.body, function(err, test) {
             if (err) next(err);
 
@@ -33,7 +35,7 @@ testsRouter.route('/')
 
 testsRouter.route('/:id')
     // GET individual test
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacher, function(req, res, next) {
         Tests.findById(req.params.id)
             .populate('subject')
             .exec(function(err, test) {
@@ -42,7 +44,7 @@ testsRouter.route('/:id')
             });
     })
     // PUT individual test
-    .put(function(req, res, next) {
+    .put(Verify.verifyTeacher, function(req, res, next) {
         Tests.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, {
@@ -53,7 +55,7 @@ testsRouter.route('/:id')
         });
     })
     // DELETE individual test
-    .delete(function(req, res, next) {
+    .delete(Verify.verifyTeacher, function(req, res, next) {
         Tests.findById(req.params.id, function(err, test) {
             if (err) next(err);
 
@@ -63,8 +65,8 @@ testsRouter.route('/:id')
     });
 
 testsRouter.route('/classroom/:classroom')
-    // GET all tests
-    .get(function(req, res, next) {
+    // GET all tests from a specific classroom
+    .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Tests.find({ classroom: req.params.classroom })
             .populate('subject')
             .exec(function(err, tests) {

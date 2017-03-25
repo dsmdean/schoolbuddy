@@ -45,7 +45,79 @@ exports.verifyAdmin = function(req, res, next) {
         next();
     } else {
         // error
-        var err = new Error('You are not authenticated! (NOT A ADMIN)');
+        var err = new Error('You are authenticated but not a admin!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify school admin
+exports.verifySchoolAdmin = function(req, res, next) {
+    if (req.decoded.school_admin) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a school admin!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify teacher
+exports.verifyTeacher = function(req, res, next) {
+    if (req.decoded.teachers) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a teacher!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify student
+exports.verifyStudent = function(req, res, next) {
+    if (req.decoded.student) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a student!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify admin or school admin
+exports.verifyAdminOrSchoolAdmin = function(req, res, next) {
+    if (req.decoded.admin || req.decoded.school_admin) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a student!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify admin or school admin
+exports.verifySchoolAdminorTeacher = function(req, res, next) {
+    if (req.decoded.school_admin || req.decoded.teachers) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a student!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify teacher or student
+exports.verifyTeacherOrStudent = function(req, res, next) {
+    if (req.decoded.teachers || req.decoded.student) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a student!');
         err.status = 403;
         return next(err);
     }

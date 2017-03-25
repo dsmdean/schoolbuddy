@@ -3,13 +3,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var Subjects = require('../models/subjects');
+var Verify = require('./verify');
 var subjectsRouter = express.Router();
 subjectsRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/subjects
 subjectsRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all subjects
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Subjects.find({}, function(err, subjects) {
             if (err) next(err);
 
@@ -17,7 +19,7 @@ subjectsRouter.route('/')
         });
     })
     // POST a subject
-    .post(function(req, res, next) {
+    .post(Verify.verifyAdmin, function(req, res, next) {
         Subjects.create(req.body, function(err, subject) {
             if (err) next(err);
 
@@ -30,26 +32,27 @@ subjectsRouter.route('/')
     });
 
 subjectsRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual subject
-    .get(function(req, res, next) {
-        Subjects.findById(req.params.id, function(err, subject) {
-            if (err) next(err);
-            res.json(subject);
-        });
-    })
+    // .get(function(req, res, next) {
+    //     Subjects.findById(req.params.id, function(err, subject) {
+    //         if (err) next(err);
+    //         res.json(subject);
+    //     });
+    // })
     // PUT individual subject
-    .put(function(req, res, next) {
-        Subjects.findByIdAndUpdate(req.params.id, {
-            $set: req.body
-        }, {
-            new: true
-        }, function(err, subject) {
-            if (err) next(err);
-            res.json(subject);
-        });
-    })
+    // .put(function(req, res, next) {
+    //     Subjects.findByIdAndUpdate(req.params.id, {
+    //         $set: req.body
+    //     }, {
+    //         new: true
+    //     }, function(err, subject) {
+    //         if (err) next(err);
+    //         res.json(subject);
+    //     });
+    // })
     // DELETE individual subject
-    .delete(function(req, res, next) {
+    .delete(Verify.verifyAdmin, function(req, res, next) {
         Subjects.findById(req.params.id, function(err, subject) {
             if (err) next(err);
 

@@ -1,19 +1,230 @@
-<div class="col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
+<div ng-show="home.loading" class="loading" ng-include="'templates/spinner.html'"></div>
 
+<div class="col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="margin-bottom: 50px">
     <div ng-show="home.isAdmin">
-        <h1>{{ home.message }}</h1>
+        <h1>School Buddy System!</h1>
 
-        <h3>Number of schools listed: {{ home.schoolCount }}</h3>
-        <h3>Number of classrooms listed: {{ home.classroomCount }}</h3>
-        <h3>Number of students listed: {{ home.studentCount }}</h3>
-        <h3>Number of teachers listed: {{ home.teacherCount }}</h3>
+        <div class="row">
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="schools" title="Schools">
+                        <img ng-src="http://www.schoolsofhope.org/wp-content/themes/schoolsofhope/img/home-school-house.png" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Schools
+                    <span class="badge" title="Schools Count">{{ home.schoolCount }}</span>
+                </h4>
+                <a ui-sref="schools">View</a> |
+                <a ui-sref="schools_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="subjects" title="Subjects">
+                        <img ng-src="http://www.improvementexam.com/wp-content/uploads/subjects.jpg" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Subjects
+                    <span class="badge" title="Subjects Count">{{ home.subjectsCount }}</span>
+                </h4>
+                <a ui-sref="subjects">View</a> |
+                <a ui-sref="subject_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <img ng-src="https://img.clipartfest.com/5554e56fb059c96c9dc716d81e679abf_classroom-with-green-board-and-clipart-in-classroom_6168-3937.png" height="150px" />
+                </div>
+
+                <h4 style="margin-top:19px;">Classrooms
+                    <span class="badge" title="Classrooms Count">{{ home.classroomCount }}</span>
+                </h4>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <img ng-src="https://img.abcmouse.com/home/schools/html5/teacher.png" height="150px" />
+                </div>
+
+                <h4 style="margin-top:19px;">Teachers
+                    <span class="badge" title="Teachers Count">{{ home.teacherCount }}</span>
+                </h4>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <img ng-src="http://www.iltaforyouth.com/wp-content/uploads/2015/09/Activities-Group1.png" height="150px" />
+                </div>
+
+                <h4 style="margin-top:19px;">Students
+                    <span class="badge" title="Students Count">{{ home.studentCount }}</span>
+                </h4>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <img ng-src="https://www.oxfordshire.gov.uk/cms/sites/default/files/styles/content_image/public/content/large_image/children%27s%20activities.jpg?itok=OdAZiwlS" height="150px" />
+                </div>
+
+                <h4 style="margin-top:19px;">Activities
+                    <span class="badge" title="Activities Count">{{ home.activitiesCount }}</span>
+                </h4>
+            </div>
+        </div>
     </div>
 
     <div ng-show="home.isSchoolAdmin">
-        <h1>{{ home.currentSchool.name }}</h1>
+        <h1>School: {{ home.currentSchool.name }}</h1>
 
-        <h3>Number of classrooms listed: {{ home.classroomCount }}</h3>
-        <h3>Number of students listed: {{ home.studentCount }}</h3>
-        <h3>Number of teachers listed: {{ home.teacherCount }}</h3>
+        <div class="row">
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="classrooms" title="Classrooms">
+                        <img ng-src="https://img.clipartfest.com/5554e56fb059c96c9dc716d81e679abf_classroom-with-green-board-and-clipart-in-classroom_6168-3937.png" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Classrooms
+                    <span class="badge" title="Classrooms Count">{{ home.classroomCount }}</span>
+                </h4>
+                <a ui-sref="classrooms">View</a> |
+                <a ui-sref="classrooms_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="teachers" title="Teachers">
+                        <img ng-src="https://img.abcmouse.com/home/schools/html5/teacher.png" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Teachers
+                    <span class="badge" title="Teachers Count">{{ home.teacherCount }}</span>
+                </h4>
+                <a ui-sref="teachers">View</a> |
+                <a ui-sref="teachers_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="students" title="Students">
+                        <img ng-src="http://www.iltaforyouth.com/wp-content/uploads/2015/09/Activities-Group1.png" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Students
+                    <span class="badge" title="Students Count">{{ home.studentCount }}</span>
+                </h4>
+                <a ui-sref="students">View</a> |
+                <a ui-sref="students_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="activities" title="Activities">
+                        <img ng-src="https://www.oxfordshire.gov.uk/cms/sites/default/files/styles/content_image/public/content/large_image/children%27s%20activities.jpg?itok=OdAZiwlS" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Activities
+                    <span class="badge" title="Activities Count">{{ home.activitiesCount }}</span>
+                </h4>
+                <a ui-sref="activities">View</a>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="home.isTeacher">
+        <h1>Teacher: {{ home.currentTeacher.firstname }} {{ home.currentTeacher.lastname }}</h1>
+
+        <div class="row">
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="teacher_classroom" title="Students">
+                        <img ng-src="http://www.iltaforyouth.com/wp-content/uploads/2015/09/Activities-Group1.png" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Students
+                    <span class="badge" title="Students Count">{{ home.studentsCount }}</span>
+                </h4>
+                <a ui-sref="teacher_classroom">View</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="classroom_subjects" title="Subjects">
+                        <img ng-src="http://www.improvementexam.com/wp-content/uploads/subjects.jpg" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Subjects
+                    <span class="badge" title="Subjects Count">{{ home.subjectsCount }}</span>
+                </h4>
+                <a ui-sref="classroom_subjects">View</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="classroom_activities" title="Activities">
+                        <img ng-src="https://www.oxfordshire.gov.uk/cms/sites/default/files/styles/content_image/public/content/large_image/children%27s%20activities.jpg?itok=OdAZiwlS" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Activities
+                    <span class="badge" title="Activities Count">{{ home.activitiesCount }}</span>
+                </h4>
+                <a ui-sref="classroom_activities">View</a> |
+                <a ui-sref="activity_register">Add</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="classroom_tests" title="Tests">
+                        <img ng-src="http://www-tc.pbskids.org/itsmylife/images/teststress1.gif" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Tests
+                    <span class="badge" title="Tests Count">{{ home.testsCount }}</span>
+                </h4>
+                <a ui-sref="classroom_tests">View</a> |
+                <a ui-sref="test_register">Add</a>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="home.isStudent">
+        <h1>Student: {{ home.currentStudent.firstname }} {{ home.currentStudent.lastname }}</h1>
+
+        <div class="row">
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="student_activities" title="Activities">
+                        <img ng-src="https://www.oxfordshire.gov.uk/cms/sites/default/files/styles/content_image/public/content/large_image/children%27s%20activities.jpg?itok=OdAZiwlS" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Activities
+                    <span class="badge" title="Activities Count">{{ home.activitiesCount }}</span>
+                </h4>
+                <a ui-sref="student_activities">View</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="student_tests" title="Tests">
+                        <img ng-src="http://www-tc.pbskids.org/itsmylife/images/teststress1.gif" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Tests
+                    <span class="badge" title="Tests Count">{{ home.testsCount }}</span>
+                </h4>
+                <a ui-sref="student_tests">View</a>
+            </div>
+            <div class="col-md-6 home-listing boxInner">
+                <div class="home-container">
+                    <a ui-sref="student_grades" title="Grades">
+                        <img ng-src="http://www.lessons4living.com/images/penclchk.gif" height="150px" />
+                    </a>
+                </div>
+
+                <h4 style="margin-top:19px;">Grades
+                    <span class="badge" title="Grades Count">{{ home.gradesCount }}</span>
+                </h4>
+                <a ui-sref="student_grades">View</a>
+            </div>
+        </div>
     </div>
 </div>

@@ -5,20 +5,22 @@ var passport = require('passport');
 
 var User = require('../models/users');
 var Teachers = require('../models/teachers');
+var Verify = require('./verify');
 var teachersRouter = express.Router();
 teachersRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/teachers
 teachersRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all teachers
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Teachers.find({}, function(err, teachers) {
             if (err) next(err);
             res.json(teachers);
         });
     })
     // POST a teacher
-    .post(function(req, res, next) {
+    .post(Verify.verifySchoolAdmin, function(req, res, next) {
         // create teacher
         User.register(new User({ username: req.body.username, firstname: req.body.firstname, lastname: req.body.lastname, teachers: true }),
             req.body.password,
@@ -47,8 +49,9 @@ teachersRouter.route('/')
     });
 
 teachersRouter.route('/school/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET all teachers from individual school
-    .get(function(req, res, next) {
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Teachers.find({ school: req.params.id })
             .populate('teacher')
             .exec(function(err, teachers) {
@@ -58,8 +61,9 @@ teachersRouter.route('/school/:id')
     });
 
 teachersRouter.route('/admin/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual teacher by userID
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacher, function(req, res, next) {
         Teachers.findOne({ teacher: req.params.id }, function(err, teacher) {
             if (err) next(err);
             res.json(teacher);
@@ -67,17 +71,18 @@ teachersRouter.route('/admin/:id')
     });
 
 teachersRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual teacher
-    .get(function(req, res, next) {
-        Teachers.findById(req.params.id)
-            .populate('teacher')
-            .exec(function(err, teacher) {
-                if (err) next(err);
-                res.json(teacher);
-            });
-    })
+    // .get(function(req, res, next) {
+    //     Teachers.findById(req.params.id)
+    //         .populate('teacher')
+    //         .exec(function(err, teacher) {
+    //             if (err) next(err);
+    //             res.json(teacher);
+    //         });
+    // })
     // PUT individual teacher
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdminorTeacher, function(req, res, next) {
         Teachers.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, {
@@ -88,7 +93,7 @@ teachersRouter.route('/:id')
         });
     })
     // DELETE individual teacher
-    .delete(function(req, res, next) {
+    .delete(Verify.verifySchoolAdmin, function(req, res, next) {
         Teachers.findById(req.params.id, function(err, teacher) {
             if (err) next(err);
 
@@ -104,8 +109,9 @@ teachersRouter.route('/:id')
     });
 
 teachersRouter.route('/:id/suspend')
+    .all(Verify.verifyOrdinaryUser)
     // suspend individual teacher
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Teachers.findById(req.params.id, function(err, teacher) {
             if (err) next(err);
 

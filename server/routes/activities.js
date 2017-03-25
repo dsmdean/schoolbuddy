@@ -4,13 +4,15 @@ var mongoose = require('mongoose');
 
 var Classrooms = require('../models/classrooms');
 var Activities = require('../models/activities');
+var Verify = require('./verify');
 var activitiesRouter = express.Router();
 activitiesRouter.use(bodyParser.json());
 
 // http://localhost:3000/api/activities
 activitiesRouter.route('/')
+    .all(Verify.verifyOrdinaryUser)
     // GET all activites
-    .get(function(req, res, next) {
+    .get(Verify.verifyAdmin, function(req, res, next) {
         Activities.find({}, function(err, activities) {
             if (err) next(err);
 
@@ -18,7 +20,7 @@ activitiesRouter.route('/')
         });
     })
     // POST a activity
-    .post(function(req, res, next) {
+    .post(Verify.verifyTeacher, function(req, res, next) {
         Activities.create(req.body, function(err, activity) {
             if (err) next(err);
 
@@ -31,8 +33,9 @@ activitiesRouter.route('/')
     });
 
 activitiesRouter.route('/classroom/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET activities from individual classroom
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Activities.find({ classroom: req.params.id })
             .populate('classroom')
             .exec(function(err, activities) {
@@ -42,8 +45,9 @@ activitiesRouter.route('/classroom/:id')
     });
 
 activitiesRouter.route('/school/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET activities from individual school
-    .get(function(req, res, next) {
+    .get(Verify.verifySchoolAdmin, function(req, res, next) {
         Activities.find({ school: req.params.id })
             .populate('classroom')
             .exec(function(err, activities) {
@@ -53,8 +57,9 @@ activitiesRouter.route('/school/:id')
     });
 
 activitiesRouter.route('/teacher/:id/:year')
+    .all(Verify.verifyOrdinaryUser)
     // GET activities from individual classroom connected to individual teacher
-    .get(function(req, res, next) {
+    .get(Verify.verifyTeacher, function(req, res, next) {
         Classrooms.findOne({ teacher: req.params.id, schoolYear: req.params.year }, function(err, classroom) {
             if (err) next(err);
 
@@ -70,15 +75,16 @@ activitiesRouter.route('/teacher/:id/:year')
     });
 
 activitiesRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual activity
-    .get(function(req, res, next) {
-        Activities.findById(req.params.id, function(err, activity) {
-            if (err) next(err);
-            res.json(activity);
-        });
-    })
+    // .get(function(req, res, next) {
+    //     Activities.findById(req.params.id, function(err, activity) {
+    //         if (err) next(err);
+    //         res.json(activity);
+    //     });
+    // })
     // PUT individual activity
-    .put(function(req, res, next) {
+    .put(Verify.verifySchoolAdmin, function(req, res, next) {
         Activities.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, {
