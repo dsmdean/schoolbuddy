@@ -50,9 +50,9 @@ schoolsRouter.route('/')
     });
 
 schoolsRouter.route('/admin/:id')
-    .all(Verify.verifyOrdinaryUser)
+    // .all(Verify.verifyOrdinaryUser)
     // GET individual school by userID
-    .get(Verify.verifySchoolAdmin, function(req, res, next) {
+    .get(function(req, res, next) {
         Schools.findOne({ school_admin: req.params.id }, function(err, school) {
             if (err) next(err);
             res.json(school);

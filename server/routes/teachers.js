@@ -61,9 +61,9 @@ teachersRouter.route('/school/:id')
     });
 
 teachersRouter.route('/admin/:id')
-    .all(Verify.verifyOrdinaryUser)
+    // .all(Verify.verifyOrdinaryUser)
     // GET individual teacher by userID
-    .get(Verify.verifyTeacher, function(req, res, next) {
+    .get(function(req, res, next) {
         Teachers.findOne({ teacher: req.params.id }, function(err, teacher) {
             if (err) next(err);
             res.json(teacher);

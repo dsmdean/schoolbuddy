@@ -22,8 +22,8 @@
                     return response.data;
                 })
                 .catch(function(response) {
-                    $log.error('Error retrieving schools: ' + response.statusText);
-                    return $q.reject('Error retrieving schools.');
+                    $log.error('Error retrieving school: ' + response.statusText);
+                    return $q.reject('Error retrieving school.');
                 });
         }
 

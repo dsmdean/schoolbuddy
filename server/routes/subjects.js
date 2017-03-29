@@ -11,7 +11,7 @@ subjectsRouter.use(bodyParser.json());
 subjectsRouter.route('/')
     .all(Verify.verifyOrdinaryUser)
     // GET all subjects
-    .get(Verify.verifyAdmin, function(req, res, next) {
+    .get(Verify.verifyAdminOrTeacher, function(req, res, next) {
         Subjects.find({}, function(err, subjects) {
             if (err) next(err);
 

@@ -61,7 +61,7 @@ userRouter.post('/login', function(req, res, next) {
                 });
             }
 
-            var token = Verify.getToken({ "username": user.username, "_id": user._id, "admin": user.admin });
+            var token = Verify.getToken({ "username": user.username, "_id": user._id, "admin": user.admin, "school_admin": user.school_admin, "teachers": user.teachers, "student": user.student });
 
             res.status(200).json({
                 status: 'Login Successful!',

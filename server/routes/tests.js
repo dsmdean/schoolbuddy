@@ -34,6 +34,7 @@ testsRouter.route('/')
     });
 
 testsRouter.route('/:id')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual test
     .get(Verify.verifyTeacher, function(req, res, next) {
         Tests.findById(req.params.id)
@@ -65,6 +66,7 @@ testsRouter.route('/:id')
     });
 
 testsRouter.route('/classroom/:classroom')
+    .all(Verify.verifyOrdinaryUser)
     // GET all tests from a specific classroom
     .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Tests.find({ classroom: req.params.classroom })

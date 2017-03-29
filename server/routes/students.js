@@ -150,8 +150,9 @@ studentsRouter.route('/school/:id')
     });
 
 studentsRouter.route('/admin/:id')
+    // .all(Verify.verifyOrdinaryUser)
     // GET individual student by userID
-    .get(Verify.verifyStudent, function(req, res, next) {
+    .get(function(req, res, next) {
         Students.findOne({ student: req.params.id }, function(err, student) {
             if (err) next(err);
             res.json(student);
@@ -159,6 +160,7 @@ studentsRouter.route('/admin/:id')
     });
 
 studentsRouter.route('/:id/grades/classroom/:classId')
+    .all(Verify.verifyOrdinaryUser)
     // GET individual student's grades from specific classroom
     .get(Verify.verifyTeacherOrStudent, function(req, res, next) {
         Students.findById(req.params.id)

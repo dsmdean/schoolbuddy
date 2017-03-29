@@ -27,6 +27,7 @@ exports.verifyOrdinaryUser = function(req, res, next) {
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
+                // console.log(req.decoded);
                 next();
             }
         });
@@ -93,7 +94,19 @@ exports.verifyAdminOrSchoolAdmin = function(req, res, next) {
         next();
     } else {
         // error
-        var err = new Error('You are authenticated but not a student!');
+        var err = new Error('You are authenticated but not a admin or school admin!');
+        err.status = 403;
+        return next(err);
+    }
+};
+
+// verify admin or teacher
+exports.verifyAdminOrTeacher = function(req, res, next) {
+    if (req.decoded.admin || req.decoded.teachers) {
+        next();
+    } else {
+        // error
+        var err = new Error('You are authenticated but not a admin or teacher!');
         err.status = 403;
         return next(err);
     }
@@ -105,7 +118,7 @@ exports.verifySchoolAdminorTeacher = function(req, res, next) {
         next();
     } else {
         // error
-        var err = new Error('You are authenticated but not a student!');
+        var err = new Error('You are authenticated but not a school admin or teacher!');
         err.status = 403;
         return next(err);
     }
@@ -117,7 +130,7 @@ exports.verifyTeacherOrStudent = function(req, res, next) {
         next();
     } else {
         // error
-        var err = new Error('You are authenticated but not a student!');
+        var err = new Error('You are authenticated but not a teacher or student!');
         err.status = 403;
         return next(err);
     }
