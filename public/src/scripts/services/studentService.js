@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function studentService(notifier, $http, $log) {
+    function studentService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllStudents() {
-            return $http.get(baseURL + '/api/students')
+            return $http.get(baseURL + '/api/students', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,7 +19,10 @@
         }
 
         function getStudentsBySchool(schoolID) {
-            return $http.get(baseURL + '/api/students/school/' + schoolID)
+            $rootScope.schoolID = schoolID;
+            return $http.get(baseURL + '/api/students/school/' + schoolID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -28,7 +33,10 @@
         }
 
         function getStudentByUserId(userID) {
-            return $http.get(baseURL + '/api/students/admin/' + userID)
+            $rootScope.userID = userID;
+            return $http.get(baseURL + '/api/students/admin/' + userID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -50,6 +58,7 @@
         }
 
         function registerStudent(newStudent) {
+            cacheService.deleteStudentsBySchool();
             return $http.post(baseURL + '/api/students', newStudent)
                 .then(function(response) {
                     return response.data;
@@ -61,6 +70,8 @@
         }
 
         function updateStudent(student) {
+            cacheService.deleteStudentByUserId();
+            // update local student data
             return $http.put(baseURL + '/api/students/' + student._id, student)
                 .then(function(response) {
                     return response.data;
@@ -72,6 +83,7 @@
         }
 
         function deleteStudent(studentID) {
+            cacheService.deleteStudentsBySchool();
             return $http.delete(baseURL + '/api/students/' + studentID)
                 .then(function(response) {
                     return response.data;
@@ -83,6 +95,7 @@
         }
 
         function suspendStudent(studentID) {
+            cacheService.deleteStudentsBySchool();
             return $http.put(baseURL + '/api/students/' + studentID + '/suspend')
                 .then(function(response) {
                     return response.data;
@@ -93,8 +106,12 @@
                 });
         }
 
-        function getStudentGrades(studentID, classroomId) {
-            return $http.get(baseURL + '/api/students/' + studentID + '/grades/classroom/' + classroomId)
+        function getStudentGrades(studentID, classroomID) {
+            $rootScope.studentID = studentID;
+            $rootScope.classroomID = classroomID;
+            return $http.get(baseURL + '/api/students/' + studentID + '/grades/classroom/' + classroomID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -118,6 +135,6 @@
     }
 
     angular.module('app')
-        .factory('studentService', ['notifier', '$http', '$log', studentService]);
+        .factory('studentService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', studentService]);
 
 }());

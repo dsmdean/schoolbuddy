@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function teacherService(notifier, $http, $log) {
+    function teacherService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllTeachers() {
-            return $http.get(baseURL + '/api/teachers')
+            return $http.get(baseURL + '/api/teachers', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,7 +19,10 @@
         }
 
         function getTeachersBySchool(schoolID) {
-            return $http.get(baseURL + '/api/teachers/school/' + schoolID)
+            $rootScope.schoolID = schoolID;
+            return $http.get(baseURL + '/api/teachers/school/' + schoolID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -28,7 +33,10 @@
         }
 
         function getTeacherByUserId(userID) {
-            return $http.get(baseURL + '/api/teachers/admin/' + userID)
+            $rootScope.userID = userID;
+            return $http.get(baseURL + '/api/teachers/admin/' + userID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -39,6 +47,7 @@
         }
 
         function registerTeacher(newTeacher) {
+            cacheService.deleteTeachersBySchool();
             return $http.post(baseURL + '/api/teachers', newTeacher)
                 .then(function(response) {
                     return response.data;
@@ -50,6 +59,8 @@
         }
 
         function updateTeacher(teacher) {
+            cacheService.deleteTeachersBySchool();
+            // update local teacher data
             return $http.put(baseURL + '/api/teachers/' + teacher._id, teacher)
                 .then(function(response) {
                     return response.data;
@@ -61,6 +72,7 @@
         }
 
         function deleteTeacher(teacherID) {
+            cacheService.deleteTeachersBySchool();
             return $http.delete(baseURL + '/api/teachers/' + teacherID)
                 .then(function(response) {
                     return response.data;
@@ -72,6 +84,7 @@
         }
 
         function suspendTeacher(teacherID) {
+            cacheService.deleteTeachersBySchool();
             return $http.put(baseURL + '/api/teachers/' + teacherID + '/suspend')
                 .then(function(response) {
                     return response.data;
@@ -94,6 +107,6 @@
     }
 
     angular.module('app')
-        .factory('teacherService', ['notifier', '$http', '$log', teacherService]);
+        .factory('teacherService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', teacherService]);
 
 }());

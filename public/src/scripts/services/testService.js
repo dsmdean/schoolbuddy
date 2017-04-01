@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function testService(notifier, $http, $log) {
+    function testService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllTests() {
-            return $http.get(baseURL + '/api/tests')
+            return $http.get(baseURL + '/api/tests', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,6 +19,7 @@
         }
 
         function registerTest(newTest) {
+            cacheService.deleteTestByClassroom();
             return $http.post(baseURL + '/api/tests', newTest)
                 .then(function(response) {
                     return response.data;
@@ -38,8 +41,11 @@
                 });
         }
 
-        function getTestByClassroom(classroomId) {
-            return $http.get(baseURL + '/api/tests/classroom/' + classroomId)
+        function getTestByClassroom(classroomID) {
+            $rootScope.classroomID = classroomID;
+            return $http.get(baseURL + '/api/tests/classroom/' + classroomID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -50,6 +56,7 @@
         }
 
         function updateTest(newTest) {
+            cacheService.deleteTestByClassroom();
             return $http.put(baseURL + '/api/tests/' + newTest._id, newTest)
                 .then(function(response) {
                     return response.data;
@@ -61,6 +68,7 @@
         }
 
         function deleteTest(testID) {
+            cacheService.deleteTestByClassroom();
             return $http.delete(baseURL + '/api/tests/' + testID)
                 .then(function(response) {
                     return response.data;
@@ -72,6 +80,8 @@
         }
 
         function gradeTest(grades) {
+            cacheService.deleteTestByClassroom();
+            // update local classroom data
             return $http.post(baseURL + '/api/students/grade', grades)
                 .then(function(response) {
                     return response.data;
@@ -94,6 +104,6 @@
     }
 
     angular.module('app')
-        .factory('testService', ['notifier', '$http', '$log', testService]);
+        .factory('testService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', testService]);
 
 }());

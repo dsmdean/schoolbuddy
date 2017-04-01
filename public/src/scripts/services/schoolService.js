@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function schoolService(notifier, $http, $log) {
+    function schoolService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllSchools() {
-            return $http.get(baseURL + '/api/schools')
+            return $http.get(baseURL + '/api/schools', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,7 +19,10 @@
         }
 
         function getSchoolByUserId(userID) {
-            return $http.get(baseURL + '/api/schools/admin/' + userID)
+            $rootScope.userID = userID;
+            return $http.get(baseURL + '/api/schools/admin/' + userID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -28,6 +33,7 @@
         }
 
         function registerSchool(newSchool) {
+            cacheService.deleteAllSchools();
             return $http.post(baseURL + '/api/schools', newSchool)
                 .then(function(response) {
                     return response.data;
@@ -39,6 +45,8 @@
         }
 
         function updateSchool(school) {
+            cacheService.deleteSchoolByUserId();
+            // update local school data
             return $http.put(baseURL + '/api/schools/' + school._id, school)
                 .then(function(response) {
                     return response.data;
@@ -50,6 +58,7 @@
         }
 
         function deleteSchool(schoolID) {
+            cacheService.deleteAllSchools();
             return $http.delete(baseURL + '/api/schools/' + schoolID)
                 .then(function(response) {
                     return response.data;
@@ -61,6 +70,7 @@
         }
 
         function suspendSchool(schoolID) {
+            cacheService.deleteAllSchools();
             return $http.put(baseURL + '/api/schools/' + schoolID + '/suspend')
                 .then(function(response) {
                     return response.data;
@@ -82,6 +92,6 @@
     }
 
     angular.module('app')
-        .factory('schoolService', ['notifier', '$http', '$log', schoolService]);
+        .factory('schoolService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', schoolService]);
 
 }());

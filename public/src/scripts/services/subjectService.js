@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function subjectService(notifier, $http, $log) {
+    function subjectService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllSubjects() {
-            return $http.get(baseURL + '/api/subjects')
+            return $http.get(baseURL + '/api/subjects', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,6 +19,7 @@
         }
 
         function registerSubject(subject) {
+            cacheService.deleteAllSubjects();
             return $http.post(baseURL + '/api/subjects', subject)
                 .then(function(response) {
                     return response.data;
@@ -28,6 +31,7 @@
         }
 
         function deleteSubject(subjectID) {
+            cacheService.deleteAllSubjects();
             return $http.delete(baseURL + '/api/subjects/' + subjectID)
                 .then(function(response) {
                     return response.data;
@@ -39,6 +43,8 @@
         }
 
         function addSubjectsToClassroom(classroomID, subjects) {
+            cacheService.deleteClassroomSubjects();
+            // update local classroom data
             return $http.put(baseURL + '/api/classrooms/' + classroomID + '/subjects', subjects)
                 .then(function(response) {
                     return response.data;
@@ -50,6 +56,8 @@
         }
 
         function deleteSubjectsFromClassroom(classroomID, subjects) {
+            cacheService.deleteClassroomSubjects();
+            // update local classroom data
             return $http.put(baseURL + '/api/classrooms/' + classroomID + '/subjects/delete', subjects)
                 .then(function(response) {
                     return response.data;
@@ -70,6 +78,6 @@
     }
 
     angular.module('app')
-        .factory('subjectService', ['notifier', '$http', '$log', subjectService]);
+        .factory('subjectService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', subjectService]);
 
 }());

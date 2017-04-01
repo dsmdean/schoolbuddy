@@ -17,7 +17,9 @@
         }
 
         function getCurrentYear() {
-            return $http.get(baseURL + '/api/schoolyear/current')
+            return $http.get(baseURL + '/api/schoolyear/current', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })

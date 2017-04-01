@@ -17,6 +17,7 @@
                         data: user
                     })
                     .then(function(response) {
+                        // update local user data
                         authentication.updateCurrentUser(user);
                         return 'User updated: ' + response.config.data.username;
                     })
@@ -28,6 +29,7 @@
                         data: user
                     })
                     .then(function(response) {
+                        // update local user data
                         authentication.updateCurrentUser(user);
                         return 'User updated: ' + response.config.data.username;
                     })

@@ -1,12 +1,14 @@
 (function() {
     'use strict';
 
-    function classroomService(notifier, $http, $log) {
+    function classroomService(notifier, $http, $log, cacheService, $rootScope) {
 
         var baseURL = 'http://localhost:3000';
 
         function getAllClassrooms() {
-            return $http.get(baseURL + '/api/classrooms')
+            return $http.get(baseURL + '/api/classrooms', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -17,7 +19,10 @@
         }
 
         function getClassroomsBySchool(schoolID) {
-            return $http.get(baseURL + '/api/classrooms/school/' + schoolID)
+            $rootScope.schoolID = schoolID;
+            return $http.get(baseURL + '/api/classrooms/school/' + schoolID, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -28,7 +33,11 @@
         }
 
         function getClassroomByTeacher(teacherID, year) {
-            return $http.get(baseURL + '/api/classrooms/teacher/' + teacherID + '/' + year)
+            $rootScope.teacherID = teacherID;
+            $rootScope.yearID = year;
+            return $http.get(baseURL + '/api/classrooms/teacher/' + teacherID + '/' + year, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -72,6 +81,7 @@
         }
 
         function registerClassroom(newClassroom) {
+            cacheService.deleteClassroomsBySchool();
             return $http.post(baseURL + '/api/classrooms', newClassroom)
                 .then(function(response) {
                     return response.data;
@@ -94,6 +104,7 @@
         }
 
         function deleteClassroom(classroomID) {
+            cacheService.deleteClassroomsBySchool();
             return $http.delete(baseURL + '/api/classrooms/' + classroomID)
                 .then(function(response) {
                     return response.data;
@@ -105,7 +116,10 @@
         }
 
         function getClassroomSubjects(classroomID) {
-            return $http.get(baseURL + '/api/classrooms/' + classroomID + '/subjects')
+            $rootScope.classroomID = classroomID;
+            return $http.get(baseURL + '/api/classrooms/' + classroomID + '/subjects', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -130,6 +144,6 @@
     }
 
     angular.module('app')
-        .factory('classroomService', ['notifier', '$http', '$log', classroomService]);
+        .factory('classroomService', ['notifier', '$http', '$log', 'cacheService', '$rootScope', classroomService]);
 
 }());
