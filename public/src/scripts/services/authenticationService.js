@@ -260,6 +260,12 @@
             localStorage.storeObject(TEACHER_DATA, teacher);
         }
 
+        function setCurrentSchool(school) {
+            currentSchool = school;
+            localStorage.remove(SCHOOL_DATA);
+            localStorage.storeObject(SCHOOL_DATA, school);
+        }
+
         function setCurrentClassroom(classroom) {
             currentClassroom = classroom;
             localStorage.remove(CLASSROOM_DATA);
@@ -303,6 +309,7 @@
             updateCurrentUser: updateCurrentUser,
             setCurrentTeacher: setCurrentTeacher,
             setCurrentClassroom: setCurrentClassroom,
+            setCurrentSchool: setCurrentSchool,
             getCurrentClassroom: getCurrentClassroom,
             getCurrentStudent: getCurrentStudent,
             getCurrentYear: getCurrentYear,

@@ -97,6 +97,28 @@ schoolsRouter.route('/:id')
         });
     });
 
+schoolsRouter.route('/:id/principal')
+    .all(Verify.verifyOrdinaryUser)
+    // GET individual school by userID
+    .post(Verify.verifySchoolAdmin, function(req, res, next) {
+        Schools.findById(req.params.id, function(err, school) {
+            if (err) next(err);
+
+            for (var i = 0; i < school.principals.length; i++) {
+                if (school.principals[i].current) {
+                    school.principals[i].current = false;
+                    school.principals[i].endDate = Date.now();
+                    break;
+                }
+            }
+
+            req.body.startDate = Date.now();
+            school.principals.push(req.body);
+            school.save();
+            res.json(school.principals);
+        });
+    });
+
 schoolsRouter.route('/:id/suspend')
     .all(Verify.verifyOrdinaryUser)
     // suspend individual school

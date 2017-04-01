@@ -81,13 +81,27 @@
                 });
         }
 
+        function registerPrincipal(schoolID, newPrincipal) {
+            cacheService.deleteSchoolByUserId();
+            // update local school data
+            return $http.post(baseURL + '/api/schools/' + schoolID + '/principal', newPrincipal)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error posting principal: ' + response.statusText);
+                    return $q.reject('Error posting principal.');
+                });
+        }
+
         return {
             getAllSchools: getAllSchools,
             getSchoolByUserId: getSchoolByUserId,
             registerSchool: registerSchool,
             updateSchool: updateSchool,
             deleteSchool: deleteSchool,
-            suspendSchool: suspendSchool
+            suspendSchool: suspendSchool,
+            registerPrincipal: registerPrincipal
         };
     }
 

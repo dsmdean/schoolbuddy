@@ -163,6 +163,18 @@
                 controller: 'StudentGradesController',
                 controllerAs: 'grades',
                 templateUrl: 'templates/studentGrades.html'
+            })
+            .state('school_principals', {
+                url: '/principals',
+                controller: 'PrincipalController',
+                controllerAs: 'principals',
+                templateUrl: 'templates/principals.html'
+            })
+            .state('principal_register', {
+                url: '/principals/register',
+                controller: 'PrincipalRegisterController',
+                controllerAs: 'principal',
+                templateUrl: 'templates/newPrincipal.html'
             });
 
     }]);
