@@ -29,9 +29,33 @@
                 });
         }
 
+        function registerSchoolyear(year) {
+            return $http.post(baseURL + '/api/schoolyear', year)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error posting schoolyear: ' + response.statusText);
+                    return $q.reject('Error posting schoolyear.');
+                });
+        }
+
+        function setCurrentYear(year) {
+            return $http.put(baseURL + '/api/schoolyear/current', year)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error setting current schoolyear: ' + response.statusText);
+                    return $q.reject('Error setting current schoolyear.');
+                });
+        }
+
         return {
             getAllYears: getAllYears,
-            getCurrentYear: getCurrentYear
+            getCurrentYear: getCurrentYear,
+            registerSchoolyear: registerSchoolyear,
+            setCurrentYear: setCurrentYear
         };
     }
 

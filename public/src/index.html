@@ -35,9 +35,10 @@
                 <ul class="nav navbar-nav">
                     <li ng-class="header.getClass('/schools')" ng-show="header.isAdmin"><a ui-sref="schools">Schools</a></li>
                     <li ng-class="header.getClass('/subjects')" ng-show="header.isAdmin"><a ui-sref="subjects">Subjects</a></li>
+                    <li ng-class="header.getClass('/schoolyears')" ng-show="header.isAdmin"><a ui-sref="schoolyears">Schoolyears</a></li>
 
                     <li ng-class="header.getClass('/classrooms')" ng-show="header.isSchoolAdmin"><a ui-sref="classrooms">Classrooms</a></li>
-                    <li ng-class="header.getClass('/principals')" ng-show="header.isSchoolAdmin"><a ui-sref="school_principals">Principals</a></li>
+                    <li ng-class="header.getClass('/principals')" ng-show="header.isSchoolAdmin"><a ui-sref="principals">Principals</a></li>
                     <li ng-class="header.getClass('/teachers')" ng-show="header.isSchoolAdmin"><a ui-sref="teachers">Teachers</a></li>
                     <li ng-class="header.getClass('/students')" ng-show="header.isSchoolAdmin"><a ui-sref="students">Students</a></li>
                     <li ng-class="header.getClass('/activities')" ng-show="header.isSchoolAdmin"><a ui-sref="activities">Activities</a></li>
@@ -120,6 +121,8 @@
     <script src="scripts/controllers/StudentGradesController.js"></script>
     <script src="scripts/controllers/PrincipalController.js"></script>
     <script src="scripts/controllers/PrincipalRegisterController.js"></script>
+    <script src="scripts/controllers/SchoolyearsController.js"></script>
+    <script src="scripts/controllers/SchoolyearRegisterController.js"></script>
     <!-- endbuild -->
 
 </body>

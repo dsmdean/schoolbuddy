@@ -164,7 +164,7 @@
                 controllerAs: 'grades',
                 templateUrl: 'templates/studentGrades.html'
             })
-            .state('school_principals', {
+            .state('principals', {
                 url: '/principals',
                 controller: 'PrincipalController',
                 controllerAs: 'principals',
@@ -175,6 +175,18 @@
                 controller: 'PrincipalRegisterController',
                 controllerAs: 'principal',
                 templateUrl: 'templates/newPrincipal.html'
+            })
+            .state('schoolyears', {
+                url: '/schoolyears',
+                controller: 'SchoolyearsController',
+                controllerAs: 'schoolyears',
+                templateUrl: 'templates/schoolyears.html'
+            })
+            .state('schoolyear_register', {
+                url: '/schoolyears/register',
+                controller: 'SchoolyearRegisterController',
+                controllerAs: 'schoolyear',
+                templateUrl: 'templates/newSchoolyear.html'
             });
 
     }]);

@@ -1,0 +1,49 @@
+<div ng-show="schoolyears.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h1 class="col-md-offset-1 col-lg-offset-1">
+    Schoolyears
+    <button class="btn btn-primary btn-sm" title="Start New Schoolyear" ui-sref="schoolyear_register">&#10010;</button>
+</h1>
+
+<div class="col-md-5 col-lg-5 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Schoolyears</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="schoolyear in schoolyears.schoolyears | filter:schoolyears.currentFilter" class="info">
+                <td>{{ schoolyear.year }}</td>
+                <td></td>
+            </tr>
+            <tr ng-repeat="schoolyear in schoolyears.schoolyears | filter:schoolyears.myFilter | orderBy: '-year'">
+                <td>{{ schoolyear.year }}</td>
+                <td>
+                    <button class="btn btn-primary btn-xs" title="Make Current Year" ng-click="schoolyears.makeYearCurrent(schoolyear)" data-toggle="modal" data-target="#modal">&#10004;</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <br/>
+                <h4 class="modal-title">Do you want to make the year <strong>{{schoolyears.yearToMakeCurrent.year}}</strong> the current schoolyear?</h4>
+                <br/>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="schoolyears.setCurrentYear()" data-dismiss="modal">Yes, Make It The Current Schoolyear</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave School</button>
+            </div>
+        </div>
+    </div>
+</div>

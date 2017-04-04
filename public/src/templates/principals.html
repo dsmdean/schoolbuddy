@@ -38,21 +38,3 @@
         </table>
     </div>
 </div>
-
-<!-- Confirm Modal -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="padding: 30px;">
-                <h4 ng-hide="teachers.teacherStopped.teacher !== undefined" class="modal-title">Do you want to {{teachers.teacherDeleteSuspendData.action}} the teacher named "<strong>{{teachers.teacherDeleteSuspendData.name}}</strong>"?</h4>
-                <h4 ng-show="teachers.teacherStopped.teacher !== undefined" class="modal-title">Did the teacher "<strong>{{teachers.teacherStopped.firstname}} {{teachers.teacherStopped.lastname}}</strong>" stop working here?</h4>
-                <br/>
-                <button ng-show="teachers.teacherStopped.teacher !== undefined" type="button" class="btn btn-info btn-sm" data-dismiss="modal" ng-click="teachers.stopWorking()">Yes, The Teacher Stopped</button>
-                <button ng-show="teachers.teacherDeleteSuspendData.action === 'delete'" type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="teachers.deleteTeacher()">Yes, Delete Teacher</button>
-                <button ng-show="teachers.teacherDeleteSuspendData.action === 'restore'" type="button" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="teachers.suspendTeacher()">Yes, Restore Teacher</button>
-                <button ng-show="teachers.teacherDeleteSuspendData.action === 'suspend'" type="button" class="btn btn-warning btn-sm" data-dismiss="modal" ng-click="teachers.suspendTeacher()">Yes, Suspend Teacher</button>
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="teachers.resetModalData()">No, Leave Teacher</button>
-            </div>
-        </div>
-    </div>
-</div>

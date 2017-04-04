@@ -19,7 +19,7 @@ schoolYearRouter.route('/')
         });
     })
     // POST a school year
-    .post(function(req, res, next) {
+    .post(Verify.verifyAdmin, function(req, res, next) {
         SchoolYear.create(req.body, function(err, schoolYear) {
             if (err) next(err);
 
@@ -39,6 +39,23 @@ schoolYearRouter.route('/current')
             if (err) next(err);
 
             res.json(schoolYear);
+        });
+    })
+    .put(function(req, res, next) {
+        SchoolYear.findOne({ current: true }, function(err, schoolYear) {
+            if (err) next(err);
+
+            schoolYear.current = false;
+            schoolYear.save();
+
+            SchoolYear.findByIdAndUpdate(req.body._id, {
+                $set: req.body
+            }, {
+                new: true
+            }, function(err, currentSchoolYear) {
+                if (err) next(err);
+                res.json(currentSchoolYear);
+            });
         });
     });
 

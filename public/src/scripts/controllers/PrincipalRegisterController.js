@@ -25,7 +25,7 @@
                     authentication.setCurrentSchool(vm.currentSchool);
                     notifier.success('Principal registered!');
                     vm.loading = false;
-                    $state.go('school_principals');
+                    $state.go('principals');
                 })
                 .catch(showError);
         };

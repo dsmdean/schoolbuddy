@@ -16,6 +16,15 @@
         schoolService.getAllSchools()
             .then(function(schools) {
                 vm.allSchools = schools;
+
+                for (var i = 0; i < vm.allSchools.length; i++) {
+                    for (var j = 0; j < vm.allSchools[i].principals.length; j++) {
+                        if (vm.allSchools[i].principals[j].current) {
+                            vm.allSchools[i].principal = vm.allSchools[i].principals[j];
+                            break;
+                        }
+                    }
+                }
             })
             .catch(showError);
 
