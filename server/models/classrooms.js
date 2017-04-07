@@ -8,6 +8,10 @@ var classroomsSchema = new Schema({
         type: String,
         required: true
     },
+    passed: {
+        type: Boolean,
+        default: false
+    },
     school: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Schools',

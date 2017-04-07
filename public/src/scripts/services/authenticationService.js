@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authentication($q, $http, $state, localStorage, $rootScope, schoolService, teacherService, studentService, classroomService, schoolyearService, notifier) {
+    function authentication($cacheFactory, $q, $http, $state, localStorage, $rootScope, schoolService, teacherService, studentService, classroomService, schoolyearService, notifier) {
 
         var TOKEN_KEY = 'Token';
         var SCHOOL_DATA = 'school_data';
@@ -134,6 +134,9 @@
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
             localStorage.remove('tokenExpiration');
+
+            var httpCache = $cacheFactory.get('$http');
+            httpCache.removeAll();
 
             if (school_admin) {
                 school_admin = false;
@@ -322,6 +325,6 @@
     }
 
     angular.module('app')
-        .factory('authentication', ['$q', '$http', '$state', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'studentService', 'classroomService', 'schoolyearService', 'notifier', authentication]);
+        .factory('authentication', ['$cacheFactory', '$q', '$http', '$state', 'localStorage', '$rootScope', 'schoolService', 'teacherService', 'studentService', 'classroomService', 'schoolyearService', 'notifier', authentication]);
 
 }());

@@ -187,6 +187,12 @@
                 controller: 'SchoolyearRegisterController',
                 controllerAs: 'schoolyear',
                 templateUrl: 'templates/newSchoolyear.html'
+            })
+            .state('pass_students', {
+                url: '/teacher/classroom/pass',
+                controller: 'PassStudentsController',
+                controllerAs: 'students',
+                templateUrl: 'templates/passStudents.html'
             });
 
     }]);
@@ -215,17 +221,17 @@
                 $state.go('home');
             }
 
-            if (!authentication.isAdmin() && (toState.name == 'schools' || toState.name == 'schools_register' || toState.name == 'subjects' || toState.name == 'subject_register')) {
+            if (!authentication.isAdmin() && (toState.name == 'schools' || toState.name == 'schools_register' || toState.name == 'subjects' || toState.name == 'subject_register' || toState.name == 'schoolyears' || toState.name == 'schoolyear_register')) {
                 event.preventDefault();
                 $state.go('home');
             }
 
-            if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register' || toState.name == 'students' || toState.name == 'students_register' || toState.name == 'classrooms' || toState.name == 'classrooms_register' || toState.name == 'classrooms_set_students' || toState.name == 'activities')) {
+            if (!authentication.isSchoolAdmin() && (toState.name == 'teachers' || toState.name == 'teachers_register' || toState.name == 'students' || toState.name == 'students_register' || toState.name == 'classrooms' || toState.name == 'classrooms_register' || toState.name == 'classrooms_set_students' || toState.name == 'activities' || toState.name == 'principals' || toState.name == 'principal_register')) {
                 event.preventDefault();
                 $state.go('home');
             }
 
-            if (!authentication.isTeacher() && (toState.name == 'teacher_classroom' || toState.name == 'classroom_subjects' || toState.name == 'classroom_activities' || toState.name == 'activity_register' || toState.name == 'classroom_tests' || toState.name == 'test_register' || toState.name == 'test_grade')) {
+            if (!authentication.isTeacher() && (toState.name == 'teacher_classroom' || toState.name == 'classroom_subjects' || toState.name == 'classroom_activities' || toState.name == 'activity_register' || toState.name == 'classroom_tests' || toState.name == 'test_register' || toState.name == 'test_grade' || toState.name == 'pass_students')) {
                 event.preventDefault();
                 $state.go('home');
             }

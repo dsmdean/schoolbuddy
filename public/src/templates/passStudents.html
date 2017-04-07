@@ -1,0 +1,52 @@
+<div ng-show="students.loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<h2 class="col-md-offset-1 col-lg-offset-1">
+    Students to pass - {{students.classroom.grade}} ({{students.currentTeacher.firstname}} {{students.currentTeacher.lastname}})
+</h2>
+
+<div class="col-md-8 col-lg-8 col-md-offset-1 col-lg-offset-1">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Students in your {{students.classroom.schoolYear.year}} class</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Pass</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="student in students.students | filter:students.search" ng-class="{danger: student.suspended}">
+                <td>{{ student.firstname }} {{student.lastname}}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.phone }}</td>
+                <td>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="true" ng-model="student.pass"></label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <select class="form-control" ng-model="students.nextGrade">
+            <option value="">Next Grade</option>
+            <option value="1st Grade">1st Grade</option>
+            <option value="2nd Grade">2nd Grade</option>
+            <option value="3rd Grade">3rd Grade</option>
+            <option value="4th Grade">4th Grade</option>
+            <option value="5th Grade">5th Grade</option>
+            <option value="6th Grade">6th Grade</option>
+            <option value="7th Grade">7th Grade</option>
+            <option value="8th Grade">8th Grade</option>
+            <option value="9th Grade">9th Grade</option>
+            <option value="10th Grade">10th Grade</option>
+            <option value="11th Grade">11th Grade</option>
+            <option value="12th Grade">12th Grade</option>
+        </select>
+    </div>
+    <button class="btn btn-default" ng-click="students.passStudents()">Pass Students</button>
+</div>

@@ -22,7 +22,7 @@
                     <th>Date Registered</th>
                 </tr>
             </thead>
-            <tr ng-repeat="student in classroom.students | filter:classroom.search" ng-class="{danger: student.suspended}">
+            <tr ng-repeat="student in classroom.students | filter:classroom.search" ng-class="{danger: student.suspended, info: student.level  != classroom.classroom.grade}">
                 <td>{{ student.firstname }} {{student.lastname}}</td>
                 <td>{{ student.address }}</td>
                 <td>{{ student.phone }}</td>
@@ -30,4 +30,5 @@
             </tr>
         </table>
     </div>
+    <button class="btn btn-default" ui-sref="pass_students" ng-disabled="classroom.classroom.passed">Pass Students to next class</button>
 </div>

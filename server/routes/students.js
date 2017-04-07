@@ -83,6 +83,31 @@ studentsRouter.route('/grade')
         });
     });
 
+studentsRouter.route('/pass')
+    .all(Verify.verifyOrdinaryUser)
+    // PUT students grades
+    .put(Verify.verifyTeacher, function(req, res, next) {
+        Students.find({
+            '_id': { $in: req.body.studentsToPass }
+        }, function(err, students) {
+            if (err) next(err);
+
+            for (var i = 0; i < students.length; i++) {
+                students[i].level = req.body.newGrade;
+                students[i].save();
+            }
+
+            Classrooms.findById(req.body.classroomID)
+                .populate('students')
+                .exec(function(err, classroom) {
+                    classroom.passed = true;
+                    classroom.save();
+
+                    res.json(classroom);
+                });
+        });
+    });
+
 studentsRouter.route('/:id')
     .all(Verify.verifyOrdinaryUser)
     // GET individual student

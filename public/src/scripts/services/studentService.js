@@ -121,6 +121,17 @@
                 });
         }
 
+        function passStudents(data) {
+            return $http.put(baseURL + '/api/students/pass', data)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error passing students: ' + response.statusText);
+                    return $q.reject('Error passing students.');
+                });
+        }
+
         return {
             getAllStudents: getAllStudents,
             getStudentsBySchool: getStudentsBySchool,
@@ -130,7 +141,8 @@
             updateStudent: updateStudent,
             deleteStudent: deleteStudent,
             suspendStudent: suspendStudent,
-            getStudentGrades: getStudentGrades
+            getStudentGrades: getStudentGrades,
+            passStudents: passStudents
         };
     }
 
